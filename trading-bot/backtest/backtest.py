@@ -53,7 +53,7 @@ import pandas as pd
 @dataclass
 class Config:
     risk_pct: float = 0.5             # % of balance risked per trade
-    rr: float = 2.0                   # Risk:Reward (e.g. 2.0 = 1:2)
+    rr: float = 2.5                   # Risk:Reward (e.g. 2.5 = 1:2.5, TP at 1.25 fib)
     adjust_tp_for_rr: bool = True     # True: widen TP; False: tighten SL
     fib_buffer: float = 0.1           # Base fib buffer (0.1 -> 0.9/0.1 levels)
     setup_hour_utc: int = 22          # Hour to "place" pendings (UTC)
@@ -63,6 +63,12 @@ class Config:
     lot_step: float = 0.01
     commission_per_lot: float = 0.0   # $ per lot (round-trip)
     spread_price: float = 0.0         # extra price slippage per fill ($)
+
+    # No-trade window (low-liquidity NY hours, default 12pm-6pm NY)
+    use_no_trade_window: bool = True
+    no_trade_start_ny_hour: int = 12  # NY local hour, inclusive
+    no_trade_end_ny_hour: int = 18    # NY local hour, exclusive
+    ny_timezone: str = "America/New_York"
 
 
 # ============================================================
@@ -195,10 +201,35 @@ class Backtester:
             l = float(bar["low"])
             o = float(bar["open"])
 
+            # No-trade window check (NY local time)
+            in_no_trade = False
+            if cfg.use_no_trade_window:
+                ny_hour = ts.tz_convert(cfg.ny_timezone).hour
+                start = cfg.no_trade_start_ny_hour
+                end = cfg.no_trade_end_ny_hour
+                if start < end:
+                    in_no_trade = start <= ny_hour < end
+                else:
+                    in_no_trade = ny_hour >= start or ny_hour < end
+
             # --- 1) Order fills ---
             if open_trade is None and (buy_pending or sell_pending):
                 buy_hit = buy_pending and h >= buy_entry
                 sell_hit = sell_pending and l <= sell_entry
+
+                # Skip the trade if fill happens during no-trade window
+                if (buy_hit or sell_hit) and in_no_trade:
+                    # Cancel both pendings to enforce 1-trade-per-day
+                    buy_pending = sell_pending = False
+                    self.trades.append(
+                        Trade(
+                            setup_date=day,
+                            direction="none",
+                            exit_reason="Skipped: no-trade window",
+                            balance_after=self.balance,
+                        )
+                    )
+                    return
 
                 if buy_hit and sell_hit:
                     # Same-bar both hits: tiebreaker = whichever level is closer to bar open
@@ -495,8 +526,8 @@ def main() -> int:
 
     p.add_argument("--risk", type=float, default=0.5,
                    help="Risk %% per trade")
-    p.add_argument("--rr", type=float, default=2.0,
-                   help="Risk:Reward ratio (e.g. 2 = 1:2)")
+    p.add_argument("--rr", type=float, default=2.5,
+                   help="Risk:Reward ratio (default 2.5 -> TP at 1.25 fib)")
     p.add_argument("--balance", type=float, default=10_000.0,
                    help="Initial balance $")
     p.add_argument("--setup-hour", type=int, default=22,
@@ -507,6 +538,13 @@ def main() -> int:
                    help="Contract size (XAUUSD=100, EURUSD=100000)")
     p.add_argument("--commission", type=float, default=0.0,
                    help="Commission $/lot per round-trip")
+
+    p.add_argument("--no-no-trade-window", action="store_true",
+                   help="Disable the no-trade window filter (allow trades any hour)")
+    p.add_argument("--no-trade-start-ny", type=int, default=12,
+                   help="No-trade window start (NY local hour, inclusive)")
+    p.add_argument("--no-trade-end-ny", type=int, default=18,
+                   help="No-trade window end (NY local hour, exclusive)")
 
     p.add_argument("--export-trades", help="Export trade log to CSV path")
     p.add_argument("--plot", help="Save equity curve PNG to this path")
@@ -529,6 +567,9 @@ def main() -> int:
         initial_balance=args.balance,
         contract_size=args.contract_size,
         commission_per_lot=args.commission,
+        use_no_trade_window=not args.no_no_trade_window,
+        no_trade_start_ny_hour=args.no_trade_start_ny,
+        no_trade_end_ny_hour=args.no_trade_end_ny,
     )
 
     bt = Backtester(df, cfg)

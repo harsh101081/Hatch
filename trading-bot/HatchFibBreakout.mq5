@@ -3,17 +3,19 @@
 //|                                                            Hatch |
 //|              Previous-Day Fibonacci Breakout EA for Gold (XAUUSD)|
 //+------------------------------------------------------------------+
-//| STRATEGY                                                         |
+//| STRATEGY v2.0                                                    |
 //|  - At the daily NY close (default 22:00 UTC), identify previous  |
 //|    day's High and Low.                                           |
 //|  - Anchor a Fibonacci: Low = 0.0, High = 1.0.                    |
 //|  - Place TWO pending stop orders:                                |
-//|       BUY  STOP @ High  (1.0)  SL @ 0.9 fib   TP @ 1.1 fib       |
-//|       SELL STOP @ Low   (0.0)  SL @ 0.1 fib   TP @ -0.1 fib      |
-//|  - Optional: widen TP (or tighten SL) to achieve target RR       |
-//|    (e.g. 1:2 for prop firm rules).                               |
+//|       BUY  STOP @ High  (1.0)  SL @ 0.9 fib   TP @ 1.25 fib      |
+//|       SELL STOP @ Low   (0.0)  SL @ 0.1 fib   TP @ -0.25 fib     |
+//|    Default 2.5R per trade.                                       |
 //|  - One-Cancels-Other (OCO): when one order fills, cancel the     |
 //|    opposing pending order.                                       |
+//|  - No-Trade Window (default 17:00-23:00 UTC = 12pm-6pm NY EST):  |
+//|    if a stop order fills during this low-liquidity window, the   |
+//|    position is immediately closed and the opposite cancelled.    |
 //|  - Maximum 1 trade per day. Pending orders auto-expire at next   |
 //|    daily setup window.                                           |
 //|  - Lot size auto-calculated from risk % of account balance.      |
@@ -24,6 +26,8 @@
 //|  - Previous-day range read via iHigh/iLow on PERIOD_D1 shift=1.  |
 //|    For brokers whose daily candle does NOT close at NY 17:00,    |
 //|    enable InpUseManualRange to compute the 24h window manually.  |
+//|  - DST: 17-23 UTC matches EST winter (12-6 NY). For EDT summer,  |
+//|    set InpNoTradeStartUTC=16 and InpNoTradeEndUTC=22.            |
 //+------------------------------------------------------------------+
 #property copyright "Hatch"
 #property link      "https://github.com/harsh101081/Hatch"
@@ -47,14 +51,19 @@ COrderInfo    ordInfo;
 input group "=== Strategy ==="
 input string InpSymbol           = "";        // Symbol ("" = use chart symbol, recommend XAUUSD)
 input double InpRiskPercent      = 0.5;       // Risk % of account balance per trade
-input double InpRiskRewardRatio  = 2.0;       // Target Risk:Reward (e.g. 2.0 = 1:2)
+input double InpRiskRewardRatio  = 2.5;       // Target Risk:Reward (default 2.5 -> TP at 1.25 / -0.25 fib)
 input bool   InpAdjustTPForRR    = true;      // true: widen TP for RR  |  false: tighten SL for RR
 input double InpFibBuffer        = 0.1;       // Base Fib buffer (0.1 = 0.9 / 1.1 levels)
 
 input group "=== Timing (UTC) ==="
 input int    InpEntryHourUTC     = 22;        // Hour to place pending orders (UTC)
 input int    InpEntryMinuteUTC   = 0;         // Minute to place pending orders (UTC)
-input int    InpSetupWindowMin   = 5;         // Minutes window after entry time to attempt setup
+input int    InpSetupWindowMin   = 5;         // Setup retry window (minutes)
+
+input group "=== No-Trade Window (low-liquidity hours) ==="
+input bool   InpUseNoTradeWindow = true;      // Skip trades that fill during low-liquidity window
+input int    InpNoTradeStartUTC  = 17;        // Window start (UTC). Default 17 = 12pm NY EST
+input int    InpNoTradeEndUTC    = 23;        // Window end (UTC, exclusive). Default 23 = 6pm NY EST
 
 input group "=== Risk / Execution ==="
 input long   InpMagicNumber      = 990110;    // Magic number
@@ -355,13 +364,61 @@ double CalculateLots(double slDistancePrice)
 }
 
 //+------------------------------------------------------------------+
+//| Returns true if current UTC hour is within no-trade window       |
+//+------------------------------------------------------------------+
+bool IsInNoTradeWindow()
+{
+   if(!InpUseNoTradeWindow) return false;
+   datetime nowUTC = TimeGMT();
+   MqlDateTime dt;
+   TimeToStruct(nowUTC, dt);
+   int h = dt.hour;
+
+   if(InpNoTradeStartUTC < InpNoTradeEndUTC)
+      return (h >= InpNoTradeStartUTC && h < InpNoTradeEndUTC);
+   else
+      return (h >= InpNoTradeStartUTC || h < InpNoTradeEndUTC); // wraps midnight
+}
+
+//+------------------------------------------------------------------+
+//| Close all positions matching our magic & symbol                  |
+//+------------------------------------------------------------------+
+int CloseAllPositionsForSymbol()
+{
+   int closed = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+   {
+      if(posInfo.SelectByIndex(i))
+      {
+         if(posInfo.Magic() == InpMagicNumber && posInfo.Symbol() == g_symbol)
+         {
+            if(trade.PositionClose(posInfo.Ticket()))
+               closed++;
+         }
+      }
+   }
+   return closed;
+}
+
+//+------------------------------------------------------------------+
 //| OCO: when one of our pendings becomes a position, cancel the     |
-//| other pending. Also tracks "1 trade per day" rule.               |
+//| other pending. Also enforces no-trade window: closes the freshly |
+//| opened position if it filled during low-liquidity hours.         |
 //+------------------------------------------------------------------+
 void ManageOCO()
 {
    if(g_oneFilledHandled) return;
    if(!HasOpenPosition()) return;
+
+   // No-trade window: position opened during low-liquidity hours -> kill it
+   if(IsInNoTradeWindow())
+   {
+      int closed = CloseAllPositionsForSymbol();
+      int killed = CancelAllPendingsForSymbol();
+      g_oneFilledHandled = true;
+      Log(StringFormat("Position skipped: opened during no-trade window. Closed %d, cancelled %d.", closed, killed));
+      return;
+   }
 
    // A position with our magic exists -> kill any remaining pendings
    int killed = CancelAllPendingsForSymbol();

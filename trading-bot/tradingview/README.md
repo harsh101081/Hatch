@@ -9,6 +9,25 @@ Two Pine Script v5 files that bring the **HatchFib Breakout** strategy to Tradin
 
 Both follow the exact same logic as the MT5 EA and the Python backtester.
 
+## v2.0 Strategy Rules
+
+At each daily setup time (NY 5pm - 6pm = 22:00 UTC during EST winter):
+
+| Side | Entry | Stop Loss | Take Profit | RR |
+|------|-------|-----------|-------------|----|
+| Buy Stop | Prev Day High (1.0 fib) | 0.9 fib | **1.25 fib** | 2.5R |
+| Sell Stop | Prev Day Low (0.0 fib) | 0.1 fib | **-0.25 fib** | 2.5R |
+
+**Filters:**
+- **OCO**: when one stop fills, the opposite is auto-cancelled
+- **No-trade window**: 12pm-6pm NY local time (red shaded on chart). If a stop triggers during this low-liquidity window, the trade is skipped.
+- **Gap protection**: gaps that fill far from entry are caught by the no-trade window since they typically happen near 5pm NY (boundary).
+- **Day-of-week filter** (optional): skip Mondays, Fridays, etc.
+
+**Sizing:**
+- Risk-based position sizing (default 0.5% of equity)
+- Max 1 trade per day
+
 ---
 
 ## Quick Start

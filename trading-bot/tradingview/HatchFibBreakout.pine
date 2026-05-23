@@ -1,14 +1,23 @@
 // =============================================================================
-// HatchFib Breakout Strategy v1.0
+// HatchFib Breakout Strategy v2.0
 // =============================================================================
-// Previous-Day Fibonacci Breakout for Gold (XAUUSD) - same logic as the MT5 EA.
+// Previous-Day Fibonacci Breakout for Gold (XAUUSD).
 //
-// At each daily setup time (default 22:00 UTC):
-//   - Identify previous day's High and Low
-//   - Place Buy Stop at High  (SL @ 0.9 fib, TP @ 1.2 fib for 1:2 RR)
-//   - Place Sell Stop at Low  (SL @ 0.1 fib, TP @ -0.2 fib for 1:2 RR)
-// One-Cancels-Other (OCO): when one fills, opposing pending is cancelled
-// Max 1 trade per day. Risk-based position sizing.
+// At each daily setup time (default 22:00 UTC = NY 5pm during EST):
+//   - Identify previous day's High and Low (the just-completed daily candle)
+//   - Place Buy Stop at High  (SL @ 0.9 fib, TP @ 1.25 fib for 2.5R)
+//   - Place Sell Stop at Low  (SL @ 0.1 fib, TP @ -0.25 fib for 2.5R)
+//
+// Filters:
+//   - One-Cancels-Other (OCO): when one fills, opposing pending is cancelled
+//   - No-trade window (default 12pm-6pm NY time): low-liquidity hours
+//     If a stop triggers during this window, the position is skipped
+//   - Gap protection: if price gaps past entry, the order won't fill at the
+//     entry price. The no-trade window also catches gap fills naturally.
+//
+// Sizing:
+//   - Risk-based position sizing from account equity (default 0.5%)
+//   - Max 1 trade per day
 //
 // HOW TO USE
 //   1. Open Gold (XAUUSD or OANDA:XAUUSD) on TradingView
@@ -40,10 +49,10 @@ strategy("HatchFib Breakout",
 g_risk        = "[1] Risk Management"
 riskPct       = input.float(0.5, "Risk per Trade (%)",       minval=0.01, maxval=10.0, step=0.05, group=g_risk,
      tooltip="Percentage of account equity risked per trade. Position size is auto-calculated from this and the SL distance.")
-rr            = input.float(2.0, "Risk:Reward Ratio (1:X)",  minval=0.5,  maxval=10.0, step=0.1,  group=g_risk,
-     tooltip="Target Risk:Reward ratio. 2.0 = 1:2 RR. Adjusted via TP or SL based on the next setting.")
+rr            = input.float(2.5, "Risk:Reward Ratio (1:X)",  minval=0.5,  maxval=10.0, step=0.1,  group=g_risk,
+     tooltip="Target Risk:Reward ratio. 2.5 = 1:2.5 RR (TP at 1.25 / -0.25 fib level). Adjusted via TP or SL based on the next setting.")
 adjustTpForRR = input.bool(true, "Widen TP for RR (else tighten SL)", group=g_risk,
-     tooltip="If TRUE, keeps SL at 0.9/0.1 fib levels and widens TP to achieve the target RR. If FALSE, keeps TP at 1.1/-0.1 and tightens SL instead.")
+     tooltip="If TRUE, keeps SL at 0.9/0.1 fib levels and widens TP to 1.25/-0.25 to achieve the 2.5R target. If FALSE, keeps TP at 1.1/-0.1 and tightens SL instead.")
 
 g_strategy = "[2] Strategy"
 fibBuffer = input.float(0.1, "Fib Buffer", minval=0.01, maxval=0.5, step=0.01, group=g_strategy,
@@ -55,6 +64,12 @@ setupHour   = input.int(22, "Setup Hour (0-23 UTC)",   minval=0, maxval=23, grou
 setupMinute = input.int(0,  "Setup Minute (0-59)",     minval=0, maxval=59, group=g_time)
 
 g_filters       = "[4] Filters"
+useNoTradeWindow = input.bool(true, "Skip Low-Liquidity Hours", group=g_filters,
+     tooltip="If a stop order fills during the low-liquidity window (default 12pm-6pm NY time), the trade is skipped. NY time auto-handles DST.")
+noTradeStartNY = input.int(12, "  No-Trade Start (NY Hour)",  minval=0, maxval=23, group=g_filters)
+noTradeEndNY   = input.int(18, "  No-Trade End (NY Hour)",    minval=0, maxval=23, group=g_filters,
+     tooltip="Exclusive. 18 means up to but not including 18:00 NY time.")
+
 useDayFilter    = input.bool(false, "Filter by Day of Week",        group=g_filters)
 tradeMon        = input.bool(true,  "  Monday",    inline="dow", group=g_filters)
 tradeTue        = input.bool(true,  "  Tuesday",   inline="dow", group=g_filters)
@@ -63,8 +78,9 @@ tradeThu        = input.bool(true,  "  Thursday",  inline="dow", group=g_filters
 tradeFri        = input.bool(true,  "  Friday",    inline="dow", group=g_filters)
 
 g_display     = "[5] Display"
-showLevels    = input.bool(true,  "Show Fib Levels on Chart", group=g_display)
-showLabels    = input.bool(true,  "Show Level Labels",         group=g_display)
+showLevels    = input.bool(true,  "Show Fib Levels on Chart",       group=g_display)
+showLabels    = input.bool(true,  "Show Level Labels",              group=g_display)
+showNoTrade   = input.bool(true,  "Highlight No-Trade Hours",       group=g_display)
 
 // =============================================================================
 // DAY OF WEEK FILTER
@@ -78,6 +94,15 @@ fridayOk    = dow_now == dayofweek.friday    and tradeFri
 dowOk       = not useDayFilter or mondayOk or tuesdayOk or wednesdayOk or thursdayOk or fridayOk
 
 // =============================================================================
+// NO-TRADE WINDOW (low-liquidity hours, NY time, auto DST-aware)
+// =============================================================================
+nyHour          = hour(time, "America/New_York")
+inNoTradeWindow = useNoTradeWindow and (
+     noTradeStartNY < noTradeEndNY ?
+     (nyHour >= noTradeStartNY and nyHour < noTradeEndNY) :
+     (nyHour >= noTradeStartNY or  nyHour < noTradeEndNY))
+
+// =============================================================================
 // PREVIOUS DAY HIGH/LOW (most recently closed daily candle)
 // =============================================================================
 [prevHigh, prevLow] = request.security(syminfo.tickerid, "D",
@@ -87,6 +112,11 @@ dayRange = prevHigh - prevLow
 
 // =============================================================================
 // CALCULATE LEVELS
+//   With defaults (rr=2.5, fibBuffer=0.1, adjustTpForRR=true):
+//     baseBuffer = 0.1 * range
+//     tpBuffer   = 0.1 * 2.5 * range = 0.25 * range  (TP at 1.25 / -0.25 fib)
+//     slBuffer   = 0.1 * range                       (SL at 0.9  /  0.1 fib)
+//   This produces 2.5R per trade.
 // =============================================================================
 baseBuffer = fibBuffer * dayRange
 tpBuffer   = adjustTpForRR ? baseBuffer * rr : baseBuffer
@@ -161,6 +191,19 @@ if strategy.position_size < 0
     strategy.cancel("Long")
 
 // =============================================================================
+// NO-TRADE WINDOW ENFORCEMENT
+//   If a stop order just filled DURING the low-liquidity window, immediately
+//   close the position and cancel the opposing pending. This implements the
+//   "skip trades that trigger in 12pm-6pm NY" rule from the strategy.
+//   Also catches gap-up/gap-down fills since gaps usually happen near setup
+//   time (5pm NY) which is on the boundary of the no-trade window.
+// =============================================================================
+positionJustOpened = strategy.position_size != 0 and strategy.position_size[1] == 0
+if positionJustOpened and inNoTradeWindow
+    strategy.close_all(comment="Skipped: low-liquidity hours")
+    strategy.cancel_all()
+
+// =============================================================================
 // VISUAL LEVELS
 // =============================================================================
 plotLong  = showLevels
@@ -205,9 +248,10 @@ if showLabels and isNewDay and dayRange > 0
     lbSellS := label.new(bar_index, sellSL,    "SL "   + str.tostring(sellSL,    "#.##"),  color=color.new(color.red,   20),  textcolor=color.white, style=label.style_label_left, size=size.tiny)
 
 // =============================================================================
-// SETUP TIME MARKER
+// SETUP TIME / NO-TRADE WINDOW MARKERS
 // =============================================================================
-bgcolor(isSetupBar ? color.new(color.yellow, 85) : na, title="Setup Bar")
+bgcolor(isSetupBar         ? color.new(color.yellow, 85) : na, title="Setup Bar")
+bgcolor(showNoTrade and inNoTradeWindow ? color.new(color.red, 92) : na, title="No-Trade Window")
 
 // =============================================================================
 // STATS TABLE (top right)

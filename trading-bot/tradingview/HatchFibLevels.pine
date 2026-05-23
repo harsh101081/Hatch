@@ -1,9 +1,13 @@
 // =============================================================================
-// HatchFib Levels - Visual Indicator (Manual Trading Helper)
+// HatchFib Levels v2.0 - Visual Indicator (Manual Trading Helper)
 // =============================================================================
 // Plots Buy/Sell entry, SL, and TP levels based on previous day's H/L Fibonacci.
 // Use this if you want to MANUALLY place orders rather than auto-trade.
 // Compatible with prop firms that don't allow auto-trading EAs.
+//
+// LEVEL CONFIGURATION (default rr=2.5):
+//   Buy Stop @ Prev High (1.0)   SL @ 0.9 fib   TP @ 1.25 fib   = 2.5R
+//   Sell Stop @ Prev Low (0.0)   SL @ 0.1 fib   TP @ -0.25 fib  = 2.5R
 //
 // HOW TO USE
 //   1. Open Gold (XAUUSD) chart on TradingView
@@ -11,7 +15,10 @@
 //   3. At setup time (default 22:00 UTC), place pending orders manually:
 //        - Buy Stop  at Buy Entry line  (SL = Buy SL,  TP = Buy TP)
 //        - Sell Stop at Sell Entry line (SL = Sell SL, TP = Sell TP)
-//   4. When one order fills, cancel the other
+//   4. When one order fills, cancel the other (use OCO if your broker supports)
+//   5. AVOID TRADES that trigger during 12pm-6pm NY (low-liquidity window).
+//      The chart shaded red highlights this window.
+//   6. If price gaps past your entry, no trade for the day.
 // =============================================================================
 
 //@version=5
@@ -21,15 +28,22 @@ indicator("HatchFib Levels", overlay=true, max_labels_count=500)
 // INPUTS
 // =============================================================================
 g_strategy = "Strategy"
-rr            = input.float(2.0, "Risk:Reward (1:X)", minval=0.5, maxval=10, step=0.1, group=g_strategy,
-     tooltip="Target Risk:Reward ratio")
+rr            = input.float(2.5, "Risk:Reward (1:X)", minval=0.5, maxval=10, step=0.1, group=g_strategy,
+     tooltip="Target Risk:Reward ratio. 2.5 = TP at 1.25 fib level (2.5R per trade)")
 adjustTpForRR = input.bool(true,  "Widen TP for RR (else tighten SL)", group=g_strategy)
 fibBuffer     = input.float(0.1,  "Fib Buffer", minval=0.01, maxval=0.5, step=0.01, group=g_strategy,
      tooltip="Base fib distance (0.1 = 0.9/0.1 fib levels)")
 
 g_time      = "Timing (UTC)"
-setupHour   = input.int(22, "Setup Hour",   minval=0, maxval=23, group=g_time)
+setupHour   = input.int(22, "Setup Hour",   minval=0, maxval=23, group=g_time,
+     tooltip="22 UTC = NY 5pm during EST winter, NY 6pm during EDT summer")
 setupMinute = input.int(0,  "Setup Minute", minval=0, maxval=59, group=g_time)
+
+g_filters        = "Filters"
+useNoTradeWindow = input.bool(true, "Highlight Low-Liquidity Hours", group=g_filters)
+noTradeStartNY   = input.int(12, "  No-Trade Start (NY Hour)",  minval=0, maxval=23, group=g_filters)
+noTradeEndNY     = input.int(18, "  No-Trade End (NY Hour)",    minval=0, maxval=23, group=g_filters,
+     tooltip="Exclusive. 18 means up to but not including 18:00 NY time.")
 
 g_display = "Display"
 showLabels = input.bool(true, "Show Level Labels", group=g_display)
@@ -60,10 +74,16 @@ sellSL    = prevLow + slBuffer
 sellTP    = prevLow - tpBuffer
 
 // =============================================================================
-// SETUP DETECTION
+// SETUP DETECTION & NO-TRADE WINDOW
 // =============================================================================
 isSetupBar = hour(time, "UTC") == setupHour and minute(time, "UTC") == setupMinute
 isNewDay   = ta.change(time("D"))
+
+nyHour          = hour(time, "America/New_York")
+inNoTradeWindow = useNoTradeWindow and (
+     noTradeStartNY < noTradeEndNY ?
+     (nyHour >= noTradeStartNY and nyHour < noTradeEndNY) :
+     (nyHour >= noTradeStartNY or  nyHour < noTradeEndNY))
 
 // =============================================================================
 // PLOT LEVELS
@@ -81,9 +101,10 @@ fill(p4, p5, color=color.new(color.lime, 92), title="Short Profit Zone")
 fill(p4, p6, color=color.new(color.red,  92), title="Short Risk Zone")
 
 // =============================================================================
-// SETUP BAR HIGHLIGHT
+// SETUP BAR HIGHLIGHT + NO-TRADE WINDOW
 // =============================================================================
-bgcolor(showRange and isSetupBar ? color.new(color.yellow, 85) : na, title="Setup Time")
+bgcolor(showRange and isSetupBar         ? color.new(color.yellow, 85) : na, title="Setup Time")
+bgcolor(useNoTradeWindow and inNoTradeWindow ? color.new(color.red, 92)    : na, title="No-Trade Window")
 
 // =============================================================================
 // LABELS (refreshed daily)
