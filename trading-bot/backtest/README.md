@@ -228,3 +228,96 @@ print(f"95th pct: ${np.percentile(results, 95):.2f}")
 ```
 
 If the 5th percentile is still positive, the edge is robust.
+
+
+
+---
+
+## Advanced Tools
+
+In addition to the basic backtester (`backtest.py`), this folder includes three advanced analysis tools:
+
+### 1. `optimizer.py` — Parameter sweep & walk-forward analysis
+
+Find the best risk/RR combination, or run honest out-of-sample validation.
+
+```bash
+# Grid search: try every combination of risk and RR, plot heatmap
+python optimizer.py --csv data.csv --mode grid \
+  --risk-min 0.25 --risk-max 2.0 --risk-step 0.25 \
+  --rr-min 1.0 --rr-max 3.0 --rr-step 0.5 \
+  --metric profit_factor \
+  --heatmap heatmap.png --export grid_results.csv
+
+# Walk-forward: optimize on in-sample, validate on out-of-sample (rolling windows)
+python optimizer.py --csv data.csv --mode walkforward --windows 4 --is-ratio 0.7
+```
+
+The walk-forward mode is the **gold standard** for parameter selection — it tells you whether your "optimal" parameters actually generalize to unseen data, or whether you've just curve-fit your backtest.
+
+### 2. `propfirm.py` — Prop firm rule simulator
+
+Simulate FTMO/MFF/5ers/Topstep evaluation rules day-by-day. Includes Monte Carlo mode that shuffles trade order to estimate the true pass probability.
+
+```bash
+# Single deterministic run with FTMO Phase 1 rules
+python propfirm.py --csv data.csv --preset ftmo --balance 100000
+
+# Custom rules
+python propfirm.py --csv data.csv \
+  --balance 50000 \
+  --profit-target 8 \
+  --max-daily-dd 5 \
+  --max-total-dd 10 \
+  --max-days 30
+
+# Monte Carlo: 10,000 shuffled orderings to estimate pass %
+python propfirm.py --csv data.csv --preset ftmo --monte-carlo 10000
+```
+
+**Available presets:** `ftmo`, `ftmo_verification`, `myforexfunds`, `the5ers`, `topstep`
+
+Output includes verdict (PASS/FAIL with reason), final balance, peak balance, trading days used, max daily DD, max total DD, and the last 10 days of equity log. Monte Carlo output adds pass rate, median return, and percentile bounds.
+
+### 3. `visualize.py` — Edge Finder dashboard
+
+Generates a single-page PNG dashboard with all the key stats — same idea as `Edge Finder` / `FX Replay` analytics.
+
+```bash
+python visualize.py --csv data.csv --risk 0.5 --rr 2 --save dashboard.png --no-show
+```
+
+The dashboard includes:
+- **Header stats:** Trades, Win Rate, Profit Factor, Total Return, Max DD, Sharpe, Avg R, Expectancy
+- **Equity Curve** with high-watermark line and underwater fill
+- **Drawdown plot** showing % drawdown over time
+- **R-Multiple distribution** histogram (wins green, losses red)
+- **P&L by Day of Week** bars
+- **Monthly Returns** bars
+- **Footer:** win/loss streaks, no-trade days, avg duration
+
+Color-coded based on quality (green = good, yellow = borderline, red = bad).
+
+---
+
+## Recommended Workflow
+
+```bash
+# Step 1: Backtest with default parameters to baseline
+python backtest.py --csv data/xauusd_h1.csv --export-trades trades.csv
+
+# Step 2: Find optimal parameters via walk-forward (avoids overfitting)
+python optimizer.py --csv data/xauusd_h1.csv --mode walkforward --windows 5
+
+# Step 3: Backtest with the optimized parameters
+python backtest.py --csv data/xauusd_h1.csv --risk 0.75 --rr 2.5
+
+# Step 4: Build edge finder report
+python visualize.py --csv data/xauusd_h1.csv --risk 0.75 --rr 2.5 --save report.png
+
+# Step 5: Validate against prop firm rules with Monte Carlo
+python propfirm.py --csv data/xauusd_h1.csv --risk 0.75 --rr 2.5 \
+  --preset ftmo --balance 100000 --monte-carlo 10000
+```
+
+If walk-forward and Monte Carlo both look good (OOS profit factor > 1.5, MC pass rate > 60%), the strategy has a real edge worth deploying. If MC pass rate is < 30% but the deterministic single-run passes, the strategy is fragile and depends on lucky trade ordering.
