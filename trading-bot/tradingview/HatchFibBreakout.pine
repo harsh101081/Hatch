@@ -69,13 +69,13 @@ showLabels    = input.bool(true,  "Show Level Labels",         group=g_display)
 // =============================================================================
 // DAY OF WEEK FILTER
 // =============================================================================
-dow_now = dayofweek(time, "UTC")
-dowOk = not useDayFilter
-    or (dow_now == dayofweek.monday    and tradeMon)
-    or (dow_now == dayofweek.tuesday   and tradeTue)
-    or (dow_now == dayofweek.wednesday and tradeWed)
-    or (dow_now == dayofweek.thursday  and tradeThu)
-    or (dow_now == dayofweek.friday    and tradeFri)
+dow_now     = dayofweek(time, "UTC")
+mondayOk    = dow_now == dayofweek.monday    and tradeMon
+tuesdayOk   = dow_now == dayofweek.tuesday   and tradeTue
+wednesdayOk = dow_now == dayofweek.wednesday and tradeWed
+thursdayOk  = dow_now == dayofweek.thursday  and tradeThu
+fridayOk    = dow_now == dayofweek.friday    and tradeFri
+dowOk       = not useDayFilter or mondayOk or tuesdayOk or wednesdayOk or thursdayOk or fridayOk
 
 // =============================================================================
 // PREVIOUS DAY HIGH/LOW (most recently closed daily candle)
@@ -130,8 +130,7 @@ if isNewDay
 // =============================================================================
 // ORDER PLACEMENT
 // =============================================================================
-canTrade = isSetupBar and not ordersPlacedToday and dayRange > 0 and dowOk
-     and barstate.isconfirmed and strategy.position_size == 0
+canTrade = isSetupBar and not ordersPlacedToday and dayRange > 0 and dowOk and barstate.isconfirmed and strategy.position_size == 0
 
 if canTrade
     // Cancel anything still pending from yesterday
