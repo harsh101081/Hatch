@@ -1,0 +1,156 @@
+// =============================================================================
+// HatchFib Levels - Visual Indicator (Manual Trading Helper)
+// =============================================================================
+// Plots Buy/Sell entry, SL, and TP levels based on previous day's H/L Fibonacci.
+// Use this if you want to MANUALLY place orders rather than auto-trade.
+// Compatible with prop firms that don't allow auto-trading EAs.
+//
+// HOW TO USE
+//   1. Open Gold (XAUUSD) chart on TradingView
+//   2. Pine Editor -> paste this script -> Save -> Add to chart
+//   3. At setup time (default 22:00 UTC), place pending orders manually:
+//        - Buy Stop  at Buy Entry line  (SL = Buy SL,  TP = Buy TP)
+//        - Sell Stop at Sell Entry line (SL = Sell SL, TP = Sell TP)
+//   4. When one order fills, cancel the other
+// =============================================================================
+
+//@version=5
+indicator("HatchFib Levels", overlay=true, max_labels_count=500)
+
+// =============================================================================
+// INPUTS
+// =============================================================================
+g_strategy = "Strategy"
+rr            = input.float(2.0, "Risk:Reward (1:X)", minval=0.5, maxval=10, step=0.1, group=g_strategy,
+     tooltip="Target Risk:Reward ratio")
+adjustTpForRR = input.bool(true,  "Widen TP for RR (else tighten SL)", group=g_strategy)
+fibBuffer     = input.float(0.1,  "Fib Buffer", minval=0.01, maxval=0.5, step=0.01, group=g_strategy,
+     tooltip="Base fib distance (0.1 = 0.9/0.1 fib levels)")
+
+g_time      = "Timing (UTC)"
+setupHour   = input.int(22, "Setup Hour",   minval=0, maxval=23, group=g_time)
+setupMinute = input.int(0,  "Setup Minute", minval=0, maxval=59, group=g_time)
+
+g_display = "Display"
+showLabels = input.bool(true, "Show Level Labels", group=g_display)
+showRange  = input.bool(true, "Highlight Setup Bar", group=g_display)
+showAlertText = input.bool(true, "Show 'PLACE ORDERS' Alert", group=g_display)
+
+// =============================================================================
+// PREVIOUS DAY HIGH/LOW
+// =============================================================================
+[prevHigh, prevLow] = request.security(syminfo.tickerid, "D",
+     [high[1], low[1]], lookahead=barmerge.lookahead_off)
+
+dayRange = prevHigh - prevLow
+
+// =============================================================================
+// LEVELS
+// =============================================================================
+baseBuffer = fibBuffer * dayRange
+tpBuffer   = adjustTpForRR ? baseBuffer * rr : baseBuffer
+slBuffer   = adjustTpForRR ? baseBuffer       : baseBuffer / rr
+
+buyEntry  = prevHigh
+buySL     = prevHigh - slBuffer
+buyTP     = prevHigh + tpBuffer
+
+sellEntry = prevLow
+sellSL    = prevLow + slBuffer
+sellTP    = prevLow - tpBuffer
+
+// =============================================================================
+// SETUP DETECTION
+// =============================================================================
+isSetupBar = hour(time, "UTC") == setupHour and minute(time, "UTC") == setupMinute
+isNewDay   = ta.change(time("D"))
+
+// =============================================================================
+// PLOT LEVELS
+// =============================================================================
+p1 = plot(buyEntry,  "Buy Entry",  color=color.new(color.green, 0),  linewidth=2, style=plot.style_linebr)
+p2 = plot(buyTP,     "Buy TP",     color=color.new(color.lime,  30), linewidth=1, style=plot.style_linebr)
+p3 = plot(buySL,     "Buy SL",     color=color.new(color.red,   30), linewidth=1, style=plot.style_linebr)
+p4 = plot(sellEntry, "Sell Entry", color=color.new(color.red,   0),  linewidth=2, style=plot.style_linebr)
+p5 = plot(sellTP,    "Sell TP",    color=color.new(color.lime,  30), linewidth=1, style=plot.style_linebr)
+p6 = plot(sellSL,    "Sell SL",    color=color.new(color.red,   30), linewidth=1, style=plot.style_linebr)
+
+fill(p1, p2, color=color.new(color.lime, 92), title="Long Profit Zone")
+fill(p1, p3, color=color.new(color.red,  92), title="Long Risk Zone")
+fill(p4, p5, color=color.new(color.lime, 92), title="Short Profit Zone")
+fill(p4, p6, color=color.new(color.red,  92), title="Short Risk Zone")
+
+// =============================================================================
+// SETUP BAR HIGHLIGHT
+// =============================================================================
+bgcolor(showRange and isSetupBar ? color.new(color.yellow, 85) : na, title="Setup Time")
+
+// =============================================================================
+// LABELS (refreshed daily)
+// =============================================================================
+var label lbBuyE  = na
+var label lbBuyT  = na
+var label lbBuyS  = na
+var label lbSellE = na
+var label lbSellT = na
+var label lbSellS = na
+
+if showLabels and isNewDay and dayRange > 0
+    label.delete(lbBuyE)
+    label.delete(lbBuyT)
+    label.delete(lbBuyS)
+    label.delete(lbSellE)
+    label.delete(lbSellT)
+    label.delete(lbSellS)
+
+    lbBuyE  := label.new(bar_index, buyEntry,  "BUY "  + str.tostring(buyEntry,  "#.##"),  color=color.new(color.green, 0),  textcolor=color.white, style=label.style_label_left, size=size.small)
+    lbBuyT  := label.new(bar_index, buyTP,     "TP "   + str.tostring(buyTP,     "#.##"),  color=color.new(color.lime,  0),  textcolor=color.black, style=label.style_label_left, size=size.tiny)
+    lbBuyS  := label.new(bar_index, buySL,     "SL "   + str.tostring(buySL,     "#.##"),  color=color.new(color.red,   0),  textcolor=color.white, style=label.style_label_left, size=size.tiny)
+    lbSellE := label.new(bar_index, sellEntry, "SELL " + str.tostring(sellEntry, "#.##"),  color=color.new(color.red,   0),  textcolor=color.white, style=label.style_label_left, size=size.small)
+    lbSellT := label.new(bar_index, sellTP,    "TP "   + str.tostring(sellTP,    "#.##"),  color=color.new(color.lime,  0),  textcolor=color.black, style=label.style_label_left, size=size.tiny)
+    lbSellS := label.new(bar_index, sellSL,    "SL "   + str.tostring(sellSL,    "#.##"),  color=color.new(color.red,   0),  textcolor=color.white, style=label.style_label_left, size=size.tiny)
+
+// =============================================================================
+// LEVELS TABLE (top right)
+// =============================================================================
+var table tbl = table.new(position.top_right, 2, 8, bgcolor=color.new(color.black, 80), border_width=1, border_color=color.gray)
+
+if barstate.islast
+    table.cell(tbl, 0, 0, "HatchFib Levels", text_color=color.yellow, bgcolor=color.new(color.black, 50), text_size=size.small)
+    table.cell(tbl, 1, 0, "",                text_color=color.yellow, bgcolor=color.new(color.black, 50), text_size=size.small)
+
+    table.cell(tbl, 0, 1, "Prev High",       text_color=color.gray,   text_size=size.small)
+    table.cell(tbl, 1, 1, str.tostring(prevHigh, "#.##"),  text_color=color.white, text_size=size.small)
+
+    table.cell(tbl, 0, 2, "Prev Low",        text_color=color.gray,   text_size=size.small)
+    table.cell(tbl, 1, 2, str.tostring(prevLow, "#.##"),   text_color=color.white, text_size=size.small)
+
+    table.cell(tbl, 0, 3, "Range",           text_color=color.gray,   text_size=size.small)
+    table.cell(tbl, 1, 3, str.tostring(dayRange, "#.##"),  text_color=color.white, text_size=size.small)
+
+    table.cell(tbl, 0, 4, "Buy Stop",        text_color=color.green,  text_size=size.small)
+    table.cell(tbl, 1, 4, str.tostring(buyEntry,  "#.##") + "  (SL " + str.tostring(buySL,  "#.##") + " | TP " + str.tostring(buyTP, "#.##") + ")",
+         text_color=color.green, text_size=size.small)
+
+    table.cell(tbl, 0, 5, "Sell Stop",       text_color=color.red,    text_size=size.small)
+    table.cell(tbl, 1, 5, str.tostring(sellEntry, "#.##") + "  (SL " + str.tostring(sellSL, "#.##") + " | TP " + str.tostring(sellTP, "#.##") + ")",
+         text_color=color.red, text_size=size.small)
+
+    table.cell(tbl, 0, 6, "RR",              text_color=color.gray, text_size=size.small)
+    table.cell(tbl, 1, 6, "1:" + str.tostring(rr, "#.0"), text_color=color.white, text_size=size.small)
+
+    table.cell(tbl, 0, 7, "Setup",           text_color=color.gray, text_size=size.small)
+    table.cell(tbl, 1, 7, str.tostring(setupHour, "00") + ":" + str.tostring(setupMinute, "00") + " UTC", text_color=color.white, text_size=size.small)
+
+// =============================================================================
+// SETUP TIME ALERT LABEL
+// =============================================================================
+if showAlertText and isSetupBar
+    label.new(bar_index, high * 1.001,
+         "PLACE ORDERS NOW\nBUY  " + str.tostring(buyEntry,  "#.##") + "\nSELL " + str.tostring(sellEntry, "#.##"),
+         color=color.new(color.yellow, 0), textcolor=color.black,
+         style=label.style_label_down, size=size.normal)
+
+alertcondition(isSetupBar,
+     title="HatchFib: Place Orders Now",
+     message="HatchFib setup time. Place: BUY STOP {{plot_0}}, SELL STOP {{plot_3}}")
