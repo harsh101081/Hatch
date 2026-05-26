@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en"><!--HTML START--><head>
+    <!--HEAD START-->
+    <title id="title">Fundsweb | Financial Solutions &amp; Investment Advisory</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fundsweb provides expert financial advisory, wealth management, investment planning, and portfolio optimization services. Secure your financial future with our data-driven strategies.">
+    <link rel="icon" href="">
+    <link rel="stylesheet" href="assets/css/plugins/animate.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/plugins/modal-video.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/stellarnav.css">
+    <link rel="stylesheet" href="assets/css/plugins/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/typography.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/button.css">
+    <link rel="stylesheet" href="assets/css/inner.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+<style id="vvvebjs-styles">#metrics-section > .v-line.v-line-right > .container > .row.align-items-center > .col-xs-6.col-sm-3.col-md-3.col-lg-3 > .metric-item.scrolla-element-anim-1.scroll-animate > div:nth-of-type(2n) {
+	left: auto;
+	top: auto;
+	float: left;
+}
+#sipDonut > .sip-donut-center:nth-of-type(2n) {
+	font-size: 55px;
+}
+</style>
+
+<!-- SIP CALCULATOR CSS -->
+<style>
+.sip-calculator-section {
+    padding: 80px 0;
+    background: #1a1a2e;
+    position: relative;
+    overflow: hidden;
+}
+.sip-calculator-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(41, 165, 135, 0.15) 0%, transparent 70%);
+}
+.sip-calculator-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(41, 165, 135, 0.1) 0%, transparent 70%);
+}
+.sip-calc-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(41, 165, 135, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 50px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+.sip-calc-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.sip-calc-title h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.sip-calc-title h2 span {
+    color: #29a587;
+}
+.sip-calc-title p {
+    color: #aaa;
+    font-size: 16px;
+}
+.sip-form-group {
+    margin-bottom: 25px;
+}
+.sip-form-group label {
+    display: block;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.sip-input-field {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    border: 2px solid rgba(41, 165, 135, 0.3);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+.sip-input-field:focus {
+    border-color: #29a587;
+    box-shadow: 0 0 0 4px rgba(41, 165, 135, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+.sip-input-field::placeholder {
+    color: #666;
+    font-weight: 400;
+}
+.sip-input-prefix {
+    position: relative;
+}
+.sip-input-prefix::before {
+    content: "\20B9";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 600;
+    color: #29a587;
+}
+.sip-input-prefix .sip-input-field {
+    padding-left: 45px;
+}
+.sip-input-suffix {
+    position: relative;
+}
+.sip-input-suffix::after {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    color: #29a587;
+}
+.sip-input-suffix.percent::after {
+    content: "%";
+}
+.sip-input-suffix.years::after {
+    content: "Years";
+}
+.sip-input-suffix .sip-input-field {
+    padding-right: 65px;
+}
+.sip-calc-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 35px auto 0;
+    padding: 16px 30px;
+    background: #29a587;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.sip-calc-btn:hover {
+    background: #1f7d65;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(41, 165, 135, 0.3);
+}
+.sip-results {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(41, 165, 135, 0.2);
+}
+.sip-result-item {
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+}
+.sip-result-item .result-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.sip-result-item .result-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #29a587;
+}
+.sip-result-item .result-value.invested {
+    color: #ccc;
+}
+.sip-result-item .result-value.returns {
+    color: #f5a623;
+}
+.sip-chart-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.sip-donut {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sip-donut-center {
+    width: 120px;
+    height: 120px;
+    background: #1a1a2e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+}
+.sip-donut-center span {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+}
+.sip-donut-center strong {
+    font-size: 16px;
+    color: #29a587;
+    font-weight: 700;
+}
+.sip-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+}
+.sip-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #ccc;
+}
+.sip-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.sip-legend-dot.invested {
+    background: #ccc;
+}
+.sip-legend-dot.returns {
+    background: #29a587;
+}
+@media (max-width: 768px) {
+    .sip-calc-card { padding: 30px 20px; }
+    .sip-results { flex-direction: column; align-items: center; }
+    .sip-result-item .result-value { font-size: 22px; }
+    .sip-calc-title h2 { font-size: 28px; }
+}
+</style>
+
+<!-- SWP CALCULATOR CSS -->
+<style>
+.swp-calculator-section { padding-top: 0; }
+.swp-mode-toggle {
+    display: flex; align-items: center; justify-content: flex-end; gap: 14px;
+    margin-bottom: 30px; padding: 14px 20px;
+    background: rgba(41,165,135,0.08);
+    border: 1px solid rgba(41,165,135,0.2);
+    border-radius: 12px;
+}
+.swp-toggle-label { color: #ccc; font-weight: 600; font-size: 14px; letter-spacing: 0.3px; }
+.swp-switch { position: relative; display: inline-block; width: 52px; height: 28px; }
+.swp-switch input { opacity: 0; width: 0; height: 0; }
+.swp-slider-toggle {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(41,165,135,0.3);
+    border-radius: 50px; transition: 0.3s ease;
+}
+.swp-slider-toggle:before {
+    content: ""; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px;
+    background: #ccc; border-radius: 50%; transition: 0.3s ease;
+}
+.swp-switch input:checked + .swp-slider-toggle { background: rgba(41,165,135,0.3); border-color: #29a587; }
+.swp-switch input:checked + .swp-slider-toggle:before { transform: translateX(24px); background: #29a587; }
+.swp-select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%2329a587' d='M6 8L0 0h12z'/></svg>");
+    background-repeat: no-repeat; background-position: right 18px center;
+    padding-right: 45px !important; cursor: pointer;
+}
+.swp-advanced-toggle {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: #29a587; font-size: 14px; font-weight: 600;
+    cursor: pointer; padding: 8px 0; margin-bottom: 10px; user-select: none;
+    transition: opacity 0.2s ease;
+}
+.swp-advanced-toggle:hover { opacity: 0.8; }
+.swp-advanced-toggle i { transition: transform 0.3s ease; }
+.swp-advanced-toggle.open i { transform: rotate(180deg); }
+.swp-advanced-section { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
+.swp-advanced-section.open { max-height: 600px; }
+.swp-insight {
+    margin: 25px 0 20px; padding: 16px 20px;
+    background: rgba(41,165,135,0.08);
+    border-left: 3px solid #29a587;
+    border-radius: 8px;
+    color: #ccc; font-size: 14px; line-height: 1.6;
+}
+.swp-insight strong { color: #29a587; }
+.swp-status {
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 22px; margin-bottom: 25px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(41,165,135,0.2);
+    border-radius: 14px; transition: all 0.3s ease;
+}
+.swp-status.excellent { border-color: #29a587; box-shadow: 0 0 0 1px rgba(41,165,135,0.3) inset; }
+.swp-status.moderate  { border-color: #f5a623; box-shadow: 0 0 0 1px rgba(245,166,35,0.3) inset; }
+.swp-status.risky     { border-color: #e74c3c; box-shadow: 0 0 0 1px rgba(231,76,60,0.3) inset; }
+.swp-status-icon { font-size: 30px; line-height: 1; }
+.swp-status-title { font-size: 18px; font-weight: 700; color: #fff; }
+.swp-status.excellent .swp-status-title { color: #29a587; }
+.swp-status.moderate  .swp-status-title { color: #f5a623; }
+.swp-status.risky     .swp-status-title { color: #e74c3c; }
+.swp-status-desc { font-size: 13px; color: #aaa; margin-top: 2px; }
+.swp-output-grid {
+    display: grid; gap: 16px; margin: 30px 0;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.swp-output-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(41,165,135,0.15);
+    border-radius: 14px; padding: 20px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.swp-output-card:hover { border-color: rgba(41,165,135,0.4); transform: translateY(-3px); }
+.swp-output-card .label { font-size: 11px; text-transform: uppercase; color: #999; letter-spacing: 1px; margin-bottom: 10px; }
+.swp-output-card .value { font-size: 22px; font-weight: 700; color: #29a587; word-break: break-word; }
+.swp-output-card.muted  .value { color: #ccc; }
+.swp-output-card.warn   .value { color: #f5a623; }
+.swp-output-card.danger .value { color: #e74c3c; }
+.swp-output-card .sub { font-size: 12px; color: #888; margin-top: 6px; }
+.swp-chart-wrap {
+    margin: 35px 0 25px; padding: 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(41,165,135,0.15);
+    border-radius: 16px;
+}
+.swp-chart-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+.swp-chart-header h4 { color: #fff; font-size: 16px; font-weight: 600; margin: 0; }
+.swp-chart-legend { display: flex; gap: 16px; flex-wrap: wrap; }
+.swp-chart-legend span { display: inline-flex; align-items: center; gap: 6px; color: #ccc; font-size: 12px; }
+.swp-chart-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.swp-chart-container { width: 100%; height: 320px; }
+.swp-chart-container svg { width: 100%; height: 100%; display: block; }
+.swp-compare-grid {
+    display: grid; gap: 16px; margin: 25px 0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.swp-compare-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(204,204,204,0.15);
+    border-radius: 14px; padding: 22px; text-align: center;
+}
+.swp-compare-card.alt { border-color: rgba(41,165,135,0.3); background: rgba(41,165,135,0.06); }
+.swp-compare-label { font-size: 12px; text-transform: uppercase; color: #999; letter-spacing: 1px; }
+.swp-compare-value { font-size: 26px; font-weight: 700; color: #ccc; margin-top: 8px; word-break: break-word; }
+.swp-compare-card.alt .swp-compare-value { color: #29a587; }
+.swp-compare-sub { font-size: 12px; color: #888; margin-top: 4px; }
+.swp-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 25px; }
+.swp-actions .sip-calc-btn { margin: 0; max-width: none; flex: 1; min-width: 180px; }
+.swp-secondary-btn {
+    background: transparent !important;
+    border: 2px solid #29a587 !important;
+    color: #29a587 !important;
+}
+.swp-secondary-btn:hover { background: #29a587 !important; color: #fff !important; }
+@media (max-width: 768px) {
+    .swp-mode-toggle { flex-direction: column; align-items: flex-start; }
+    .swp-output-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .swp-output-card .value { font-size: 18px; }
+    .swp-chart-container { height: 240px; }
+    .swp-actions { flex-direction: column; }
+}
+@media (max-width: 480px) {
+    .swp-output-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<!--HEAD END-->
+
+
+<body>
+<div class="preloader" style="display: none;"><div class="lds-dual-ring"></div></div>
+<div class="site site-white">
+<!-- HEADER -->
+<div class="header-area header-main sticky" id="header">
+<a href="#home" class="up-btn"><i class="fal fa-angle-up"></i></a>
+<div class="container"><div class="row">
+<div class="col-6 col-lg-3 align-self-center"><a class="logo"><img src="assets/img/logo/Fundsweb1.png" alt="Fundsweb Financial Logo"></a></div>
+<div class="col-6 text-center align-self-center"><div class="main-menu"><div class="stellarnav light right desktop">
+<a href="#" class="menu-toggle"><span class="bars"><span></span><span></span><span></span></span></a>
+<ul class="navbarmneuclass">
+<li class="current"><a href="#home">Home</a></li>
+<li><a href="#service">Services</a></li>
+<li><a href="#career">Expertise</a></li>
+<li><a href="#sip-calculator">SIP Calculator</a></li>
+<li><a href="#testimonials">Testimonials</a></li>
+</ul>
+</div></div></div>
+<div class="d-none d-lg-block col-lg-3 align-self-center text-right">
+<a href="#contact" class="cbtn cbnt1">Get Financial Advice <i class="fal fa-angle-right"></i></a>
+</div>
+</div></div>
+</div>
+<!-- HEADER END -->
+
+
+<!-- WELCOME -->
+<div class="welcome-area-wrap welcome__wrap2">
+<div class="welcome-area" id="home"><div class="single-welcome-area"><div class="container"><div class="row"><div class="col-lg-7">
+<div class="wlc-title white">
+<h1 class="fadeInDown animated"><span>Harsh Rathod</span> is not just a dream, it's a plan</h1>
+<p class="fadeInDown animated">Secure your future with expert financial strategies, smart investments, and personalized wealth management.<br>Your journey to prosperity starts here.</p>
+<a href="#contact" class="cbtn cbnt1 fadeInDown animated">Start Investing <i class="fal fa-angle-right"></i></a>
+</div>
+</div></div></div>
+<div class="wlc-author-1">
+<img src="assets/img/img/full-length-portrait-of-three-confident-businesspe-2026-01-06-00-30-23-utc.jpg" alt="Financial advisors team">
+<h1 class="wlc-filltext">fundsweb</h1>
+</div>
+</div></div>
+<div class="memphis-wrap"><div class="memphics">
+<img src="assets/img/icon/cta1.png" alt="" class="memphis memphis1">
+<img src="assets/img/bg/circle_shape.svg" alt="" class="memphis memphis2">
+<img src="assets/img/icon/cta2.png" alt="" class="memphis memphis3">
+<img src="assets/img/icon/cta3.png" alt="" class="memphis memphis4">
+<img src="assets/img/icon/cta6.svg" alt="" class="memphis memphis5">
+<img src="assets/img/icon/cta5.png" alt="" class="memphis memphis6">
+<img src="assets/img/icon/cta7.svg" alt="" class="memphis memphis7">
+</div></div>
+</div>
+<!-- WELCOME END -->
+
+<!-- SERVICES -->
+<div class="service-area service-primery padding-top" id="service"><div class="container"><div class="row">
+<div class="col-lg-4"><div class="single-service pricing2"><div class="service-icon"><img src="assets/img/icon/service1.svg" alt=""></div><div class="service-text"><h4>Wealth Management</h4><p>Comprehensive portfolio management tailored to your risk appetite and long-term financial goals. Maximize returns while minimizing volatility.</p></div><div class="circles-wrap"><div class="circles"><span class="circle circle-1"></span><span class="circle circle-2"></span><span class="circle circle-3"></span><span class="circle circle-4"></span></div></div></div></div>
+<div class="col-lg-4"><div class="single-service active pricing2"><div class="service-icon"><img src="assets/img/icon/service2.svg" alt=""></div><div class="service-text"><h4>Investment Planning</h4><p>Data-driven investment strategies across equities, fixed income, and alternative assets. Build a diversified portfolio for sustainable growth.</p></div><div class="circles-wrap"><div class="circles"><span class="circle circle-1"></span><span class="circle circle-2"></span><span class="circle circle-3"></span><span class="circle circle-4"></span></div></div></div></div>
+<div class="col-lg-4"><div class="single-service pricing2"><div class="service-icon"><img src="assets/img/icon/service3.svg" alt=""></div><div class="service-text"><h4>Retirement Solutions</h4><p>Secure your golden years with smart retirement planning, pension optimization, and tax-efficient withdrawal strategies for lasting peace of mind.</p></div><div class="circles-wrap"><div class="circles"><span class="circle circle-1"></span><span class="circle circle-2"></span><span class="circle circle-3"></span><span class="circle circle-4"></span></div></div></div></div>
+</div></div></div>
+<!-- SERVICES END -->
+
+
+<!-- SKILL/EXPERTISE -->
+<div class="skill-area primery-skill section-padding mt-5" id="career"><div class="container">
+<div class="row">
+<div class="col-lg-6 align-self-center"><div class="primery-heading"><strong class="filltext">our expertise</strong><small>financial experience</small><h2>Decades of <span>market mastery</span></h2></div></div>
+<div class="col-lg-6 align-self-center"><div class="primery-info-content"></div></div>
+</div>
+<div class="space-60"></div>
+<div class="row">
+<div class="col-lg-4"><div class="skill-box skill-box2"><small>2018 - Present (Senior Analyst)</small><h5>Equity Research &amp; Forecasting</h5><p>Pioneered predictive models that outperformed market benchmarks by 15% annually, delivering consistent alpha for high-net-worth clients.</p></div></div>
+<div class="col-lg-4"><div class="skill-box skill-box2"><small>2015 - 2018 (Investment Advisor)</small><h5>Portfolio Optimization</h5><p>Managed $50M+ in assets across sectors, rebalancing strategies that reduced drawdowns by 30% while capturing upside potential.</p></div></div>
+<div class="col-lg-4"><div class="skill-box skill-box2"><small>2012 - 2015 (Risk Manager)</small><h5>Financial Risk Assessment</h5><p>Developed robust risk frameworks that safeguarded client portfolios during volatile cycles, ensuring capital preservation and steady growth.</p></div></div>
+</div>
+</div></div>
+<div class="container"><div class="border_separatior"></div></div>
+
+<style>
+.brands-single-row .brand-img-box { width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; padding: 15px; background-color: #f9f9f9; border-radius: 10px; transition: all 0.3s ease; }
+.brands-single-row .brand-img-box:hover { background-color: #f0f0f0; transform: translateY(-5px); }
+.brands-single-row .brand-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; width: auto; height: auto; }
+@media (max-width: 768px) { .brands-single-row .brand-img-box { width: 110px; height: 110px; padding: 12px; } }
+@media (max-width: 480px) { .brands-single-row .brand-img-box { width: 90px; height: 90px; padding: 10px; } .brands-single-row { gap: 15px !important; } }
+</style>
+
+<div class="brands-single-row" style="margin-top: 80px; padding-bottom: 150px; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 30px;">
+<div class="brand-img-box jumble-down scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner01.png" alt="Financial Partner"></div>
+<div class="brand-img-box jumble-up scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner02.png" alt="Investment Alliance"></div>
+<div class="brand-img-box jumble-down scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner03.png" alt="Wealth Network"></div>
+<div class="brand-img-box jumble-up scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner04.png" alt="Global Finance"></div>
+<div class="brand-img-box jumble-down scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner05.png" alt="Capital Partners"></div>
+<div class="brand-img-box jumble-up scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner07.png" alt="Trust Financial"></div>
+<div class="brand-img-box jumble-down scrolla-element-anim-1 scroll-animate" data-animate="active"><img decoding="async" src="assets/img/partner06.png" alt="Asset Management"></div>
+</div>
+
+
+<!-- Section - Works -->
+<section class="lui-section lui-gradient-top" id="works-section">
+<div class="lui-heading"><div class="container"><div class="m-titles align-center">
+<h2 class="m-title splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> Investment Portfolio </span></h2>
+<div class="m-subtitle splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> our <b>Success Cases</b></span></div>
+</div></div></div>
+<div class="v-line v-line-right"><div class="container"><div class="works-box">
+<style>
+.portfolio-collage { position: relative; height: 500px; margin-bottom: 30px; }
+.portfolio-collage img { position: absolute; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
+.portfolio-collage img:hover { transform: scale(1.05); z-index: 10 !important; }
+.port-img-1 { top: 0; left: 0; width: 48%; z-index: 1; }
+.port-img-2 { top: 10%; right: 0; width: 48%; z-index: 2; border: 5px solid #fff; }
+.port-img-3 { bottom: 0; left: 15%; width: 55%; z-index: 3; border: 5px solid #fff; }
+.port-img-1-alt { top: 0; right: 0; width: 48%; z-index: 1; }
+.port-img-2-alt { top: 10%; left: 0; width: 48%; z-index: 2; border: 5px solid #fff; }
+.port-img-3-alt { bottom: 0; right: 15%; width: 55%; z-index: 3; border: 5px solid #fff; }
+@media (max-width: 767px) { .portfolio-collage { height: 350px; } }
+</style>
+
+<div class="row" style="display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 80px;">
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="portfolio-collage scrolla-element-anim-1 scroll-animate" data-animate="active">
+<img decoding="async" src="assets/img/portfolio-3.jpg" alt="Financial growth chart" class="port-img-1">
+<img decoding="async" src="assets/img/portfolio-2.jpg" alt="Investment planning" class="port-img-2">
+<img decoding="async" src="assets/img/portfolio-1.jpg" alt="Wealth management" class="port-img-3">
+</div></div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="portfolio-details scrolla-element-anim-1 scroll-animate" data-animate="active" style="padding: 20px;">
+<div class="lui-subtitle"><span> Featured Financial Project </span></div>
+<h3 class="lui-title" style="margin-bottom: 20px;"><span> Strategic Wealth Growth &amp; Tax Optimization </span></h3>
+<div class="lui-text">
+<p>Executed a comprehensive wealth strategy for a high-net-worth family, integrating tax-efficient structures, diversified asset allocation, and dynamic rebalancing. Achieved 28% portfolio growth while reducing tax liability by 34%.</p>
+<div class="row" style="margin-top: 30px;">
+<div class="col-xs-6"><h4 style="color: #29a587; font-size: 28px; font-weight: bold; margin-bottom: 5px;">+28%</h4><span>Portfolio Growth</span></div>
+<div class="col-xs-6"><h4 style="color: #29a587; font-size: 28px; font-weight: bold; margin-bottom: 5px;">-34%</h4><span>Tax Liability</span></div>
+</div>
+<ul style="list-style: none; padding: 0; margin-top: 30px;">
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Asset Allocation &amp; Rebalancing</li>
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Tax-Loss Harvesting Strategy</li>
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Retirement &amp; Estate Integration</li>
+</ul>
+</div>
+<div style="margin-top: 30px;"><a href="#contact-section" class="btn btn-solid"><span>View Case Study</span></a></div>
+</div></div>
+</div>
+
+
+<!-- Second Block -->
+<div class="row" style="display: flex; flex-wrap: wrap; align-items: center;">
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="portfolio-details scrolla-element-anim-1 scroll-animate" data-animate="active" style="padding: 20px;">
+<div class="lui-subtitle"><h2 class="m-title splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> Project Highlight </span></h2></div>
+<h3 class="lui-title" style="margin-bottom: 20px;"><span> Institutional Fund Optimization </span></h3>
+<div class="lui-text">
+<p>Revamped a $120M institutional portfolio by integrating ESG criteria and dynamic factor tilts. Reduced volatility by 22% while maintaining competitive returns, earning top quartile ranking among peer funds.</p>
+<div class="row" style="margin-top: 30px;">
+<div class="col-xs-6"><h4 style="color: #29a587; font-size: 28px; font-weight: bold; margin-bottom: 5px;">-22%</h4><span>Risk Reduction</span></div>
+<div class="col-xs-6"><h4 style="color: #29a587; font-size: 28px; font-weight: bold; margin-bottom: 5px;">Top 5%</h4><span>Performance Rank</span></div>
+</div>
+<ul style="list-style: none; padding: 0; margin-top: 30px;">
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> ESG Integration Framework</li>
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Factor-Based Allocation</li>
+<li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Liquidity Management Protocols</li>
+</ul>
+</div>
+<div style="margin-top: 30px;"><a href="#contact-section" class="btn btn-solid"><span>View Case Study</span></a></div>
+</div></div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><div class="portfolio-collage scrolla-element-anim-1 scroll-animate" data-animate="active">
+<img decoding="async" src="assets/img/project-1.jpg" alt="Financial data analysis" class="port-img-1-alt">
+<img decoding="async" src="assets/img/project-3.jpg" alt="Investment dashboard" class="port-img-2-alt">
+<img decoding="async" src="assets/img/project-2.jpg" alt="Client portfolio" class="port-img-3-alt">
+</div></div>
+</div>
+
+<!-- Third Block -->
+<div class="row" style="display: flex; flex-wrap: wrap; align-items: center; margin-top: 80px;">
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="portfolio-details scrolla-element-anim-1 scroll-animate" data-animate="active" style="padding: 10px;">
+<div class="lui-subtitle"><h2 class="m-title splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> Client Success </span></h2></div>
+<h3 class="lui-title" style="margin-bottom: 20px;"><span> Retirement Income Blueprint </span></h3>
+<div class="lui-text">
+<p>Designed a customized retirement withdrawal strategy for pre-retirees, balancing income needs with longevity risk. Extended portfolio sustainability by 12+ years through smart annuitization and glidepath management.</p>
+<div class="row" style="margin-top: 20px;"><div class="col-xs-12"><h4 style="color: #29a587; font-size: 28px; font-weight: bold; margin-bottom: 5px;">+12 Years</h4><span>Extended Portfolio Life</span></div></div>
+</div>
+<div style="margin-top: 30px;"><a href="#contact-section" class="btn btn-solid"><span>View Case Study</span></a></div>
+</div></div>
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="portfolio-collage scrolla-element-anim-1 scroll-animate" data-animate="active">
+<img decoding="async" src="assets/img/community-1.jpg" alt="Retirement planning" class="port-img-1">
+<img decoding="async" src="assets/img/community-3.jpg" alt="Financial wellness" class="port-img-2">
+<img decoding="async" src="assets/img/community-2.jpg" alt="Client meeting" class="port-img-3">
+</div></div>
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"><div class="portfolio-details scrolla-element-anim-1 scroll-animate" data-animate="active" style="padding: 10px;">
+<div class="lui-text"><ul style="list-style: none; padding: 0; margin-top: 10px;">
+<li style="margin-bottom: 20px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Income Flooring Strategy</li>
+<li style="margin-bottom: 20px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Tax-Efficient Withdrawal Sequencing</li>
+<li style="margin-bottom: 20px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Longevity Risk Hedging</li>
+<li style="margin-bottom: 20px;"><i class="fas fa-check" style="color: #29a587; margin-right: 10px;"></i> Healthcare Cost Planning</li>
+</ul></div>
+</div></div>
+</div>
+</div></div></div>
+</section>
+
+
+<!-- Section - Metrics -->
+<section class="lui-section lui-gradient-center" id="metrics-section" style="padding: 80px 0;">
+<div class="lui-heading"><div class="container"><div class="m-titles align-center">
+<h2 class="m-title splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> Financial Impact </span></h2>
+<div class="m-subtitle splitting-text-anim-1 scroll-animate" data-splitting="words" data-animate="active"><span> numbers <b>That Define Success</b> </span></div>
+</div></div></div>
+<div class="v-line v-line-right"><div class="container">
+<div class="row align-items-center" style="display: flex; flex-wrap: wrap; text-align: center;">
+<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 30px;"><div class="metric-item scrolla-element-anim-1 scroll-animate" data-animate="active"><div style="font-size: 50px; font-weight: 700; color: #29a587;">$85M+</div><div class="lui-subtitle" style="margin-top: 10px; font-size: 14px; text-transform: uppercase;">Assets Managed</div></div></div>
+<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 30px;"><div class="metric-item scrolla-element-anim-1 scroll-animate" data-animate="active"><div style="font-size: 50px; font-weight: 700; color: #29a587;">450+</div><div class="lui-subtitle" style="margin-top: 10px; font-size: 14px; text-transform: uppercase;">Happy Clients</div></div></div>
+<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 30px;"><div class="metric-item scrolla-element-anim-1 scroll-animate" data-animate="active"><div style="font-size: 50px; font-weight: 700; color: #29a587;">15.8%</div><div class="lui-subtitle" style="margin-top: 10px; font-size: 14px; text-transform: uppercase;">Avg Annual Return</div></div></div>
+<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 30px;"><div class="metric-item scrolla-element-anim-1 scroll-animate" data-animate="active"><div style="font-size: 50px; font-weight: 700; color: #29a587;">98%</div><div class="lui-subtitle" style="margin-top: 10px; font-size: 14px; text-transform: uppercase;">Client Retention</div></div></div>
+</div>
+</div></div>
+</section>
+
+<!-- ===== SIP CALCULATOR SECTION START ===== -->
+<section class="sip-calculator-section" id="sip-calculator">
+<div class="container"><div class="sip-calc-card">
+<div class="sip-calc-title"><h2>SIP <span>Calculator</span></h2><p>Plan your wealth growth with systematic investments</p></div>
+<div class="sip-form-group"><label>Monthly Investment</label><div class="sip-input-prefix"><input type="number" class="sip-input-field" id="sipAmount" placeholder="5000" value="5000" min="500" max="1000000"></div></div>
+<div class="sip-form-group"><label>Expected Annual Return</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="sipRate" placeholder="12" value="12" min="1" max="50" step="0.5"></div></div>
+<div class="sip-form-group"><label>Investment Duration</label><div class="sip-input-suffix years"><input type="number" class="sip-input-field" id="sipYears" placeholder="10" value="10" min="1" max="40"></div></div>
+<button class="sip-calc-btn" onclick="calculateSIP()">Calculate Returns</button>
+<div class="sip-results" id="sipResults">
+<div class="sip-result-item"><div class="result-label">Invested Amount</div><div class="result-value invested" id="sipInvested">&#8377;6,00,000</div></div>
+<div class="sip-result-item"><div class="result-label">Estimated Returns</div><div class="result-value returns" id="sipReturns">&#8377;5,61,695</div></div>
+<div class="sip-result-item"><div class="result-label">Total Value</div><div class="result-value" id="sipTotal">&#8377;11,61,695</div></div>
+</div>
+<div class="sip-legend"><div class="sip-legend-item"><div class="sip-legend-dot invested"></div><span>Invested</span></div><div class="sip-legend-item"><div class="sip-legend-dot returns"></div><span>Returns</span></div></div>
+<div class="sip-chart-container"><div class="sip-donut" id="sipDonut" style="background: conic-gradient(#ccc 0% 51.6%, #29a587 51.6% 100%);"><div class="sip-donut-center"><span>Total</span><strong id="sipDonutTotal">&#8377;11.6L</strong></div></div></div>
+</div></div>
+</section>
+<!-- ===== SIP CALCULATOR SECTION END ===== -->
+
+
+<!-- ===== SWP CALCULATOR SECTION START ===== -->
+<section class="sip-calculator-section swp-calculator-section" id="swp-calculator">
+<div class="container"><div class="sip-calc-card">
+<div class="sip-calc-title"><h2>SWP <span>Calculator</span></h2><p>Plan your systematic withdrawals with precision</p></div>
+
+<!-- Goal-Based Mode Toggle -->
+<div class="swp-mode-toggle">
+<span class="swp-toggle-label">Calculate Required Corpus</span>
+<label class="swp-switch"><input type="checkbox" id="swpGoalMode"><span class="swp-slider-toggle"></span></label>
+</div>
+
+<!-- STANDARD SWP MODE -->
+<div id="swpStandardForm">
+<div class="row">
+<div class="col-md-6"><div class="sip-form-group"><label>Total Investment Amount</label><div class="sip-input-prefix"><input type="text" inputmode="numeric" class="sip-input-field swp-num" id="swpCorpus" placeholder="10,00,000" value="10,00,000"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Expected Annual Return</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="swpRate" placeholder="12" value="12" step="0.1" min="0" max="50"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Monthly Withdrawal Amount</label><div class="sip-input-prefix"><input type="text" inputmode="numeric" class="sip-input-field swp-num" id="swpWithdraw" placeholder="10,000" value="10,000"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Investment Duration</label><div class="sip-input-suffix years"><input type="number" class="sip-input-field" id="swpYears" placeholder="20" value="20" min="1" max="60"></div></div></div>
+</div>
+<div class="swp-advanced-toggle" id="swpAdvancedToggle"><span>Advanced Options</span><i class="fal fa-angle-down"></i></div>
+<div class="swp-advanced-section" id="swpAdvancedSection"><div class="row">
+<div class="col-md-4"><div class="sip-form-group"><label>Inflation Rate</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="swpInflation" placeholder="6" value="6" step="0.1" min="0" max="20"></div></div></div>
+<div class="col-md-4"><div class="sip-form-group"><label>Annual Step-Up Withdrawal</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="swpStepUp" placeholder="0" value="0" step="0.1" min="0" max="30"></div></div></div>
+<div class="col-md-4"><div class="sip-form-group"><label>Withdrawal Frequency</label><select class="sip-input-field swp-select" id="swpFreq"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option></select></div></div>
+</div></div>
+</div>
+
+<!-- GOAL-BASED SWP MODE -->
+<div id="swpGoalForm" style="display:none;">
+<div class="row">
+<div class="col-md-6"><div class="sip-form-group"><label>Desired Monthly Withdrawal</label><div class="sip-input-prefix"><input type="text" inputmode="numeric" class="sip-input-field swp-num" id="swpGoalWithdraw" placeholder="50,000" value="50,000"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Withdrawal Duration</label><div class="sip-input-suffix years"><input type="number" class="sip-input-field" id="swpGoalYears" placeholder="25" value="25" min="1" max="60"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Expected Annual Return</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="swpGoalRate" placeholder="12" value="12" step="0.1" min="0" max="50"></div></div></div>
+<div class="col-md-6"><div class="sip-form-group"><label>Inflation Rate</label><div class="sip-input-suffix percent"><input type="number" class="sip-input-field" id="swpGoalInflation" placeholder="6" value="6" step="0.1" min="0" max="20"></div></div></div>
+</div>
+</div>
+
+<!-- Insight -->
+<div class="swp-insight" id="swpInsight"></div>
+
+<!-- Status -->
+<div class="swp-status excellent" id="swpStatus">
+<div class="swp-status-icon" id="swpStatusIcon">&#9989;</div>
+<div class="swp-status-text"><div class="swp-status-title" id="swpStatusTitle">Excellent</div><div class="swp-status-desc" id="swpStatusDesc">Your plan looks sustainable.</div></div>
+</div>
+
+<!-- Output Cards -->
+<div class="swp-output-grid" id="swpOutputs"></div>
+
+
+<!-- Chart -->
+<div class="swp-chart-wrap">
+<div class="swp-chart-header"><h4>Corpus &amp; Withdrawal Projection</h4>
+<div class="swp-chart-legend"><span><i style="background:#29a587"></i> Corpus</span><span><i style="background:#f5a623"></i> Withdrawn</span><span><i style="background:#e74c3c"></i> Inflation Need</span></div>
+</div>
+<div class="swp-chart-container"><svg id="swpChart" viewBox="0 0 800 320" preserveAspectRatio="none"></svg></div>
+</div>
+
+<!-- Purchasing Power Comparison -->
+<div class="swp-compare-grid">
+<div class="swp-compare-card"><div class="swp-compare-label">Current Purchasing Power</div><div class="swp-compare-value" id="swpCurrentPower">&#8377;0/mo</div><div class="swp-compare-sub">today</div></div>
+<div class="swp-compare-card alt"><div class="swp-compare-label">Future Equivalent Need</div><div class="swp-compare-value" id="swpFuturePower">&#8377;0/mo</div><div class="swp-compare-sub" id="swpFuturePowerSub">after horizon</div></div>
+</div>
+
+<!-- Actions -->
+<div class="swp-actions">
+<button type="button" class="sip-calc-btn swp-secondary-btn" id="swpResetBtn">Reset</button>
+<button type="button" class="sip-calc-btn" id="swpExportBtn">Download Results</button>
+</div>
+</div></div>
+</section>
+<!-- ===== SWP CALCULATOR SECTION END ===== -->
+
+<div class="container mt-5"><div class="border_separatior"></div></div>
+
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-area testimonials-area-primery section-padding mt-5" id="testimonials"><div class="container">
+<div class="row">
+<div class="col-lg-6 align-self-center"><div class="primery-heading"><strong class="filltext">Testimonials</strong><small>Client Voices</small><h2>What Our <span>Clients Say</span></h2></div></div>
+<div class="col-lg-6 align-self-center"><div class="primery-info-content"></div></div>
+</div>
+<div class="space-60"></div>
+<div class="row"><div class="col-lg-10 m-auto">
+<div class="testimonials owl-carousel">
+<div class="testimonial"><div class="testimonial-img animated fadeInLeft"><img src="assets/img/img/young-and-successful-2026-01-08-07-54-50-utc.JPG" alt="Happy client"></div><div class="testimonial-text animated fadeInDown"><img src="assets/img/icon/quote.png" alt=""><h4>Fundsweb transformed our family's financial future. Their strategic planning and transparent advice helped us grow our wealth while sleeping peacefully. Truly a partner we trust.</h4><p>Priya Mehta, Mumbai</p></div></div>
+<div class="testimonial"><div class="testimonial-img animated fadeInLeft"><img src="assets/img/img/young-and-successful-2026-01-08-07-54-50-utc.JPG" alt="Happy client"></div><div class="testimonial-text animated fadeInDown"><img src="assets/img/icon/quote.png" alt=""><h4>The team at Fundsweb helped me build a retirement corpus I never thought possible. Their disciplined SIP approach and regular portfolio reviews gave me complete confidence in my financial journey.</h4><p>Rajesh Sharma, Delhi</p></div></div>
+<div class="testimonial"><div class="testimonial-img animated fadeInLeft"><img src="assets/img/img/young-and-successful-2026-01-08-07-54-50-utc.JPG" alt="Happy client"></div><div class="testimonial-text animated fadeInDown"><img src="assets/img/icon/quote.png" alt=""><h4>As a business owner, I needed someone who understood complex financial planning. Fundsweb delivered exceptional tax-saving strategies and grew my investments by over 22% in just two years.</h4><p>Anita Desai, Pune</p></div></div>
+</div>
+</div></div>
+</div></div>
+
+<div class="container mt-5"><div class="border_separatior"></div></div>
+
+<!-- BLOG/CTA/CONTACT -->
+<div class="blog-area section-padding" id="blog"><div class="container"><div class="space-60"></div>
+<div class="cta-area cta-are2 padding-top cta-primery" id="contact"><div class="container">
+<div class="row"><div class="col-lg-6 m-auto text-center"><div class="primery-heading cta-heading"><div class="space-20"></div><h2>Get financial insights &amp; market updates straight to your inbox</h2></div><div class="space-40"></div></div></div>
+<div class="space-100"></div><div class="space-20"></div>
+<img src="assets/img/icon/cta1.png" alt="" class="cta-shape cta-shap1">
+<img src="assets/img/icon/cta2.png" alt="" class="cta-shape cta-shap2">
+<img src="assets/img/icon/cta3.png" alt="" class="cta-shape cta-shap3">
+<img src="assets/img/icon/cta4.png" alt="" class="cta-shape cta-shap4">
+<img src="assets/img/icon/cta5.png" alt="" class="cta-shape cta-shap5">
+</div></div></div>
+
+
+<div class="row">
+<div class="col-lg-6 mt-10 mb-10 align-self-center"><div class="map mr-lg-4"><iframe width="100%" height="450" id="gmap_canvas" src="https://maps.google.com/maps?q=Fundsroom%20Pune&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>
+<div class="col-lg-6 align-self-center"><div class="contact-form"><form id="contact_form">
+<div class="contact-title"><h2>Request a Financial Consultation <span></span></h2></div>
+<div class="contact-form-group">
+<div class="form-field"><input type="text" id="username" name="username" class="form-control" placeholder="Full Name" required=""></div>
+<div class="form-field"><input type="email" id="email" name="email" class="form-control" placeholder="Email" required=""></div>
+<div class="form-field"><input type="text" id="phone" name="phone" class="form-control" placeholder="Phone Number" required=""></div>
+<div class="form-field message"><textarea id="message" name="message" cols="30" rows="4" class="form-control" placeholder="Tell us about your financial goals..." required=""></textarea></div>
+<div class="form-field"><button id="submit" class="default-btn" type="submit">Schedule Call <span></span></button></div>
+</div>
+<div id="form-messages" class="alert" role="alert" style="display:none;">Redirecting to WhatsApp...</div>
+</form></div></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-area section-padding" style="background-image: url(assets/img/bg/footer-bg.png);background-size: cover;background-position: center;background-repeat: no-repeat;">
+<div class="space-100"></div>
+<div class="container"><div class="row"><div class="col-lg-6 m-auto text-center">
+<div class="footer-menu"><ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#service">Services</a></li>
+<li><a href="#career">Expertise</a></li>
+<li><a href="#sip-calculator">SIP Calculator</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul></div>
+<div class="space-40"></div>
+<div class="copyright">
+<img src="assets/img/logo/Fundsweb1.png" alt="Fundsweb Logo" style="height: 25px; vertical-align: middle; margin-right: 5px;">
+<p class="footer-text">&copy; Powered by <a href="https://www.fundsweb.in" target="_blank" rel="noopener noreferrer" class="footer-link">Fundsweb.in</a></p>
+</div>
+</div></div></div>
+</div>
+</div><!-- SITE END -->
+
+
+<!-- ALL JS FILES -->
+<script src="assets/js/plugins/jQuery.2.1.0.min.js"></script>
+<script src="assets/js/plugins/bootstrap.min.js"></script>
+<script src="assets/js/plugins/jquery.nav.js"></script>
+<script src="assets/js/plugins/jquery.waypoints.min.js"></script>
+<script src="assets/js/plugins/jquery-modal-video.min.js"></script>
+<script src="assets/js/plugins/stellarnav.js"></script>
+<script src="assets/js/plugins/popper.min.js"></script>
+<script src="assets/js/plugins/owl.carousel.js"></script>
+<script src="assets/js/plugins/wow.min.js"></script>
+<script src="assets/js/plugins/appear.js"></script>
+<script src="assets/js/plugins/easypiechart.min.js"></script>
+<script src="assets/js/plugins/animatenumber.min.js"></script>
+<script src="assets/js/plugins/bars.js"></script>
+<script src="assets/js/plugins/circle-progress.js"></script>
+<script src="assets/js/plugins/jquery.hoverdir.js"></script>
+<script src="assets/js/plugins/isotop.v3.0.4.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Existing fundsweb script -->
+<script>
+$(document).ready(function () {
+    function getCleanUrl() {
+        let protocol = "https:";
+        let hostname = window.location.hostname;
+        hostname = hostname.replace(/^www\./, '');
+        return protocol + "//" + hostname;
+    }
+    const cleanUrl = getCleanUrl();
+    $.ajax({
+        url: 'https://api.fundsweb.in/api/v1/user/gtag-by-domain',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ websiteUrl: cleanUrl }),
+        success: function (response) {
+            const gcode = response.measurementId;
+            if (response.seoKeywords) { $('meta[name="description"]').attr('content', response.seoKeywords); }
+            if (gcode) {
+                const gtagScript = document.createElement('script');
+                gtagScript.setAttribute('async', '');
+                gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + gcode;
+                document.head.appendChild(gtagScript);
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', gcode);
+            }
+        },
+        error: function (err) { console.error('Error fetching gtag code:', err); }
+    });
+});
+</script>
+
+
+<script>
+function getUserIdFromURL() { var pathArray = window.location.pathname.split('/'); return pathArray[4]; }
+document.getElementById("contact_form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("username").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var message = document.getElementById("message").value.trim();
+    if (!name || !email || !phone || !message) { alert("Please fill all fields"); return; }
+    var userId = getUserIdFromURL();
+    try {
+        $.ajax({
+            url: 'http://api.fundsweb.in/api/v1/user/single/' + userId,
+            type: 'GET',
+            success: function (data) {
+                if (!data.success) { alert("Failed to fetch user details"); return; }
+                var phoneNumber = "91" + data.phoneNumber;
+                var whatsappMessage = "Hello,\n\nNew Contact Form Submission:\n\nName: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\n\nMessage:\n" + message;
+                var encodedMessage = encodeURIComponent(whatsappMessage);
+                var whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodedMessage;
+                var msgBox = document.getElementById("form-messages");
+                msgBox.style.display = "block";
+                msgBox.className = "alert alert-success";
+                msgBox.innerText = "Redirecting to WhatsApp...";
+                window.open(whatsappURL, "_blank");
+            },
+            error: function (err) { console.error(err); alert("Something went wrong"); }
+        });
+    } catch (error) { console.error(error); alert("Something went wrong"); }
+});
+</script>
+
+<!-- ===== SIP CALCULATOR JS ===== -->
+<script>
+(function() {
+    var amountInput = document.getElementById('sipAmount');
+    var rateInput = document.getElementById('sipRate');
+    var yearsInput = document.getElementById('sipYears');
+    function formatINR(num) {
+        var str = Math.round(num).toString();
+        var lastThree = str.substring(str.length - 3);
+        var otherNumbers = str.substring(0, str.length - 3);
+        if (otherNumbers !== '') lastThree = ',' + lastThree;
+        return '\u20B9' + otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + lastThree;
+    }
+    function formatShort(num) {
+        if (num >= 10000000) return '\u20B9' + (num / 10000000).toFixed(1) + 'Cr';
+        if (num >= 100000) return '\u20B9' + (num / 100000).toFixed(1) + 'L';
+        if (num >= 1000) return '\u20B9' + (num / 1000).toFixed(1) + 'K';
+        return '\u20B9' + Math.round(num);
+    }
+    function updateDonut(invested, total) {
+        var investedPct = (invested / total) * 100;
+        var donut = document.getElementById('sipDonut');
+        donut.style.background = 'conic-gradient(#ccc 0% ' + investedPct + '%, #29a587 ' + investedPct + '% 100%)';
+        var el = document.getElementById('sipDonutTotal');
+        if (el) el.textContent = formatShort(total);
+    }
+    window.calculateSIP = function() {
+        var P = parseFloat(amountInput.value) || 0;
+        var annualRate = parseFloat(rateInput.value) || 0;
+        var years = parseInt(yearsInput.value) || 0;
+        if (P <= 0 || annualRate <= 0 || years <= 0) {
+            document.getElementById('sipInvested').textContent = '\u20B90';
+            document.getElementById('sipReturns').textContent = '\u20B90';
+            document.getElementById('sipTotal').textContent = '\u20B90';
+            return;
+        }
+        var n = years * 12;
+        var r = annualRate / 12 / 100;
+        var totalValue = P * (((Math.pow(1 + r, n)) - 1) / r) * (1 + r);
+        var invested = P * n;
+        var returns = totalValue - invested;
+        document.getElementById('sipInvested').textContent = formatINR(invested);
+        document.getElementById('sipReturns').textContent = formatINR(returns);
+        document.getElementById('sipTotal').textContent = formatINR(totalValue);
+        updateDonut(invested, totalValue);
+    };
+    amountInput.addEventListener('input', calculateSIP);
+    rateInput.addEventListener('input', calculateSIP);
+    yearsInput.addEventListener('input', calculateSIP);
+    calculateSIP();
+})();
+</script>
+
+
+<!-- ===== SWP CALCULATOR JS ===== -->
+<script>
+(function () {
+    var $ = function (id) { return document.getElementById(id); };
+    function fmtINR(num) {
+        if (!isFinite(num)) num = 0;
+        var sign = num < 0 ? '-' : '';
+        var n = Math.abs(Math.round(num)).toString();
+        var lastThree = n.substring(n.length - 3);
+        var other = n.substring(0, n.length - 3);
+        if (other !== '') lastThree = ',' + lastThree;
+        return sign + '\u20B9' + other.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + lastThree;
+    }
+    function fmtShort(num) {
+        if (!isFinite(num) || num <= 0) return '\u20B90';
+        var v = Math.abs(num); var s = num < 0 ? '-' : '';
+        if (v >= 1e7) return s + '\u20B9' + (v / 1e7).toFixed(2) + 'Cr';
+        if (v >= 1e5) return s + '\u20B9' + (v / 1e5).toFixed(2) + 'L';
+        if (v >= 1e3) return s + '\u20B9' + (v / 1e3).toFixed(1) + 'K';
+        return s + '\u20B9' + Math.round(v);
+    }
+    function unfmt(s) { return parseFloat(String(s || '').replace(/[^\d.\-]/g, '')) || 0; }
+    function attachIndianFormat(el) {
+        el.addEventListener('input', function () {
+            var caret = el.selectionStart;
+            var prevLen = el.value.length;
+            var raw = el.value.replace(/[^\d]/g, '');
+            if (raw === '') { el.value = ''; return; }
+            var formatted = parseInt(raw, 10).toLocaleString('en-IN');
+            el.value = formatted;
+            var diff = formatted.length - prevLen;
+            try { el.setSelectionRange(Math.max(0, caret + diff), Math.max(0, caret + diff)); } catch (e) {}
+        });
+    }
+    document.querySelectorAll('.swp-num').forEach(attachIndianFormat);
+
+    var goalMode = $('swpGoalMode');
+    var stdForm = $('swpStandardForm');
+    var goalForm = $('swpGoalForm');
+    goalMode.addEventListener('change', function () {
+        stdForm.style.display = goalMode.checked ? 'none' : '';
+        goalForm.style.display = goalMode.checked ? '' : 'none';
+        compute();
+    });
+    var advBtn = $('swpAdvancedToggle');
+    var advSec = $('swpAdvancedSection');
+    advBtn.addEventListener('click', function () { advBtn.classList.toggle('open'); advSec.classList.toggle('open'); });
+
+    ['swpCorpus','swpRate','swpWithdraw','swpYears','swpInflation','swpStepUp','swpFreq',
+     'swpGoalWithdraw','swpGoalYears','swpGoalRate','swpGoalInflation'].forEach(function (id) {
+        var el = $(id); if (!el) return;
+        el.addEventListener('input', compute);
+        el.addEventListener('change', compute);
+    });
+
+
+    $('swpResetBtn').addEventListener('click', function () {
+        $('swpCorpus').value = '10,00,000'; $('swpRate').value = 12;
+        $('swpWithdraw').value = '10,000'; $('swpYears').value = 20;
+        $('swpInflation').value = 6; $('swpStepUp').value = 0; $('swpFreq').value = 12;
+        $('swpGoalWithdraw').value = '50,000'; $('swpGoalYears').value = 25;
+        $('swpGoalRate').value = 12; $('swpGoalInflation').value = 6;
+        goalMode.checked = false; stdForm.style.display = ''; goalForm.style.display = 'none';
+        compute();
+    });
+
+    $('swpExportBtn').addEventListener('click', function () {
+        var rows = [['Field','Value']];
+        if (goalMode.checked) {
+            rows.push(['Mode','Goal-Based SWP']);
+            rows.push(['Desired Monthly Withdrawal', $('swpGoalWithdraw').value]);
+            rows.push(['Withdrawal Duration (Years)', $('swpGoalYears').value]);
+            rows.push(['Expected Annual Return (%)', $('swpGoalRate').value]);
+            rows.push(['Inflation Rate (%)', $('swpGoalInflation').value]);
+        } else {
+            rows.push(['Mode','Standard SWP']);
+            rows.push(['Total Investment', $('swpCorpus').value]);
+            rows.push(['Expected Return (%)', $('swpRate').value]);
+            rows.push(['Monthly Withdrawal', $('swpWithdraw').value]);
+            rows.push(['Duration (Years)', $('swpYears').value]);
+            rows.push(['Inflation (%)', $('swpInflation').value]);
+            rows.push(['Step-Up (%)', $('swpStepUp').value]);
+            rows.push(['Frequency', $('swpFreq').options[$('swpFreq').selectedIndex].text]);
+        }
+        rows.push(['---','---']);
+        document.querySelectorAll('#swpOutputs .swp-output-card').forEach(function (c) {
+            rows.push([c.querySelector('.label').textContent, c.querySelector('.value').textContent]);
+        });
+        var csv = rows.map(function (r) { return r.map(function (v) { return '"' + String(v).replace(/"/g,'""') + '"'; }).join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a'); a.href = url; a.download = 'swp-results.csv';
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+    });
+
+    function simulateSWP(corpus, annualRate, monthlyW, years, inflation, stepUp, freq) {
+        var perYear = freq;
+        var periods = Math.max(0, Math.round(years * perYear));
+        var rPer = annualRate / 100 / perYear;
+        var w = monthlyW * (12 / perYear);
+        var balance = corpus, withdrawnTotal = 0, depletedAt = null, depleted = false;
+        var series = [{ year: 0, corpus: corpus, withdrawn: 0 }];
+        for (var i = 1; i <= periods; i++) {
+            if (i > 1 && (i - 1) % perYear === 0 && stepUp > 0) w *= (1 + stepUp / 100);
+            balance = balance * (1 + rPer);
+            var pay = Math.min(w, Math.max(0, balance));
+            balance -= pay; withdrawnTotal += pay;
+            if (balance <= 0 && !depleted) { depleted = true; depletedAt = i / perYear; balance = 0; }
+            if (i % perYear === 0) series.push({ year: i / perYear, corpus: balance, withdrawn: withdrawnTotal });
+        }
+        return { endingCorpus: balance, totalWithdrawn: withdrawnTotal, totalReturns: balance + withdrawnTotal - corpus,
+            inflationAdjustedEnding: balance / Math.pow(1 + inflation / 100, years), depletedAtYear: depletedAt, series: series };
+    }
+
+
+    function computeGoalCorpus(monthlyW, years, annualRate, inflation) {
+        var n = years * 12; var r = annualRate / 100 / 12; var g = inflation / 100 / 12;
+        var pv;
+        if (Math.abs(r - g) < 1e-9) pv = monthlyW * n / (1 + r);
+        else pv = monthlyW * (1 - Math.pow((1 + g) / (1 + r), n)) / (r - g);
+        var finalMonthly = monthlyW * Math.pow(1 + inflation / 100, years);
+        var realRate = annualRate - inflation;
+        var sustainableMonthly = pv * Math.max(0.02, Math.min(0.07, realRate / 100)) / 12;
+        var balance = pv, w = monthlyW, totalW = 0;
+        var series = [{ year: 0, corpus: balance, withdrawn: 0 }];
+        for (var i = 1; i <= n; i++) {
+            balance = balance * (1 + r);
+            var pay = Math.min(w, Math.max(0, balance));
+            balance -= pay; totalW += pay; w *= (1 + g);
+            if (i % 12 === 0) series.push({ year: i / 12, corpus: Math.max(0, balance), withdrawn: totalW });
+        }
+        return { requiredCorpus: pv, finalMonthlyNeed: finalMonthly, sustainableMonthly: sustainableMonthly, totalWithdrawn: totalW, series: series };
+    }
+
+    function buildOutputs(items) {
+        return items.map(function (i) {
+            return '<div class="swp-output-card ' + (i.cls || '') + '"><div class="label">' + i.label + '</div><div class="value">' + i.value + '</div>' + (i.sub ? '<div class="sub">' + i.sub + '</div>' : '') + '</div>';
+        }).join('');
+    }
+
+    function setStatus(rating, title, desc) {
+        var box = $('swpStatus');
+        box.classList.remove('excellent','moderate','risky'); box.classList.add(rating);
+        var icons = { excellent: '\u2705', moderate: '\u26A0\uFE0F', risky: '\u274C' };
+        $('swpStatusIcon').textContent = icons[rating];
+        $('swpStatusTitle').textContent = title;
+        $('swpStatusDesc').textContent = desc;
+    }
+
+    function drawChart(seriesList, opts) {
+        var svg = $('swpChart'); var W = 800, H = 320;
+        var pad = { l: 60, r: 20, t: 20, b: 36 };
+        var maxY = 0;
+        seriesList.forEach(function (s) { s.points.forEach(function (p) { if (p.y > maxY) maxY = p.y; }); });
+        if (maxY <= 0) maxY = 1;
+        var nYears = opts.years || 1;
+        var xS = function (yr) { return pad.l + (yr / nYears) * (W - pad.l - pad.r); };
+        var yS = function (v) { return H - pad.b - (v / maxY) * (H - pad.t - pad.b); };
+        var html = '';
+        for (var g = 0; g <= 4; g++) {
+            var v = (maxY / 4) * g, yp = yS(v);
+            html += '<line x1="'+pad.l+'" y1="'+yp+'" x2="'+(W-pad.r)+'" y2="'+yp+'" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+            html += '<text x="'+(pad.l-8)+'" y="'+(yp+4)+'" fill="#888" font-size="11" text-anchor="end">' + fmtShort(v) + '</text>';
+        }
+        var ticks = Math.min(Math.max(1, nYears), 8);
+        for (var t = 0; t <= ticks; t++) {
+            var yr = Math.round((nYears / ticks) * t);
+            html += '<text x="'+xS(yr)+'" y="'+(H-12)+'" fill="#888" font-size="11" text-anchor="middle">Y'+yr+'</text>';
+        }
+        seriesList.forEach(function (s) {
+            if (!s.points.length) return;
+            var d = '';
+            s.points.forEach(function (p, i) { d += (i === 0 ? 'M' : 'L') + xS(p.x).toFixed(2) + ',' + yS(p.y).toFixed(2) + ' '; });
+            if (s.fill) {
+                var area = d + 'L' + xS(s.points[s.points.length-1].x).toFixed(2)+','+yS(0)+' L'+xS(s.points[0].x).toFixed(2)+','+yS(0)+' Z';
+                html += '<path d="'+area+'" fill="'+s.fill+'" opacity="0.18"/>';
+            }
+            html += '<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="2.5" stroke-linejoin="round"'+(s.dashed?' stroke-dasharray="6,4"':'')+'/>';
+        });
+        svg.innerHTML = html;
+    }
+
+    function compute() { return goalMode.checked ? computeGoal() : computeStandard(); }
+
+
+    function computeStandard() {
+        var corpus = unfmt($('swpCorpus').value);
+        var rate = parseFloat($('swpRate').value) || 0;
+        var monthlyW = unfmt($('swpWithdraw').value);
+        var years = parseFloat($('swpYears').value) || 0;
+        var inflation = parseFloat($('swpInflation').value) || 0;
+        var stepUp = parseFloat($('swpStepUp').value) || 0;
+        var freq = parseInt($('swpFreq').value, 10) || 12;
+        if (corpus <= 0 || years <= 0 || monthlyW < 0 || rate < 0) {
+            $('swpOutputs').innerHTML = buildOutputs([{ label:'Remaining Corpus', value:'\u20B90' }]);
+            $('swpInsight').innerHTML = 'Enter valid positive values to see your projection.';
+            $('swpCurrentPower').textContent = '\u20B90/mo'; $('swpFuturePower').textContent = '\u20B90/mo';
+            setStatus('moderate', 'Awaiting Input', 'Provide all required inputs to evaluate.');
+            drawChart([{ color:'#29a587', points:[{x:0,y:0},{x:1,y:0}] }], { years: 1 }); return;
+        }
+        var res = simulateSWP(corpus, rate, monthlyW, years, inflation, stepUp, freq);
+        var realRate = rate - inflation;
+        var futureMonthlyNeed = monthlyW * Math.pow(1 + inflation / 100, years);
+        var inflationImpact = futureMonthlyNeed - monthlyW;
+        var withdrawalRate = (monthlyW * 12) / corpus * 100;
+        var rating, title, desc;
+        if (res.depletedAtYear !== null && res.depletedAtYear < years) {
+            rating='risky'; title='Risky'; desc='Corpus depletes around year '+res.depletedAtYear.toFixed(1)+'. Reduce withdrawal or boost corpus.';
+        } else if (withdrawalRate > realRate + 1.5) {
+            rating='moderate'; title='Moderate'; desc='Withdrawal rate ('+withdrawalRate.toFixed(1)+'%) exceeds real return. Sustainability is borderline.';
+        } else { rating='excellent'; title='Excellent'; desc='Withdrawals look sustainable across the chosen horizon.'; }
+        setStatus(rating, title, desc);
+        $('swpOutputs').innerHTML = buildOutputs([
+            { label:'Remaining Corpus', value: fmtINR(res.endingCorpus), cls: res.endingCorpus > 0 ? '' : 'danger', sub: res.depletedAtYear !== null ? 'Depleted at Y'+res.depletedAtYear.toFixed(1) : 'at end of horizon' },
+            { label:'Total Withdrawn', value: fmtINR(res.totalWithdrawn), cls:'muted' },
+            { label:'Estimated Returns', value: fmtINR(res.totalReturns), cls:'warn' },
+            { label:'Inflation-Adj. Value', value: fmtINR(res.inflationAdjustedEnding), sub:'today\u2019s purchasing power' },
+            { label:'Real Return Rate', value: realRate.toFixed(2) + '%', sub:'return minus inflation' },
+            { label:'Future Monthly Need', value: fmtINR(futureMonthlyNeed), sub:'after '+years+' yrs' },
+            { label:'Inflation Impact', value:'+'+fmtINR(inflationImpact), cls:'warn', sub:'extra monthly need at end' },
+            { label:'Sustainability', value: res.depletedAtYear === null ? 'Lifelong' : 'Y'+res.depletedAtYear.toFixed(1), cls: res.depletedAtYear === null ? '' : 'danger' }
+        ]);
+        $('swpInsight').innerHTML = '<strong>'+fmtINR(monthlyW)+'/month</strong> today may require approximately <strong>'+fmtINR(futureMonthlyNeed)+'/month</strong> after '+years+' years at '+inflation+'% inflation.';
+        $('swpCurrentPower').textContent = fmtINR(monthlyW) + '/mo';
+        $('swpFuturePower').textContent = fmtINR(futureMonthlyNeed) + '/mo';
+        $('swpFuturePowerSub').textContent = 'after '+years+' yrs at '+inflation+'% inflation';
+        var corpusPts = res.series.map(function (s) { return { x: s.year, y: s.corpus }; });
+        var withdrPts = res.series.map(function (s) { return { x: s.year, y: s.withdrawn }; });
+        var inflPts = []; for (var y = 0; y <= years; y++) inflPts.push({ x: y, y: monthlyW * 12 * Math.pow(1 + inflation / 100, y) });
+        drawChart([{ color:'#29a587', fill:'#29a587', points: corpusPts },{ color:'#f5a623', points: withdrPts },{ color:'#e74c3c', dashed:true, points: inflPts }], { years: years });
+    }
+
+
+    function computeGoal() {
+        var monthlyW = unfmt($('swpGoalWithdraw').value);
+        var years = parseFloat($('swpGoalYears').value) || 0;
+        var rate = parseFloat($('swpGoalRate').value) || 0;
+        var inflation = parseFloat($('swpGoalInflation').value) || 0;
+        if (monthlyW <= 0 || years <= 0 || rate < 0) {
+            $('swpOutputs').innerHTML = buildOutputs([{ label:'Required Corpus', value:'\u20B90' }]);
+            $('swpInsight').innerHTML = 'Enter valid values to estimate the required corpus.';
+            $('swpCurrentPower').textContent = '\u20B90/mo'; $('swpFuturePower').textContent = '\u20B90/mo';
+            setStatus('moderate', 'Awaiting Input', 'Provide all required inputs to evaluate.');
+            drawChart([{ color:'#29a587', points:[{x:0,y:0},{x:1,y:0}] }], { years: 1 }); return;
+        }
+        var res = computeGoalCorpus(monthlyW, years, rate, inflation);
+        var realRate = rate - inflation;
+        var futureMonthlyNeed = monthlyW * Math.pow(1 + inflation / 100, years);
+        var rating, title, desc;
+        if (realRate < 0) { rating='risky'; title='Risky'; desc='Real return is negative. Inflation outpaces expected return.'; }
+        else if (realRate < 2) { rating='moderate'; title='Moderate'; desc='Real return is thin. Required corpus may be very large.'; }
+        else { rating='excellent'; title='Excellent'; desc='Real return supports a healthy required-corpus ratio.'; }
+        setStatus(rating, title, desc);
+        $('swpOutputs').innerHTML = buildOutputs([
+            { label:'Required Corpus', value: fmtINR(res.requiredCorpus), sub:'starting corpus needed' },
+            { label:'Total Withdrawn', value: fmtINR(res.totalWithdrawn), cls:'muted', sub:'across '+years+' yrs' },
+            { label:'Future Monthly Need', value: fmtINR(futureMonthlyNeed), sub:'after '+years+' yrs' },
+            { label:'Real Return Rate', value: realRate.toFixed(2) + '%', sub:'return minus inflation' },
+            { label:'Sustainable Withdrawal', value: fmtINR(res.sustainableMonthly) + '/mo', cls:'warn', sub:'estimated safe rate' },
+            { label:'Inflation Impact', value:'+'+fmtINR(futureMonthlyNeed - monthlyW), cls:'warn', sub:'extra monthly need at end' },
+            { label:'Corpus Sustainability', value: years + ' yrs', sub:'planned horizon' },
+            { label:'Withdrawal Status', value: rating==='excellent'?'Healthy':(rating==='moderate'?'Borderline':'Strained'), cls: rating==='risky'?'danger':(rating==='moderate'?'warn':'') }
+        ]);
+        $('swpInsight').innerHTML = 'To withdraw <strong>'+fmtINR(monthlyW)+'/month</strong> for '+years+' years at '+rate+'% return and '+inflation+'% inflation, you need approximately <strong>'+fmtINR(res.requiredCorpus)+'</strong> as starting corpus.';
+        $('swpCurrentPower').textContent = fmtINR(monthlyW) + '/mo';
+        $('swpFuturePower').textContent = fmtINR(futureMonthlyNeed) + '/mo';
+        $('swpFuturePowerSub').textContent = 'after '+years+' yrs at '+inflation+'% inflation';
+        var corpusPts = res.series.map(function (s) { return { x: s.year, y: s.corpus }; });
+        var withdrPts = res.series.map(function (s) { return { x: s.year, y: s.withdrawn }; });
+        var inflPts = []; for (var y = 0; y <= years; y++) inflPts.push({ x: y, y: monthlyW * 12 * Math.pow(1 + inflation / 100, y) });
+        drawChart([{ color:'#29a587', fill:'#29a587', points: corpusPts },{ color:'#f5a623', points: withdrPts },{ color:'#e74c3c', dashed:true, points: inflPts }], { years: years });
+    }
+
+    compute();
+})();
+</script>
+</body>
+</html>
