@@ -1201,5 +1201,153 @@ document.getElementById("contact_form").addEventListener("submit", function (e) 
     compute();
 })();
 </script>
+
+<style>
+.ratios-card,.pos-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(41,165,135,0.2);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);padding:50px 40px;max-width:900px;margin:0 auto}
+.ratios-select,.pos-select,.ratios-input,.pos-input{width:100%;padding:14px 20px;font-size:18px;font-weight:600;color:#fff;border:2px solid rgba(41,165,135,0.3);border-radius:12px;background:rgba(255,255,255,0.05);outline:none;transition:border-color .3s}
+.ratios-select:focus,.pos-select:focus,.ratios-input:focus,.pos-input:focus{border-color:#29a587}
+.ratios-select option,.pos-select option{background:#1a1a2e;color:#fff}
+.ratios-btn,.pos-btn{background:#29a587;color:#fff;border:none;border-radius:50px;padding:16px 30px;font-size:16px;font-weight:600;cursor:pointer;transition:transform .2s,box-shadow .2s;width:100%}
+.ratios-btn:hover,.pos-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(41,165,135,0.4)}
+.ratios-result{margin-top:30px;padding:25px;border-radius:16px;background:rgba(41,165,135,0.08);border:1px solid rgba(41,165,135,0.25);display:none}
+.ratios-result-value{font-size:36px;font-weight:700;color:#29a587;text-align:center}
+.ratios-health{display:inline-block;padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;margin-top:8px}
+.ratios-health-strong{background:rgba(41,165,135,0.2);color:#29a587}
+.ratios-health-moderate{background:rgba(245,166,35,0.2);color:#f5a623}
+.ratios-health-weak{background:rgba(231,76,60,0.2);color:#e74c3c}
+.ratios-interpretation{color:rgba(255,255,255,0.7);font-size:14px;margin-top:12px;line-height:1.5}
+.ratios-chart{margin-top:20px;text-align:center}
+.pos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:30px}
+.pos-output-card{background:rgba(255,255,255,0.05);border:1px solid rgba(41,165,135,0.2);border-radius:14px;padding:18px;text-align:center}
+.pos-output-label{font-size:12px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px}
+.pos-output-value{font-size:22px;font-weight:700;color:#29a587;margin-top:6px}
+.pos-quality{font-size:14px;font-weight:600;padding:4px 12px;border-radius:12px;display:inline-block;margin-top:4px}
+.pos-quality-excellent{background:rgba(41,165,135,0.2);color:#29a587}
+.pos-quality-good{background:rgba(245,166,35,0.2);color:#f5a623}
+.pos-quality-poor{background:rgba(231,76,60,0.2);color:#e74c3c}
+.pos-visual{margin-top:25px;padding:20px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1)}
+.pos-bar{height:28px;border-radius:6px;margin:8px 0;position:relative;display:flex;align-items:center;padding-left:12px;font-size:13px;font-weight:600}
+.pos-reset{background:transparent;border:2px solid rgba(231,76,60,0.5);color:#e74c3c;border-radius:50px;padding:12px 30px;font-size:14px;font-weight:600;cursor:pointer;margin-top:15px;width:100%;transition:background .3s}
+.pos-reset:hover{background:rgba(231,76,60,0.1)}
+.ratios-fields,.pos-fields{display:grid;gap:16px;margin-top:16px}
+.ratios-label,.pos-label{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:6px;display:block}
+.pos-prefix{position:relative}.pos-prefix::before{content:'₹';position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);font-size:18px;font-weight:600}
+.pos-prefix .pos-input{padding-left:36px}
+</style>
+
+<!-- FINANCIAL RATIOS CALCULATOR -->
+<section class="sip-calculator-section" id="ratios-section">
+<div class="sip-calc-card ratios-card">
+<h2 class="sip-calc-title" style="text-align:center;font-size:28px;color:#fff;margin-bottom:30px">Financial Ratios Calculator</h2>
+<div class="sip-form-group">
+<label class="ratios-label">Ratio Category</label>
+<select class="sip-input-field ratios-select" id="ratios-category" onchange="RatiosCalc.updateSub()">
+<option value="">Select Category</option>
+<option value="liquidity">Liquidity</option>
+<option value="profitability">Profitability</option>
+<option value="solvency">Solvency</option>
+<option value="efficiency">Efficiency</option>
+<option value="market">Market</option>
+</select>
+</div>
+<div class="sip-form-group" style="margin-top:16px">
+<label class="ratios-label">Specific Ratio</label>
+<select class="sip-input-field ratios-select" id="ratios-sub" onchange="RatiosCalc.updateFields()">
+<option value="">Select Ratio</option>
+</select>
+</div>
+<div id="ratios-fields" class="ratios-fields"></div>
+<button class="sip-calc-btn ratios-btn" style="margin-top:20px" onclick="RatiosCalc.calculate()">Calculate Ratio</button>
+<div class="ratios-result" id="ratios-result">
+<div class="ratios-result-value" id="ratios-value"></div>
+<div style="text-align:center"><span class="ratios-health" id="ratios-health"></span></div>
+<p class="ratios-interpretation" id="ratios-interp"></p>
+<div class="ratios-chart" id="ratios-chart"></div>
+</div>
+</div>
+</section>
+
+<!-- POSITION SIZE & RISK MANAGEMENT CALCULATOR -->
+<section class="sip-calculator-section" id="pos-section" style="margin-top:60px">
+<div class="sip-calc-card pos-card">
+<h2 class="sip-calc-title" style="text-align:center;font-size:28px;color:#fff;margin-bottom:30px">Position Size & Risk Management Calculator</h2>
+<div class="pos-fields">
+<div class="sip-form-group"><label class="pos-label">Account Size</label><div class="pos-prefix"><input class="sip-input-field pos-input" id="pos-account" type="number" placeholder="500000"></div></div>
+<div class="sip-form-group"><label class="pos-label">Risk Per Trade (%)</label><input class="sip-input-field pos-input" id="pos-risk" type="number" placeholder="2" step="0.1"></div>
+<div class="sip-form-group"><label class="pos-label">Entry Price</label><input class="sip-input-field pos-input" id="pos-entry" type="number" placeholder="150"></div>
+<div class="sip-form-group"><label class="pos-label">Stop Loss Price</label><input class="sip-input-field pos-input" id="pos-sl" type="number" placeholder="140"></div>
+<div class="sip-form-group"><label class="pos-label">Target Price</label><input class="sip-input-field pos-input" id="pos-target" type="number" placeholder="170"></div>
+<div class="sip-form-group"><label class="pos-label">Trade Type</label>
+<select class="sip-input-field pos-select" id="pos-type"><option value="buy">Buy (Long)</option><option value="sell">Sell (Short)</option></select></div>
+</div>
+<button class="sip-calc-btn pos-btn" style="margin-top:20px" onclick="PosCalc.calculate()">Calculate Position</button>
+<button class="pos-reset" onclick="PosCalc.reset()">Reset</button>
+<div class="pos-grid" id="pos-grid" style="display:none"></div>
+<div class="pos-visual" id="pos-visual" style="display:none"></div>
+</div>
+</section>
+
+<script>
+;(function(){
+const RATIOS={liquidity:[{id:'current',name:'Current Ratio',fields:['Current Assets','Current Liabilities'],calc:v=>v[0]/v[1],interpret:(r)=>r>=2?['Strong','Excellent liquidity']:r>=1?['Moderate','Adequate liquidity']:['Weak','Liquidity concern']},
+{id:'quick',name:'Quick Ratio',fields:['Current Assets','Inventory','Current Liabilities'],calc:v=>(v[0]-v[1])/v[2],interpret:r=>r>=1?['Strong','Good quick liquidity']:r>=0.5?['Moderate','Acceptable']:['Weak','Low quick liquidity']},
+{id:'cash',name:'Cash Ratio',fields:['Cash','Current Liabilities'],calc:v=>v[0]/v[1],interpret:r=>r>=0.5?['Strong','Strong cash position']:r>=0.2?['Moderate','Adequate cash']:['Weak','Low cash reserves']}],
+profitability:[{id:'gpm',name:'Gross Profit Margin',fields:['Gross Profit','Revenue'],calc:v=>(v[0]/v[1])*100,pct:true,interpret:r=>r>=40?['Strong','High margin']:r>=20?['Moderate','Average margin']:['Weak','Low margin']},
+{id:'npm',name:'Net Profit Margin',fields:['Net Income','Revenue'],calc:v=>(v[0]/v[1])*100,pct:true,interpret:r=>r>=20?['Strong','Excellent profitability']:r>=5?['Moderate','Acceptable']:['Weak','Low profitability']},
+{id:'roe',name:'Return on Equity',fields:['Net Income','Equity'],calc:v=>(v[0]/v[1])*100,pct:true,interpret:r=>r>=15?['Strong','Great returns']:r>=8?['Moderate','Fair returns']:['Weak','Poor returns']},
+{id:'roa',name:'Return on Assets',fields:['Net Income','Total Assets'],calc:v=>(v[0]/v[1])*100,pct:true,interpret:r=>r>=10?['Strong','Efficient asset use']:r>=5?['Moderate','Average']:['Weak','Inefficient']}],
+solvency:[{id:'de',name:'Debt to Equity',fields:['Total Debt','Equity'],calc:v=>v[0]/v[1],interpret:r=>r<=1?['Strong','Low leverage']:r<=2?['Moderate','Moderate leverage']:['Weak','High leverage']},
+{id:'ic',name:'Interest Coverage',fields:['EBIT','Interest Expense'],calc:v=>v[0]/v[1],interpret:r=>r>=3?['Strong','Well covered']:r>=1.5?['Moderate','Adequate']:['Weak','Risk of default']}],
+efficiency:[{id:'invt',name:'Inventory Turnover',fields:['COGS','Average Inventory'],calc:v=>v[0]/v[1],interpret:r=>r>=8?['Strong','Fast turnover']:r>=4?['Moderate','Average']:['Weak','Slow turnover']},
+{id:'at',name:'Asset Turnover',fields:['Revenue','Total Assets'],calc:v=>v[0]/v[1],interpret:r=>r>=1?['Strong','Efficient']:r>=0.5?['Moderate','Average']:['Weak','Underutilized']}],
+market:[{id:'eps',name:'Earnings Per Share',fields:['Net Income','Preferred Dividends','Outstanding Shares'],calc:v=>(v[0]-v[1])/v[2],interpret:r=>r>=20?['Strong','High EPS']:r>=5?['Moderate','Average EPS']:['Weak','Low EPS']},
+{id:'pe',name:'P/E Ratio',fields:['Market Price','EPS'],calc:v=>v[0]/v[1],interpret:r=>r>=10&&r<=25?['Strong','Fairly valued']:r<10?['Moderate','Possibly undervalued']:['Weak','Possibly overvalued']}]};
+function fmt(n){return n.toFixed(2)}
+window.RatiosCalc={updateSub(){const cat=document.getElementById('ratios-category').value,sub=document.getElementById('ratios-sub');
+sub.innerHTML='<option value="">Select Ratio</option>';document.getElementById('ratios-fields').innerHTML='';document.getElementById('ratios-result').style.display='none';
+if(!cat)return;RATIOS[cat].forEach((r,i)=>{sub.innerHTML+=`<option value="${i}">${r.name}</option>`})},
+updateFields(){const cat=document.getElementById('ratios-category').value,idx=document.getElementById('ratios-sub').value;
+const cont=document.getElementById('ratios-fields');cont.innerHTML='';document.getElementById('ratios-result').style.display='none';
+if(!cat||idx==='')return;const r=RATIOS[cat][idx];
+r.fields.forEach((f,i)=>{cont.innerHTML+=`<div class="sip-form-group"><label class="ratios-label">${f}</label><input class="sip-input-field ratios-input" id="rf-${i}" type="number" placeholder="Enter ${f}"></div>`})},
+calculate(){const cat=document.getElementById('ratios-category').value,idx=document.getElementById('ratios-sub').value;
+if(!cat||idx==='')return;const r=RATIOS[cat][idx],vals=r.fields.map((_,i)=>parseFloat(document.getElementById('rf-'+i).value));
+if(vals.some(isNaN))return;const result=r.calc(vals),[health,interp]=r.interpret(result);
+const suffix=r.pct?'%':'x';document.getElementById('ratios-value').textContent=fmt(result)+(r.pct?' %':' x');
+const hEl=document.getElementById('ratios-health');hEl.textContent=health;hEl.className='ratios-health ratios-health-'+health.toLowerCase();
+document.getElementById('ratios-interp').textContent=interp;
+const pct=Math.min(Math.abs(result)*(r.pct?1:20),100);const color=health==='Strong'?'#29a587':health==='Moderate'?'#f5a623':'#e74c3c';
+document.getElementById('ratios-chart').innerHTML=`<svg width="100%" height="40"><rect x="0" y="10" width="100%" height="20" rx="10" fill="rgba(255,255,255,0.05)"/><rect x="0" y="10" width="${pct}%" height="20" rx="10" fill="${color}" opacity="0.8"/></svg>`;
+document.getElementById('ratios-result').style.display='block'}};
+})();
+;(function(){
+function inrFmt(n){const s=Math.abs(n).toFixed(2).split('.'),d=s[0],dec=s[1];let r='',c=0;
+for(let i=d.length-1;i>=0;i--){if(c===3||c===5||c===7||c===9||c===11)r=','+r;r=d[i]+r;c++}return(n<0?'-':'')+'₹'+r+'.'+dec}
+window.PosCalc={calculate(){const acc=parseFloat(document.getElementById('pos-account').value),risk=parseFloat(document.getElementById('pos-risk').value),
+entry=parseFloat(document.getElementById('pos-entry').value),sl=parseFloat(document.getElementById('pos-sl').value),
+target=parseFloat(document.getElementById('pos-target').value),type=document.getElementById('pos-type').value;
+if([acc,risk,entry,sl,target].some(isNaN)||acc<=0||entry<=0)return;
+const riskAmt=acc*(risk/100),riskPerShare=Math.abs(entry-sl),qty=Math.floor(riskAmt/riskPerShare);
+if(qty<=0||riskPerShare<=0)return;
+const capital=qty*entry,reward=Math.abs(target-entry)*qty,rr=Math.abs(target-entry)/riskPerShare,
+exposure=(capital/acc)*100,winRate=(1/(1+rr))*100;
+let quality,qClass;if(rr>=3){quality='Excellent';qClass='excellent'}else if(rr>=1.5){quality='Good';qClass='good'}else{quality='Poor';qClass='poor'}
+const grid=document.getElementById('pos-grid');grid.style.display='grid';
+grid.innerHTML=[['Quantity',qty+' shares'],['Total Risk',inrFmt(riskAmt)],['Risk/Share',inrFmt(riskPerShare)],['Capital Required',inrFmt(capital)],
+['Potential Reward',inrFmt(reward)],['Risk:Reward','1 : '+rr.toFixed(2)],['Exposure',exposure.toFixed(1)+'%'],
+['Trade Quality',`<span class="pos-quality pos-quality-${qClass}">${quality}</span>`],['Win Rate Needed',winRate.toFixed(1)+'%']]
+.map(([l,v])=>`<div class="pos-output-card"><div class="pos-output-label">${l}</div><div class="pos-output-value">${v}</div></div>`).join('');
+const vis=document.getElementById('pos-visual');vis.style.display='block';
+const mn=Math.min(entry,sl,target),mx=Math.max(entry,sl,target),range=mx-mn||1;
+const eP=((entry-mn)/range)*100,sP=((sl-mn)/range)*100,tP=((target-mn)/range)*100;
+vis.innerHTML=`<div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:12px">Trade Setup Visualization</div>
+<div class="pos-bar" style="width:${Math.max(eP,10)}%;background:rgba(41,165,135,0.4);color:#29a587">Entry: ${inrFmt(entry)}</div>
+<div class="pos-bar" style="width:${Math.max(sP,10)}%;background:rgba(231,76,60,0.4);color:#e74c3c">SL: ${inrFmt(sl)}</div>
+<div class="pos-bar" style="width:${Math.max(tP,10)}%;background:rgba(245,166,35,0.4);color:#f5a623">Target: ${inrFmt(target)}</div>`},
+reset(){['pos-account','pos-risk','pos-entry','pos-sl','pos-target'].forEach(id=>{document.getElementById(id).value=''});
+document.getElementById('pos-grid').style.display='none';document.getElementById('pos-visual').style.display='none'}};
+})();
+</script>
+
 </body>
 </html>
