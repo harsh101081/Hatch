@@ -1,0 +1,297 @@
+// =============================================================================
+// HatchFib Breakout Strategy v2.0
+// =============================================================================
+// Previous-Day Fibonacci Breakout for Gold (XAUUSD).
+//
+// At each daily setup time (default 22:00 UTC = NY 5pm during EST):
+//   - Identify previous day's High and Low (the just-completed daily candle)
+//   - Place Buy Stop at High  (SL @ 0.9 fib, TP @ 1.25 fib for 2.5R)
+//   - Place Sell Stop at Low  (SL @ 0.1 fib, TP @ -0.25 fib for 2.5R)
+//
+// Filters:
+//   - One-Cancels-Other (OCO): when one fills, opposing pending is cancelled
+//   - No-trade window (default 12pm-6pm NY time): low-liquidity hours
+//     If a stop triggers during this window, the position is skipped
+//   - Gap protection: if price gaps past entry, the order won't fill at the
+//     entry price. The no-trade window also catches gap fills naturally.
+//
+// Sizing:
+//   - Risk-based position sizing from account equity (default 0.5%)
+//   - Max 1 trade per day
+//
+// HOW TO USE
+//   1. Open Gold (XAUUSD or OANDA:XAUUSD) on TradingView
+//   2. Pine Editor -> paste this script -> Save -> Add to chart
+//   3. Right-click chart -> Strategy Tester -> Properties:
+//      - Initial capital: 10000 (or your prop firm balance)
+//      - Slippage: 2 ticks (or whatever matches your broker)
+//      - Commission: set to your broker's commission
+//   4. View backtest results in the Strategy Tester panel
+// =============================================================================
+
+//@version=5
+strategy("HatchFib Breakout",
+     overlay              = true,
+     initial_capital      = 10000,
+     default_qty_type     = strategy.fixed,
+     default_qty_value    = 1,
+     pyramiding           = 0,
+     calc_on_every_tick   = false,
+     process_orders_on_close = true,
+     close_entries_rule   = "ANY",
+     commission_type      = strategy.commission.cash_per_order,
+     commission_value     = 0.0,
+     currency             = currency.USD)
+
+// =============================================================================
+// INPUTS
+// =============================================================================
+g_risk        = "[1] Risk Management"
+riskPct       = input.float(0.5, "Risk per Trade (%)",       minval=0.01, maxval=10.0, step=0.05, group=g_risk,
+     tooltip="Percentage of account equity risked per trade. Position size is auto-calculated from this and the SL distance.")
+rr            = input.float(2.5, "Risk:Reward Ratio (1:X)",  minval=0.5,  maxval=10.0, step=0.1,  group=g_risk,
+     tooltip="Target Risk:Reward ratio. 2.5 = 1:2.5 RR (TP at 1.25 / -0.25 fib level). Adjusted via TP or SL based on the next setting.")
+adjustTpForRR = input.bool(true, "Widen TP for RR (else tighten SL)", group=g_risk,
+     tooltip="If TRUE, keeps SL at 0.9/0.1 fib levels and widens TP to 1.25/-0.25 to achieve the 2.5R target. If FALSE, keeps TP at 1.1/-0.1 and tightens SL instead.")
+
+g_strategy = "[2] Strategy"
+fibBuffer = input.float(0.1, "Fib Buffer", minval=0.01, maxval=0.5, step=0.01, group=g_strategy,
+     tooltip="Base fib distance. 0.1 means SL at 0.9 (long) or 0.1 (short) fib level.")
+
+g_time      = "[3] Timing (UTC)"
+setupHour   = input.int(22, "Setup Hour (0-23 UTC)",   minval=0, maxval=23, group=g_time,
+     tooltip="UTC hour at which to place pending orders. 22 = NY 5pm during EST winter, NY 6pm during EDT summer.")
+setupMinute = input.int(0,  "Setup Minute (0-59)",     minval=0, maxval=59, group=g_time)
+
+g_filters       = "[4] Filters"
+useNoTradeWindow = input.bool(true, "Skip Low-Liquidity Hours", group=g_filters,
+     tooltip="If a stop order fills during the low-liquidity window (default 12pm-6pm NY time), the trade is skipped. NY time auto-handles DST.")
+noTradeStartNY = input.int(12, "  No-Trade Start (NY Hour)",  minval=0, maxval=23, group=g_filters)
+noTradeEndNY   = input.int(18, "  No-Trade End (NY Hour)",    minval=0, maxval=23, group=g_filters,
+     tooltip="Exclusive. 18 means up to but not including 18:00 NY time.")
+
+useDayFilter    = input.bool(false, "Filter by Day of Week",        group=g_filters)
+tradeMon        = input.bool(true,  "  Monday",    inline="dow", group=g_filters)
+tradeTue        = input.bool(true,  "  Tuesday",   inline="dow", group=g_filters)
+tradeWed        = input.bool(true,  "  Wednesday", inline="dow", group=g_filters)
+tradeThu        = input.bool(true,  "  Thursday",  inline="dow", group=g_filters)
+tradeFri        = input.bool(true,  "  Friday",    inline="dow", group=g_filters)
+
+g_display     = "[5] Display"
+showLevels    = input.bool(true,  "Show Fib Levels on Chart",       group=g_display)
+showLabels    = input.bool(true,  "Show Level Labels",              group=g_display)
+showNoTrade   = input.bool(true,  "Highlight No-Trade Hours",       group=g_display)
+
+// =============================================================================
+// DAY OF WEEK FILTER
+// =============================================================================
+dow_now     = dayofweek(time, "UTC")
+mondayOk    = dow_now == dayofweek.monday    and tradeMon
+tuesdayOk   = dow_now == dayofweek.tuesday   and tradeTue
+wednesdayOk = dow_now == dayofweek.wednesday and tradeWed
+thursdayOk  = dow_now == dayofweek.thursday  and tradeThu
+fridayOk    = dow_now == dayofweek.friday    and tradeFri
+dowOk       = not useDayFilter or mondayOk or tuesdayOk or wednesdayOk or thursdayOk or fridayOk
+
+// =============================================================================
+// NO-TRADE WINDOW (low-liquidity hours, NY time, auto DST-aware)
+// =============================================================================
+nyHour          = hour(time, "America/New_York")
+inNoTradeWindow = useNoTradeWindow and (
+     noTradeStartNY < noTradeEndNY ?
+     (nyHour >= noTradeStartNY and nyHour < noTradeEndNY) :
+     (nyHour >= noTradeStartNY or  nyHour < noTradeEndNY))
+
+// =============================================================================
+// PREVIOUS DAY HIGH/LOW (most recently closed daily candle)
+// =============================================================================
+[prevHigh, prevLow] = request.security(syminfo.tickerid, "D",
+     [high[1], low[1]], lookahead=barmerge.lookahead_off)
+
+dayRange = prevHigh - prevLow
+
+// =============================================================================
+// CALCULATE LEVELS
+//   With defaults (rr=2.5, fibBuffer=0.1, adjustTpForRR=true):
+//     baseBuffer = 0.1 * range
+//     tpBuffer   = 0.1 * 2.5 * range = 0.25 * range  (TP at 1.25 / -0.25 fib)
+//     slBuffer   = 0.1 * range                       (SL at 0.9  /  0.1 fib)
+//   This produces 2.5R per trade.
+// =============================================================================
+baseBuffer = fibBuffer * dayRange
+tpBuffer   = adjustTpForRR ? baseBuffer * rr : baseBuffer
+slBuffer   = adjustTpForRR ? baseBuffer       : baseBuffer / rr
+
+buyEntry  = prevHigh
+buySL     = prevHigh - slBuffer
+buyTP     = prevHigh + tpBuffer
+
+sellEntry = prevLow
+sellSL    = prevLow + slBuffer
+sellTP    = prevLow - tpBuffer
+
+// =============================================================================
+// TIME DETECTION
+// =============================================================================
+isSetupBar = hour(time, "UTC") == setupHour and minute(time, "UTC") == setupMinute
+isNewDay   = ta.change(time("D"))
+
+// =============================================================================
+// POSITION SIZING (risk-based)
+//   Risk per unit = |entry - SL|
+//   Risk amount   = equity * risk%
+//   Quantity      = risk amount / risk per unit
+// =============================================================================
+buyRiskPerUnit  = math.abs(buyEntry  - buySL)
+sellRiskPerUnit = math.abs(sellEntry - sellSL)
+
+riskAmount = strategy.equity * riskPct / 100.0
+
+buyQty  = buyRiskPerUnit  > 0 ? riskAmount / buyRiskPerUnit  : 0.0
+sellQty = sellRiskPerUnit > 0 ? riskAmount / sellRiskPerUnit : 0.0
+
+// =============================================================================
+// STATE
+// =============================================================================
+var bool ordersPlacedToday = false
+if isNewDay
+    ordersPlacedToday := false
+
+// =============================================================================
+// ORDER PLACEMENT
+// =============================================================================
+canTrade = isSetupBar and not ordersPlacedToday and dayRange > 0 and dowOk and barstate.isconfirmed and strategy.position_size == 0
+
+if canTrade
+    // Cancel anything still pending from yesterday
+    strategy.cancel_all()
+
+    // Buy Stop with attached SL/TP
+    strategy.entry("Long", strategy.long, qty=buyQty, stop=buyEntry,
+         comment="HatchFib L @ " + str.tostring(buyEntry, "#.##"))
+    strategy.exit("Long Exit", from_entry="Long",
+         stop=buySL, limit=buyTP,
+         comment_loss="L SL", comment_profit="L TP")
+
+    // Sell Stop with attached SL/TP
+    strategy.entry("Short", strategy.short, qty=sellQty, stop=sellEntry,
+         comment="HatchFib S @ " + str.tostring(sellEntry, "#.##"))
+    strategy.exit("Short Exit", from_entry="Short",
+         stop=sellSL, limit=sellTP,
+         comment_loss="S SL", comment_profit="S TP")
+
+    ordersPlacedToday := true
+
+// =============================================================================
+// OCO LOGIC: cancel opposite when one fills
+// =============================================================================
+if strategy.position_size > 0
+    strategy.cancel("Short")
+if strategy.position_size < 0
+    strategy.cancel("Long")
+
+// =============================================================================
+// NO-TRADE WINDOW ENFORCEMENT
+//   If a stop order just filled DURING the low-liquidity window, immediately
+//   close the position and cancel the opposing pending. This implements the
+//   "skip trades that trigger in 12pm-6pm NY" rule from the strategy.
+//   Also catches gap-up/gap-down fills since gaps usually happen near setup
+//   time (5pm NY) which is on the boundary of the no-trade window.
+// =============================================================================
+positionJustOpened = strategy.position_size != 0 and strategy.position_size[1] == 0
+if positionJustOpened and inNoTradeWindow
+    strategy.close_all(comment="Skipped: low-liquidity hours")
+    strategy.cancel_all()
+
+// =============================================================================
+// VISUAL LEVELS
+// =============================================================================
+plotLong  = showLevels
+plotShort = showLevels
+
+p1 = plot(plotLong  ? buyEntry  : na, "Buy Entry",  color=color.new(color.green, 0),  linewidth=2,  style=plot.style_linebr)
+p2 = plot(plotLong  ? buyTP     : na, "Buy TP",     color=color.new(color.lime, 30),  linewidth=1,  style=plot.style_linebr)
+p3 = plot(plotLong  ? buySL     : na, "Buy SL",     color=color.new(color.red, 30),   linewidth=1,  style=plot.style_linebr)
+p4 = plot(plotShort ? sellEntry : na, "Sell Entry", color=color.new(color.red, 0),    linewidth=2,  style=plot.style_linebr)
+p5 = plot(plotShort ? sellTP    : na, "Sell TP",    color=color.new(color.lime, 30),  linewidth=1,  style=plot.style_linebr)
+p6 = plot(plotShort ? sellSL    : na, "Sell SL",    color=color.new(color.red, 30),   linewidth=1,  style=plot.style_linebr)
+
+// Fill between entry and TP (profit zone) and entry and SL (risk zone)
+fill(p1, p2, color=color.new(color.lime, 92), title="Long Profit Zone")
+fill(p1, p3, color=color.new(color.red,  92), title="Long Risk Zone")
+fill(p4, p5, color=color.new(color.lime, 92), title="Short Profit Zone")
+fill(p4, p6, color=color.new(color.red,  92), title="Short Risk Zone")
+
+// =============================================================================
+// LEVEL LABELS (refreshed daily)
+// =============================================================================
+var label lbBuyE  = na
+var label lbBuyT  = na
+var label lbBuyS  = na
+var label lbSellE = na
+var label lbSellT = na
+var label lbSellS = na
+
+if showLabels and isNewDay and dayRange > 0
+    label.delete(lbBuyE)
+    label.delete(lbBuyT)
+    label.delete(lbBuyS)
+    label.delete(lbSellE)
+    label.delete(lbSellT)
+    label.delete(lbSellS)
+
+    lbBuyE  := label.new(bar_index, buyEntry,  "Buy "  + str.tostring(buyEntry,  "#.##"),  color=color.new(color.green, 20),  textcolor=color.white, style=label.style_label_left, size=size.small)
+    lbBuyT  := label.new(bar_index, buyTP,     "TP "   + str.tostring(buyTP,     "#.##"),  color=color.new(color.lime,  20),  textcolor=color.black, style=label.style_label_left, size=size.tiny)
+    lbBuyS  := label.new(bar_index, buySL,     "SL "   + str.tostring(buySL,     "#.##"),  color=color.new(color.red,   20),  textcolor=color.white, style=label.style_label_left, size=size.tiny)
+    lbSellE := label.new(bar_index, sellEntry, "Sell " + str.tostring(sellEntry, "#.##"),  color=color.new(color.red,   20),  textcolor=color.white, style=label.style_label_left, size=size.small)
+    lbSellT := label.new(bar_index, sellTP,    "TP "   + str.tostring(sellTP,    "#.##"),  color=color.new(color.lime,  20),  textcolor=color.black, style=label.style_label_left, size=size.tiny)
+    lbSellS := label.new(bar_index, sellSL,    "SL "   + str.tostring(sellSL,    "#.##"),  color=color.new(color.red,   20),  textcolor=color.white, style=label.style_label_left, size=size.tiny)
+
+// =============================================================================
+// SETUP TIME / NO-TRADE WINDOW MARKERS
+// =============================================================================
+bgcolor(isSetupBar         ? color.new(color.yellow, 85) : na, title="Setup Bar")
+bgcolor(showNoTrade and inNoTradeWindow ? color.new(color.red, 92) : na, title="No-Trade Window")
+
+// =============================================================================
+// STATS TABLE (top right)
+// =============================================================================
+var table statsTable = table.new(position.top_right, 2, 6, bgcolor=color.new(color.black, 80), border_width=1, border_color=color.gray)
+
+if barstate.islast
+    table.cell(statsTable, 0, 0, "HatchFib Stats", text_color=color.yellow,    bgcolor=color.new(color.black, 50), text_size=size.small)
+    table.cell(statsTable, 1, 0, "",                text_color=color.yellow,    bgcolor=color.new(color.black, 50), text_size=size.small)
+
+    table.cell(statsTable, 0, 1, "Trades",          text_color=color.white,     text_size=size.small)
+    table.cell(statsTable, 1, 1, str.tostring(strategy.closedtrades), text_color=color.white, text_size=size.small)
+
+    winrate = strategy.closedtrades > 0 ? strategy.wintrades / strategy.closedtrades * 100 : 0.0
+    table.cell(statsTable, 0, 2, "Win Rate",        text_color=color.white, text_size=size.small)
+    table.cell(statsTable, 1, 2, str.tostring(winrate, "#.0") + "%",
+         text_color=winrate >= 50 ? color.lime : color.red, text_size=size.small)
+
+    pf = strategy.grossloss != 0 ? strategy.grossprofit / math.abs(strategy.grossloss) : 0.0
+    table.cell(statsTable, 0, 3, "Profit Factor",   text_color=color.white, text_size=size.small)
+    table.cell(statsTable, 1, 3, str.tostring(pf, "#.00"),
+         text_color=pf >= 1.5 ? color.lime : (pf >= 1.0 ? color.yellow : color.red), text_size=size.small)
+
+    netRet = strategy.initial_capital > 0 ? strategy.netprofit / strategy.initial_capital * 100 : 0.0
+    table.cell(statsTable, 0, 4, "Return %",        text_color=color.white, text_size=size.small)
+    table.cell(statsTable, 1, 4, str.tostring(netRet, "+#.00") + "%",
+         text_color=netRet >= 0 ? color.lime : color.red, text_size=size.small)
+
+    table.cell(statsTable, 0, 5, "Max DD",          text_color=color.white, text_size=size.small)
+    table.cell(statsTable, 1, 5, str.tostring(strategy.max_drawdown / strategy.initial_capital * 100, "#.00") + "%",
+         text_color=color.red, text_size=size.small)
+
+// =============================================================================
+// ALERTS
+// =============================================================================
+alertcondition(canTrade, title="HatchFib: Setup Time",
+     message="HatchFib: Levels ready. Buy Stop {{plot_0}}, Sell Stop {{plot_3}}")
+
+alertcondition(strategy.position_size > 0 and strategy.position_size[1] == 0,
+     title="HatchFib: Long Filled", message="HatchFib LONG filled")
+
+alertcondition(strategy.position_size < 0 and strategy.position_size[1] == 0,
+     title="HatchFib: Short Filled", message="HatchFib SHORT filled")
