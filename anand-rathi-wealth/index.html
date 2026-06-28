@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Anand Rathi Wealth Ltd. — private wealth advisory guiding individuals and families to preserve, plan and grow wealth with trust, strategy and a long-term vision." />
+<title>Anand Rathi Wealth Ltd. — Private Wealth, Personally Guided</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   ANAND RATHI WEALTH LTD. — PRIVATE WEALTH ADVISORY
+   Luxury editorial single-page site • internal CSS + JS
+   Academic / project demonstration only
+   Class prefix: arw-
+   ============================================================ */
+
+:root{
+  --ivory:#f7f3ec;
+  --warm-white:#fbf8f2;
+  --paper:#fffdf9;
+  --espresso:#2a211b;
+  --charcoal:#37322c;
+  --ink-soft:#6b6258;
+  --ink-faint:#9b9286;
+  --gold:#b08d4f;
+  --gold-deep:#9a763a;
+  --gold-soft:#d9c39a;
+  --champagne:#ece2cf;
+  --champagne-2:#e4d7bf;
+  --grey-soft:#e8e3da;
+  --maroon:#6e2b2b;
+  --line:#ddd4c5;
+  --shadow-soft:0 30px 70px -40px rgba(42,33,27,.4);
+  --shadow-card:0 24px 60px -34px rgba(42,33,27,.45);
+  --serif:'Playfair Display',Georgia,serif;
+  --serif-alt:'Cormorant Garamond',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+  --pad:120px;
+  --maxw:1240px;
+  --ease:cubic-bezier(.33,.9,.34,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:var(--sans);background:var(--ivory);color:var(--charcoal);
+  font-weight:400;line-height:1.75;font-size:16.5px;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+ul{list-style:none}
+
+.arw-wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+
+/* ---------- Typographic primitives ---------- */
+.arw-kicker{
+  font-family:var(--sans);font-weight:600;font-size:.7rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold-deep);display:inline-flex;align-items:center;gap:14px;
+}
+.arw-kicker::before{content:"";width:34px;height:1px;background:var(--gold);display:inline-block}
+.arw-kicker.center{justify-content:center}
+.arw-kicker.center::after{content:"";width:34px;height:1px;background:var(--gold);display:inline-block}
+
+h1,h2,h3,.arw-serif{font-family:var(--serif);font-weight:500;color:var(--espresso);line-height:1.18;letter-spacing:.2px}
+.arw-display{font-size:clamp(2.6rem,5.4vw,4.4rem);font-weight:500}
+.arw-h2{font-size:clamp(2rem,3.8vw,3.1rem);font-weight:500;letter-spacing:-.3px}
+.arw-lede{font-family:var(--serif-alt);font-size:clamp(1.2rem,2vw,1.5rem);color:var(--ink-soft);font-style:italic;font-weight:500}
+.arw-em{color:var(--gold-deep);font-style:italic}
+
+/* ---------- Buttons ---------- */
+.arw-btn{
+  display:inline-flex;align-items:center;gap:12px;font-family:var(--sans);font-weight:600;
+  font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  padding:16px 30px;border-radius:2px;transition:all .45s var(--ease);border:1px solid transparent;
+}
+.arw-btn .ar{transition:transform .45s var(--ease)}
+.arw-btn:hover .ar{transform:translateX(5px)}
+.arw-btn--solid{background:var(--espresso);color:var(--warm-white)}
+.arw-btn--solid:hover{background:var(--gold-deep)}
+.arw-btn--line{background:transparent;color:var(--espresso);border-color:var(--charcoal)}
+.arw-btn--line:hover{background:var(--espresso);color:var(--warm-white);border-color:var(--espresso)}
+.arw-btn--gold{background:var(--gold);color:#fff}
+.arw-btn--gold:hover{background:var(--gold-deep)}
+
+/* ---------- Navbar ---------- */
+.arw-nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;transition:all .5s var(--ease);
+  padding:26px 0;border-bottom:1px solid transparent;
+}
+.arw-nav.is-stuck{background:rgba(247,243,236,.9);backdrop-filter:blur(14px);border-bottom-color:var(--line);padding:16px 0}
+.arw-nav__row{display:flex;align-items:center;justify-content:space-between}
+.arw-brand{display:flex;align-items:center;gap:14px}
+.arw-brand__mark{
+  width:46px;height:46px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;
+  font-family:var(--serif);font-size:1.15rem;color:var(--gold-deep);letter-spacing:.5px;position:relative;
+}
+.arw-brand__mark::after{content:"";position:absolute;inset:5px;border:1px solid var(--gold-soft);border-radius:50%}
+.arw-brand__name{font-family:var(--serif);font-size:1.18rem;color:var(--espresso);line-height:1.1}
+.arw-brand__name small{display:block;font-family:var(--sans);font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-top:3px}
+
+.arw-menu{display:flex;align-items:center;gap:34px}
+.arw-menu a{font-size:.82rem;letter-spacing:.05em;color:var(--ink-soft);font-weight:500;position:relative;padding:4px 0;transition:color .35s}
+.arw-menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--gold-deep);transition:width .4s var(--ease)}
+.arw-menu a:hover,.arw-menu a.is-active{color:var(--espresso)}
+.arw-menu a:hover::after,.arw-menu a.is-active::after{width:100%}
+.arw-nav__cta{margin-left:6px}
+.arw-nav__cta .arw-btn{padding:12px 22px}
+
+.arw-burger{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:pointer;padding:6px;z-index:230}
+.arw-burger span{width:28px;height:1.5px;background:var(--espresso);transition:.4s var(--ease)}
+.arw-burger.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.arw-burger.is-open span:nth-child(2){opacity:0}
+.arw-burger.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* ---------- Reveal ---------- */
+.r{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.r.in{opacity:1;transform:none}
+.r-1{transition-delay:.1s}.r-2{transition-delay:.22s}.r-3{transition-delay:.34s}
+.r-4{transition-delay:.46s}.r-5{transition-delay:.58s}
+
+/* ---------- Section frame ---------- */
+.arw-sec{padding:var(--pad) 0;position:relative}
+.arw-sec--paper{background:var(--paper)}
+.arw-sec--cream{background:var(--warm-white)}
+.arw-sec--dark{background:var(--espresso);color:var(--ivory)}
+.arw-rule{width:100%;height:1px;background:var(--line)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.arw-hero{padding:190px 0 110px;position:relative;overflow:hidden}
+.arw-hero::before{
+  content:"";position:absolute;top:0;right:0;width:48%;height:100%;
+  background:linear-gradient(180deg,var(--champagne),transparent);opacity:.5;z-index:0;
+}
+.arw-hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;position:relative;z-index:1}
+.arw-hero h1{margin:22px 0 24px}
+.arw-hero__sub{max-width:480px;color:var(--ink-soft);font-size:1.05rem;margin-bottom:38px}
+.arw-hero__actions{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:54px}
+.arw-hero__stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.arw-stat{padding:22px 22px 4px 0;border-right:1px solid var(--line)}
+.arw-stat:last-child{border-right:none;padding-right:0}
+.arw-stat__ic{font-family:var(--serif);font-size:1rem;color:var(--gold-deep);margin-bottom:8px;display:block}
+.arw-stat__t{font-family:var(--serif);font-size:1.12rem;color:var(--espresso);line-height:1.2}
+.arw-stat__s{font-size:.76rem;color:var(--ink-faint);margin-top:4px;letter-spacing:.02em}
+
+.arw-hero__media{position:relative}
+.arw-hero__frame{position:relative;border-radius:3px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.arw-hero__frame img{width:100%;height:580px;object-fit:cover;filter:saturate(.92) contrast(1.02)}
+.arw-hero__frame::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.25)}
+.arw-hero__badge{
+  position:absolute;left:-34px;bottom:54px;background:var(--paper);padding:26px 30px;
+  box-shadow:var(--shadow-card);border-top:2px solid var(--gold);max-width:240px;
+}
+.arw-hero__badge .q{font-family:var(--serif-alt);font-style:italic;font-size:1.18rem;color:var(--espresso);line-height:1.4}
+.arw-hero__badge .a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);margin-top:12px;font-weight:600}
+.arw-hero__deco{position:absolute;top:-26px;right:-26px;width:120px;height:120px;border:1px solid var(--gold-soft);z-index:-1}
+
+/* ============================================================
+   AT A GLANCE  (two-column editorial)
+   ============================================================ */
+.arw-glance__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start}
+.arw-glance__left h2{margin:20px 0 24px}
+.arw-glance__num{font-family:var(--serif);font-size:5rem;color:var(--champagne-2);line-height:.8;display:block}
+.arw-glance__right p{color:var(--ink-soft);margin-bottom:22px;font-size:1.04rem}
+.arw-glance__right p:first-child{font-size:1.18rem;color:var(--charcoal)}
+.arw-glance__pillars{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.arw-glance__pillar{padding:24px 24px 24px 0;border-bottom:1px solid var(--line)}
+.arw-glance__pillar:nth-child(odd){border-right:1px solid var(--line);padding-right:30px}
+.arw-glance__pillar:nth-child(even){padding-left:30px}
+.arw-glance__pillar h4{font-family:var(--serif);font-size:1.12rem;margin-bottom:6px}
+.arw-glance__pillar p{font-size:.9rem;color:var(--ink-faint);margin:0}
+
+/* ============================================================
+   WHY EXISTS — vertical story blocks
+   ============================================================ */
+.arw-why__head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:70px}
+.arw-why__head p{color:var(--ink-soft)}
+.arw-why__stories{display:grid;grid-template-columns:repeat(3,1fr);gap:54px}
+.arw-story{position:relative;padding-top:30px}
+.arw-story::before{content:"";position:absolute;top:0;left:0;width:46px;height:2px;background:var(--gold)}
+.arw-story__idx{font-family:var(--serif-alt);font-style:italic;font-size:1.1rem;color:var(--gold-deep)}
+.arw-story h3{font-size:1.7rem;margin:14px 0 14px}
+.arw-story p{color:var(--ink-soft);font-size:.98rem}
+.arw-story__img{margin-top:26px;height:200px;overflow:hidden;border-radius:2px}
+.arw-story__img img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);filter:saturate(.9)}
+.arw-story:hover .arw-story__img img{transform:scale(1.07)}
+
+/* ============================================================
+   WHO IT HELPS — segmented list
+   ============================================================ */
+.arw-who{background:var(--warm-white)}
+.arw-who__head{max-width:640px;margin-bottom:54px}
+.arw-who__head h2{margin:18px 0 0}
+.arw-seg{border-top:1px solid var(--line)}
+.arw-seg__row{
+  display:grid;grid-template-columns:64px 1.1fr 2fr auto;gap:30px;align-items:center;
+  padding:30px 8px;border-bottom:1px solid var(--line);transition:all .5s var(--ease);position:relative;
+}
+.arw-seg__row::before{content:"";position:absolute;left:0;top:0;height:100%;width:0;background:var(--champagne);z-index:0;transition:width .5s var(--ease);opacity:.45}
+.arw-seg__row:hover::before{width:100%}
+.arw-seg__row>*{position:relative;z-index:1}
+.arw-seg__row:hover{padding-left:24px}
+.arw-seg__no{font-family:var(--serif);font-size:1.1rem;color:var(--gold-deep)}
+.arw-seg__name{font-family:var(--serif);font-size:1.5rem;color:var(--espresso)}
+.arw-seg__desc{color:var(--ink-soft);font-size:.95rem}
+.arw-seg__icon{font-family:var(--serif-alt);font-style:italic;color:var(--gold-deep);font-size:1.6rem;opacity:.5;transition:opacity .5s,transform .5s}
+.arw-seg__row:hover .arw-seg__icon{opacity:1;transform:translateX(-6px)}
+
+/* ============================================================
+   ADVISORY JOURNEY — interactive timeline (dark)
+   ============================================================ */
+.arw-journey{background:var(--espresso);color:var(--ivory);overflow:hidden}
+.arw-journey .arw-kicker{color:var(--gold-soft)}
+.arw-journey .arw-kicker::before,.arw-journey .arw-kicker.center::after{background:var(--gold-soft)}
+.arw-journey h2{color:var(--paper)}
+.arw-journey__head{text-align:center;max-width:680px;margin:0 auto 66px}
+.arw-journey__head p{color:rgba(247,243,236,.62);margin-top:16px}
+.arw-journey__layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:70px;align-items:center}
+
+/* steps list */
+.arw-steps{position:relative;padding-left:38px}
+.arw-steps::before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:1px;background:rgba(217,195,154,.28)}
+.arw-steps__fill{position:absolute;left:11px;top:6px;width:1px;background:var(--gold-soft);transition:height .5s var(--ease);height:0}
+.arw-step{position:relative;padding:13px 0 13px 8px;cursor:pointer;transition:all .4s var(--ease)}
+.arw-step__dot{position:absolute;left:-32px;top:18px;width:11px;height:11px;border-radius:50%;background:var(--espresso);border:1px solid rgba(217,195,154,.5);transition:all .45s var(--ease)}
+.arw-step__t{font-family:var(--serif);font-size:1.22rem;color:rgba(247,243,236,.55);transition:color .4s}
+.arw-step__n{font-family:var(--sans);font-size:.7rem;letter-spacing:.2em;color:rgba(217,195,154,.6);text-transform:uppercase;display:block;margin-bottom:3px}
+.arw-step.is-active .arw-step__t{color:var(--paper)}
+.arw-step.is-active .arw-step__dot{background:var(--gold-soft);box-shadow:0 0 0 5px rgba(217,195,154,.16);border-color:var(--gold-soft)}
+.arw-step:hover .arw-step__t{color:rgba(247,243,236,.85)}
+
+/* detail panel */
+.arw-journey__panel{position:relative;background:rgba(255,255,255,.035);border:1px solid rgba(217,195,154,.2);padding:50px 48px;border-radius:3px;min-height:340px}
+.arw-journey__panel::before{content:"";position:absolute;top:0;left:0;width:60px;height:2px;background:var(--gold-soft)}
+.arw-panel__num{font-family:var(--serif);font-size:4.6rem;color:rgba(217,195,154,.22);line-height:.8}
+.arw-panel__t{font-family:var(--serif);font-size:2rem;color:var(--paper);margin:16px 0 18px}
+.arw-panel__d{color:rgba(247,243,236,.72);font-size:1.04rem;max-width:440px}
+.arw-panel__meta{margin-top:30px;display:flex;gap:30px;border-top:1px solid rgba(217,195,154,.2);padding-top:22px}
+.arw-panel__meta div span{display:block}
+.arw-panel__meta .k{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(217,195,154,.7);margin-bottom:5px}
+.arw-panel__meta .v{font-family:var(--serif);font-size:1.05rem;color:var(--paper)}
+.arw-fade{animation:arwFade .6s var(--ease)}
+@keyframes arwFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   CORE SERVICES — elegant tiles
+   ============================================================ */
+.arw-serv__head{max-width:620px;margin:0 auto 60px;text-align:center}
+.arw-serv__head h2{margin-top:18px}
+.arw-serv__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+.arw-tile{padding:44px 38px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;transition:background .5s var(--ease)}
+.arw-tile:nth-child(3n){border-right:none}
+.arw-tile:nth-last-child(-n+3){border-bottom:none}
+.arw-tile::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease)}
+.arw-tile:hover{background:var(--warm-white)}
+.arw-tile:hover::after{transform:scaleX(1)}
+.arw-tile__no{font-family:var(--serif-alt);font-style:italic;font-size:1rem;color:var(--gold-deep)}
+.arw-tile h4{font-family:var(--serif);font-size:1.42rem;margin:14px 0 12px;color:var(--espresso)}
+.arw-tile p{color:var(--ink-soft);font-size:.94rem;margin:0}
+
+/* ============================================================
+   MAIN OBJECTIVE — quote section
+   ============================================================ */
+.arw-obj{background:var(--espresso);color:var(--ivory);text-align:center;position:relative;overflow:hidden}
+.arw-obj::before{content:"\201C";position:absolute;top:30px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-size:14rem;color:rgba(217,195,154,.12);line-height:1}
+.arw-obj__inner{max-width:900px;margin:0 auto;position:relative;z-index:1}
+.arw-obj blockquote{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,3.4vw,2.7rem);line-height:1.45;color:var(--paper);font-style:italic}
+.arw-obj blockquote b{color:var(--gold-soft);font-style:normal;font-weight:500}
+.arw-obj__sign{margin-top:36px;font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-soft)}
+.arw-obj__tags{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:40px}
+.arw-obj__tags span{border:1px solid rgba(217,195,154,.35);padding:9px 20px;border-radius:30px;font-size:.78rem;letter-spacing:.05em;color:rgba(247,243,236,.85)}
+
+/* ============================================================
+   RELATIONSHIP MODEL
+   ============================================================ */
+.arw-rel__grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.arw-rel__media{position:relative}
+.arw-rel__media img{width:100%;height:520px;object-fit:cover;border-radius:3px;box-shadow:var(--shadow-soft)}
+.arw-rel__media .arw-rel__chip{position:absolute;right:-26px;top:40px;background:var(--paper);padding:20px 24px;box-shadow:var(--shadow-card);border-left:2px solid var(--gold);max-width:200px}
+.arw-rel__chip .v{font-family:var(--serif);font-size:1.5rem;color:var(--espresso)}
+.arw-rel__chip .k{font-size:.74rem;color:var(--ink-faint);letter-spacing:.04em}
+.arw-rel__copy h2{margin:18px 0 22px}
+.arw-rel__copy>p{color:var(--ink-soft);margin-bottom:30px}
+.arw-rel__list{display:flex;flex-direction:column;gap:4px}
+.arw-rel__item{display:flex;gap:20px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
+.arw-rel__item:last-child{border-bottom:1px solid var(--line)}
+.arw-rel__item .ic{font-family:var(--serif);font-size:1.2rem;color:var(--gold-deep);width:30px;flex-shrink:0;transition:transform .5s var(--ease)}
+.arw-rel__item:hover .ic{transform:translateY(-3px)}
+.arw-rel__item b{font-family:var(--serif);font-weight:500;font-size:1.1rem;color:var(--espresso);display:block;margin-bottom:2px}
+.arw-rel__item span{color:var(--ink-soft);font-size:.92rem}
+
+/* ============================================================
+   IMPACT — subtle counters
+   ============================================================ */
+.arw-impact{background:var(--warm-white);text-align:center}
+.arw-impact__head{max-width:680px;margin:0 auto 64px}
+.arw-impact__head p{color:var(--ink-soft);margin-top:16px}
+.arw-impact__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.arw-metric{padding:50px 24px;border-right:1px solid var(--line)}
+.arw-metric:last-child{border-right:none}
+.arw-metric__v{font-family:var(--serif);font-size:clamp(2.6rem,4.6vw,3.6rem);color:var(--espresso);line-height:1}
+.arw-metric__v .suf{color:var(--gold-deep)}
+.arw-metric__l{margin-top:14px;font-size:.82rem;letter-spacing:.04em;color:var(--ink-soft)}
+
+/* ============================================================
+   CONTACT — consultation
+   ============================================================ */
+.arw-contact{background:var(--paper)}
+.arw-contact__grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:0;border:1px solid var(--line);box-shadow:var(--shadow-soft)}
+.arw-contact__aside{background:var(--espresso);color:var(--ivory);padding:60px 50px;position:relative;overflow:hidden}
+.arw-contact__aside::after{content:"";position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border:1px solid rgba(217,195,154,.25);border-radius:50%}
+.arw-contact__aside .arw-kicker{color:var(--gold-soft)}
+.arw-contact__aside .arw-kicker::before{background:var(--gold-soft)}
+.arw-contact__aside h2{color:var(--paper);font-size:2.1rem;margin:18px 0 16px}
+.arw-contact__aside>p{color:rgba(247,243,236,.62);margin-bottom:40px}
+.arw-channel{display:flex;gap:18px;align-items:flex-start;padding:22px 0;border-top:1px solid rgba(217,195,154,.22)}
+.arw-channel:last-child{border-bottom:1px solid rgba(217,195,154,.22)}
+.arw-channel .ic{font-family:var(--serif);font-size:1.1rem;color:var(--gold-soft);width:26px;flex-shrink:0}
+.arw-channel b{font-family:var(--serif);font-weight:500;font-size:1.15rem;color:var(--paper);display:block}
+.arw-channel span{font-size:.86rem;color:rgba(247,243,236,.6)}
+
+.arw-form{padding:56px 52px;background:var(--paper)}
+.arw-form__note{display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);border:1px solid var(--gold-soft);padding:7px 16px;border-radius:30px;margin-bottom:26px}
+.arw-form h3{font-size:1.7rem;margin-bottom:30px}
+.arw-field{margin-bottom:26px;position:relative}
+.arw-field label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:10px}
+.arw-field input,.arw-field select,.arw-field textarea{
+  width:100%;border:none;border-bottom:1px solid var(--line);background:transparent;
+  padding:8px 0;font-family:var(--sans);font-size:1rem;color:var(--charcoal);transition:border-color .4s;
+}
+.arw-field textarea{resize:vertical;min-height:80px}
+.arw-field input:focus,.arw-field select:focus,.arw-field textarea:focus{outline:none;border-bottom-color:var(--gold-deep)}
+.arw-field input::placeholder,.arw-field textarea::placeholder{color:var(--ink-faint);opacity:.7}
+.arw-form__cols{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.arw-field .err{display:none;color:var(--maroon);font-size:.74rem;margin-top:6px;letter-spacing:.02em}
+.arw-field.invalid input,.arw-field.invalid select,.arw-field.invalid textarea{border-bottom-color:var(--maroon)}
+.arw-field.invalid .err{display:block}
+.arw-form__foot{margin-top:8px}
+.arw-form__disclaimer{font-size:.78rem;color:var(--ink-faint);margin-top:18px;font-style:italic}
+.arw-form__ok{display:none;margin-top:20px;padding:16px 18px;background:var(--champagne);border-left:2px solid var(--gold);color:var(--espresso);font-size:.92rem}
+.arw-form__ok.show{display:block;animation:arwFade .5s var(--ease)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.arw-footer{background:var(--espresso);color:rgba(247,243,236,.7);padding:80px 0 34px}
+.arw-footer__top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.4fr;gap:48px;padding-bottom:50px;border-bottom:1px solid rgba(217,195,154,.18)}
+.arw-footer .arw-brand__name{color:var(--paper)}
+.arw-footer__about{margin-top:22px;font-size:.92rem;max-width:320px;color:rgba(247,243,236,.6)}
+.arw-footer h5{font-family:var(--serif);font-weight:500;color:var(--paper);font-size:1.05rem;margin-bottom:20px}
+.arw-footer__links li{margin-bottom:13px}
+.arw-footer__links a{font-size:.9rem;color:rgba(247,243,236,.62);transition:color .35s}
+.arw-footer__links a:hover{color:var(--gold-soft)}
+.arw-footer__disc{font-size:.82rem;color:rgba(247,243,236,.6);line-height:1.7;border:1px solid rgba(217,195,154,.2);padding:18px;border-radius:2px}
+.arw-footer__disc b{color:var(--gold-soft);font-weight:600}
+.arw-footer__bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;padding-top:28px;font-size:.8rem;color:rgba(247,243,236,.45)}
+
+/* ---------- scroll top ---------- */
+.arw-top{
+  position:fixed;bottom:32px;right:32px;width:50px;height:50px;border-radius:50%;z-index:150;
+  border:1px solid var(--gold);background:var(--paper);color:var(--gold-deep);cursor:pointer;
+  display:grid;place-items:center;font-family:var(--serif);font-size:1.1rem;
+  opacity:0;visibility:hidden;transform:translateY(16px);transition:all .5s var(--ease);box-shadow:var(--shadow-card);
+}
+.arw-top.show{opacity:1;visibility:visible;transform:none}
+.arw-top:hover{background:var(--espresso);color:var(--gold-soft);border-color:var(--espresso)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1040px){
+  :root{--pad:90px}
+  .arw-hero__grid,.arw-glance__grid,.arw-rel__grid,.arw-journey__layout{grid-template-columns:1fr;gap:50px}
+  .arw-hero__media{max-width:520px;margin:0 auto}
+  .arw-why__stories{grid-template-columns:1fr;gap:60px;max-width:520px}
+  .arw-serv__grid{grid-template-columns:1fr 1fr}
+  .arw-tile:nth-child(3n){border-right:1px solid var(--line)}
+  .arw-tile:nth-child(2n){border-right:none}
+  .arw-tile:nth-last-child(-n+3){border-bottom:1px solid var(--line)}
+  .arw-tile:nth-last-child(-n+2){border-bottom:none}
+  .arw-impact__grid{grid-template-columns:1fr 1fr}
+  .arw-metric:nth-child(2){border-right:none}
+  .arw-metric:nth-child(1),.arw-metric:nth-child(2){border-bottom:1px solid var(--line)}
+  .arw-contact__grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .arw-wrap{padding:0 26px}
+  .arw-menu,.arw-nav__cta{display:none}
+  .arw-burger{display:flex}
+  .arw-menu.is-mobile{
+    display:flex;flex-direction:column;align-items:flex-start;gap:0;
+    position:fixed;inset:0 0 0 auto;width:80%;max-width:340px;height:100vh;z-index:210;
+    background:var(--paper);padding:110px 40px 40px;transform:translateX(100%);transition:transform .5s var(--ease);
+    box-shadow:-30px 0 60px -30px rgba(42,33,27,.4);
+  }
+  .arw-menu.is-mobile.is-open{transform:translateX(0)}
+  .arw-menu.is-mobile a{font-family:var(--serif);font-size:1.5rem;color:var(--espresso);padding:16px 0;width:100%;border-bottom:1px solid var(--line)}
+  .arw-overlay{position:fixed;inset:0;background:rgba(42,33,27,.4);z-index:205;opacity:0;visibility:hidden;transition:.4s}
+  .arw-overlay.show{opacity:1;visibility:visible}
+  .arw-why__head,.arw-form__cols,.arw-glance__pillars{grid-template-columns:1fr}
+  .arw-hero__frame img{height:440px}
+  .arw-hero__badge{left:0;bottom:0;position:relative;margin-top:-30px;margin-left:20px}
+  .arw-seg__row{grid-template-columns:40px 1fr;gap:14px;row-gap:6px}
+  .arw-seg__desc{grid-column:1/-1}
+  .arw-seg__icon{display:none}
+  .arw-rel__media .arw-rel__chip{right:0;position:relative;margin-top:16px}
+}
+@media(max-width:540px){
+  .arw-serv__grid,.arw-impact__grid{grid-template-columns:1fr}
+  .arw-tile{border-right:none !important}
+  .arw-metric{border-right:none !important}
+  .arw-footer__top{grid-template-columns:1fr 1fr}
+  .arw-journey__panel{padding:36px 28px}
+  .arw-contact__aside,.arw-form{padding:40px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="arw-nav" id="arwNav">
+  <div class="arw-wrap arw-nav__row">
+    <a href="#top" class="arw-brand">
+      <span class="arw-brand__mark">AR</span>
+      <span class="arw-brand__name">Anand Rathi Wealth<small>Private Wealth Advisory</small></span>
+    </a>
+    <nav class="arw-menu" id="arwMenu">
+      <a href="#glance">The Company</a>
+      <a href="#why">Purpose</a>
+      <a href="#who">Who We Serve</a>
+      <a href="#journey">Advisory Journey</a>
+      <a href="#services">Services</a>
+      <a href="#relationship">Our Model</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="arw-nav__cta">
+      <a href="#contact" class="arw-btn arw-btn--line">Connect With Advisor</a>
+    </div>
+    <button class="arw-burger" id="arwBurger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="arw-overlay" id="arwOverlay"></div>
+
+<!-- ============ HERO ============ -->
+<section class="arw-hero" id="top">
+  <div class="arw-wrap arw-hero__grid">
+    <div class="arw-hero__copy">
+      <span class="arw-kicker r">Anand Rathi Wealth Ltd.</span>
+      <h1 class="arw-display r r-1">Private Wealth,<br><span class="arw-em">Personally Guided</span></h1>
+      <p class="arw-lede r r-2" style="margin-bottom:20px">Guiding wealth with trust, strategy and long-term vision.</p>
+      <p class="arw-hero__sub r r-2">A private wealth advisory dedicated to helping individuals and families preserve what they have built, plan for what lies ahead, and grow their capital with quiet, considered discipline.</p>
+      <div class="arw-hero__actions r r-3">
+        <a href="#glance" class="arw-btn arw-btn--solid">Understand the Company <span class="ar">&rarr;</span></a>
+        <a href="#contact" class="arw-btn arw-btn--line">Connect With Advisor</a>
+      </div>
+      <div class="arw-hero__stats r r-4">
+        <div class="arw-stat"><span class="arw-stat__ic">i.</span><div class="arw-stat__t">Wealth Advisory</div><div class="arw-stat__s">Considered, personal counsel</div></div>
+        <div class="arw-stat"><span class="arw-stat__ic">ii.</span><div class="arw-stat__t">Goal Planning</div><div class="arw-stat__s">Strategies built around you</div></div>
+        <div class="arw-stat"><span class="arw-stat__ic">iii.</span><div class="arw-stat__t">Client Relationships</div><div class="arw-stat__s">Partnerships across generations</div></div>
+      </div>
+    </div>
+    <div class="arw-hero__media r r-2">
+      <div class="arw-hero__deco"></div>
+      <div class="arw-hero__frame">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1000&q=80" alt="Wealth advisor in conversation with private clients" loading="eager" />
+      </div>
+      <div class="arw-hero__badge">
+        <p class="q">"Wealth, thoughtfully guided, becomes a legacy."</p>
+        <p class="a">A relationship-led philosophy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AT A GLANCE ============ -->
+<section class="arw-sec arw-sec--paper" id="glance">
+  <div class="arw-wrap arw-glance__grid">
+    <div class="arw-glance__left r">
+      <span class="arw-glance__num">01</span>
+      <span class="arw-kicker" style="margin-top:18px">The Company at a Glance</span>
+      <h2 class="arw-h2">A house built<br>around your wealth</h2>
+      <p style="color:var(--ink-soft)">An advisory practice where every recommendation begins with understanding the person behind the portfolio.</p>
+    </div>
+    <div class="arw-glance__right r r-2">
+      <p>Anand Rathi Wealth Ltd. is a private wealth management and investment advisory firm. We help clients make calm, well-informed decisions about their money — combining financial planning, investment advisory and dedicated relationship management into one trusted relationship.</p>
+      <p>Rather than selling products, we begin with your life: your goals, your responsibilities and the future you wish to secure. From there we shape strategies that protect capital, pursue sensible growth, and adapt as your circumstances evolve over the years.</p>
+      <div class="arw-glance__pillars">
+        <div class="arw-glance__pillar"><h4>Wealth Management</h4><p>A coordinated view of your entire financial life.</p></div>
+        <div class="arw-glance__pillar"><h4>Investment Advisory</h4><p>Guidance grounded in research and suitability.</p></div>
+        <div class="arw-glance__pillar"><h4>Financial Planning</h4><p>Roadmaps aligned to your goals and timelines.</p></div>
+        <div class="arw-glance__pillar"><h4>Lasting Relationships</h4><p>Continuity and care across decades.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="arw-wrap"><div class="arw-rule"></div></div>
+
+<!-- ============ WHY EXISTS ============ -->
+<section class="arw-sec" id="why">
+  <div class="arw-wrap">
+    <div class="arw-why__head">
+      <div class="r">
+        <span class="arw-kicker">Why the Company Exists</span>
+        <h2 class="arw-h2" style="margin-top:18px">Purpose, before<br>products</h2>
+      </div>
+      <p class="r r-2">We exist for a simple reason: to help clients protect, manage and grow their wealth with guidance they can trust. Three commitments shape everything we do.</p>
+    </div>
+    <div class="arw-why__stories">
+      <article class="arw-story r r-1">
+        <span class="arw-story__idx">i.</span>
+        <h3>Preserve Wealth</h3>
+        <p>Safeguarding what you have earned through prudent, risk-aware planning — so the foundation you have built remains secure for those who depend on it.</p>
+        <div class="arw-story__img"><img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=800&q=80" alt="Family wealth preservation planning" loading="lazy" /></div>
+      </article>
+      <article class="arw-story r r-2">
+        <span class="arw-story__idx">ii.</span>
+        <h3>Plan Future Goals</h3>
+        <p>Translating ambitions — education, retirement, legacy — into structured, achievable plans, with clear milestones and the flexibility to adapt over time.</p>
+        <div class="arw-story__img"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Planning future financial goals" loading="lazy" /></div>
+      </article>
+      <article class="arw-story r r-3">
+        <span class="arw-story__idx">iii.</span>
+        <h3>Grow Capital Responsibly</h3>
+        <p>Pursuing meaningful, long-term growth through suitable, well-researched solutions — never speculation, always considered and aligned to your comfort.</p>
+        <div class="arw-story__img"><img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?auto=format&fit=crop&w=800&q=80" alt="Responsible long-term capital growth" loading="lazy" /></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT HELPS ============ -->
+<section class="arw-sec arw-who" id="who">
+  <div class="arw-wrap">
+    <div class="arw-who__head r">
+      <span class="arw-kicker">Who We Serve</span>
+      <h2 class="arw-h2">Advisory shaped around<br>distinct lives</h2>
+    </div>
+    <div class="arw-seg">
+      <div class="arw-seg__row r"><span class="arw-seg__no">01</span><span class="arw-seg__name">High Net-Worth Individuals</span><span class="arw-seg__desc">Discreet, sophisticated counsel for substantial and complex portfolios.</span><span class="arw-seg__icon">&rarr;</span></div>
+      <div class="arw-seg__row r"><span class="arw-seg__no">02</span><span class="arw-seg__name">Families</span><span class="arw-seg__desc">Coordinated planning across generations, goals and shared responsibilities.</span><span class="arw-seg__icon">&rarr;</span></div>
+      <div class="arw-seg__row r"><span class="arw-seg__no">03</span><span class="arw-seg__name">Business Owners</span><span class="arw-seg__desc">Balancing enterprise, personal wealth and long-term financial security.</span><span class="arw-seg__icon">&rarr;</span></div>
+      <div class="arw-seg__row r"><span class="arw-seg__no">04</span><span class="arw-seg__name">Professionals</span><span class="arw-seg__desc">Structured wealth-building for those at the height of their careers.</span><span class="arw-seg__icon">&rarr;</span></div>
+      <div class="arw-seg__row r"><span class="arw-seg__no">05</span><span class="arw-seg__name">Retirement-Focused Clients</span><span class="arw-seg__desc">Income, stability and peace of mind for the years that matter most.</span><span class="arw-seg__icon">&rarr;</span></div>
+      <div class="arw-seg__row r"><span class="arw-seg__no">06</span><span class="arw-seg__name">Long-Term Investors</span><span class="arw-seg__desc">Patient strategies for those who measure success over decades.</span><span class="arw-seg__icon">&rarr;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADVISORY JOURNEY (interactive) ============ -->
+<section class="arw-sec arw-journey" id="journey">
+  <div class="arw-wrap">
+    <div class="arw-journey__head">
+      <span class="arw-kicker center">The Wealth Advisory Journey</span>
+      <h2 class="arw-h2 r">A considered path, walked together</h2>
+      <p class="r r-1">Select a stage to explore how we move from first understanding to a lasting advisory relationship.</p>
+    </div>
+    <div class="arw-journey__layout">
+      <div class="arw-steps r" id="arwSteps">
+        <span class="arw-steps__fill" id="arwStepsFill"></span>
+        <div class="arw-step is-active" data-step="0"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 01</span><span class="arw-step__t">Understand Client Profile</span></div>
+        <div class="arw-step" data-step="1"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 02</span><span class="arw-step__t">Identify Goals &amp; Risk Appetite</span></div>
+        <div class="arw-step" data-step="2"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 03</span><span class="arw-step__t">Create a Wealth Strategy</span></div>
+        <div class="arw-step" data-step="3"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 04</span><span class="arw-step__t">Recommend Investment Solutions</span></div>
+        <div class="arw-step" data-step="4"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 05</span><span class="arw-step__t">Monitor &amp; Review Portfolio</span></div>
+        <div class="arw-step" data-step="5"><span class="arw-step__dot"></span><span class="arw-step__n">Stage 06</span><span class="arw-step__t">Long-Term Relationship Support</span></div>
+      </div>
+      <div class="arw-journey__panel r r-2" id="arwPanel">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CORE SERVICES ============ -->
+<section class="arw-sec arw-sec--paper" id="services">
+  <div class="arw-wrap">
+    <div class="arw-serv__head r">
+      <span class="arw-kicker center">Core Services</span>
+      <h2 class="arw-h2">A complete advisory practice</h2>
+    </div>
+    <div class="arw-serv__grid">
+      <div class="arw-tile r"><span class="arw-tile__no">01</span><h4>Wealth Management</h4><p>A single, coordinated view of your complete financial picture.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">02</span><h4>Investment Advisory</h4><p>Research-led guidance tailored to your objectives and suitability.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">03</span><h4>Mutual Fund Solutions</h4><p>Curated fund portfolios aligned to your goals and horizon.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">04</span><h4>Structured Products</h4><p>Sophisticated solutions for defined outcomes and risk profiles.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">05</span><h4>Portfolio Review</h4><p>Regular, disciplined assessment to keep strategy on course.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">06</span><h4>Goal-Based Planning</h4><p>Clear plans built around the milestones that matter to you.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">07</span><h4>Retirement Planning</h4><p>Dependable income and stability for life beyond work.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">08</span><h4>Family Wealth Planning</h4><p>Continuity, succession and harmony across generations.</p></div>
+      <div class="arw-tile r"><span class="arw-tile__no">09</span><h4>Relationship Management</h4><p>A dedicated point of trust, present through every chapter.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAIN OBJECTIVE ============ -->
+<section class="arw-sec arw-obj">
+  <div class="arw-wrap arw-obj__inner">
+    <span class="arw-kicker center r" style="justify-content:center;color:var(--gold-soft)">Our Main Objective</span>
+    <blockquote class="r r-1" style="margin-top:30px">To create <b>long-term wealth</b> and ensure <b>capital preservation</b> through <b>trusted guidance</b> and <b>personalised investment planning</b> — so every client moves toward their future with clarity and confidence.</blockquote>
+    <div class="arw-obj__sign r r-2">— The promise of Anand Rathi Wealth</div>
+    <div class="arw-obj__tags r r-3">
+      <span>Long-Term Wealth Creation</span>
+      <span>Capital Preservation</span>
+      <span>Trusted Guidance</span>
+      <span>Personalised Planning</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RELATIONSHIP MODEL ============ -->
+<section class="arw-sec" id="relationship">
+  <div class="arw-wrap arw-rel__grid">
+    <div class="arw-rel__media r">
+      <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=900&q=80" alt="Relationship manager advising a client" loading="lazy" />
+      <div class="arw-rel__chip">
+        <div class="v">One Advisor</div>
+        <div class="k">A single, lasting point of trust</div>
+      </div>
+    </div>
+    <div class="arw-rel__copy r r-2">
+      <span class="arw-kicker">A Relationship-Led Model</span>
+      <h2 class="arw-h2">Built on people,<br>not transactions</h2>
+      <p>Anand Rathi Wealth functions through genuine understanding. A dedicated relationship manager learns your story, advisory specialists shape the strategy, and your portfolio is reviewed continuously — so guidance stays aligned to your life as it changes.</p>
+      <div class="arw-rel__list">
+        <div class="arw-rel__item"><span class="ic">01</span><div><b>Client Understanding</b><span>We listen first — to your goals, concerns and circumstances.</span></div></div>
+        <div class="arw-rel__item"><span class="ic">02</span><div><b>Relationship Managers</b><span>A dedicated advisor who stays with you for the long term.</span></div></div>
+        <div class="arw-rel__item"><span class="ic">03</span><div><b>Advisory Support</b><span>Specialist insight and research behind every recommendation.</span></div></div>
+        <div class="arw-rel__item"><span class="ic">04</span><div><b>Product Selection</b><span>Suitable solutions chosen to fit your strategy, not the other way round.</span></div></div>
+        <div class="arw-rel__item"><span class="ic">05</span><div><b>Continuous Review</b><span>Ongoing monitoring to keep your plan on course over time.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section class="arw-sec arw-impact" id="impact">
+  <div class="arw-wrap">
+    <div class="arw-impact__head r">
+      <span class="arw-kicker center">Impact in Wealth Management</span>
+      <h2 class="arw-h2">A trusted name in India's growing wealth landscape</h2>
+      <p>As more of India builds and inherits wealth, considered advisory matters more than ever. Anand Rathi Wealth contributes to a maturing industry — one where families are guided with discipline, transparency and genuine, long-term care.</p>
+    </div>
+    <div class="arw-impact__grid">
+      <div class="arw-metric r r-1"><div class="arw-metric__v" data-to="6"><span class="n">0</span><span class="suf">+</span></div><div class="arw-metric__l">Client segments served</div></div>
+      <div class="arw-metric r r-2"><div class="arw-metric__v" data-to="9"><span class="n">0</span><span class="suf">+</span></div><div class="arw-metric__l">Core advisory services</div></div>
+      <div class="arw-metric r r-3"><div class="arw-metric__v" data-to="100"><span class="n">0</span><span class="suf">%</span></div><div class="arw-metric__l">Personalised guidance</div></div>
+      <div class="arw-metric r r-4"><div class="arw-metric__v" data-to="360"><span class="n">0</span><span class="suf">&deg;</span></div><div class="arw-metric__l">View of your wealth</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="arw-sec arw-contact" id="contact">
+  <div class="arw-wrap">
+    <div class="arw-contact__grid r">
+      <aside class="arw-contact__aside">
+        <span class="arw-kicker">Wealth Enquiry</span>
+        <h2 class="arw-h2">Begin a conversation</h2>
+        <p>Share a few details and the right specialist will reach out to understand how we may be of service.</p>
+        <div class="arw-channel"><span class="ic">01</span><div><b>Wealth Advisory Enquiry</b><span>Explore how our advisory approach fits your needs.</span></div></div>
+        <div class="arw-channel"><span class="ic">02</span><div><b>Relationship Manager Assistance</b><span>Speak with a dedicated point of contact.</span></div></div>
+        <div class="arw-channel"><span class="ic">03</span><div><b>Investment Planning Support</b><span>Discuss goals, planning and suitable solutions.</span></div></div>
+      </aside>
+
+      <form class="arw-form" id="arwForm" novalidate>
+        <span class="arw-form__note">By Invitation &amp; Enquiry</span>
+        <h3>Request a private consultation</h3>
+        <div class="arw-form__cols">
+          <div class="arw-field">
+            <label for="arwName">Full Name</label>
+            <input type="text" id="arwName" placeholder="Your name" />
+            <span class="err">Kindly enter your name.</span>
+          </div>
+          <div class="arw-field">
+            <label for="arwEmail">Email</label>
+            <input type="email" id="arwEmail" placeholder="you@example.com" />
+            <span class="err">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="arw-form__cols">
+          <div class="arw-field">
+            <label for="arwPhone">Phone</label>
+            <input type="tel" id="arwPhone" placeholder="10-digit number" />
+            <span class="err">Please enter a valid 10-digit number.</span>
+          </div>
+          <div class="arw-field">
+            <label for="arwType">Client Type</label>
+            <select id="arwType">
+              <option value="">Select</option>
+              <option>High Net-Worth Individual</option>
+              <option>Family</option>
+              <option>Business Owner</option>
+              <option>Professional</option>
+              <option>Retirement-Focused</option>
+              <option>Long-Term Investor</option>
+            </select>
+            <span class="err">Please select a client type.</span>
+          </div>
+        </div>
+        <div class="arw-field">
+          <label for="arwService">Service Interested In</label>
+          <select id="arwService">
+            <option value="">Select a service</option>
+            <option>Wealth Management</option>
+            <option>Investment Advisory</option>
+            <option>Mutual Fund Solutions</option>
+            <option>Structured Products</option>
+            <option>Portfolio Review</option>
+            <option>Goal-Based Planning</option>
+            <option>Retirement Planning</option>
+            <option>Family Wealth Planning</option>
+            <option>Relationship Management</option>
+          </select>
+          <span class="err">Please select a service.</span>
+        </div>
+        <div class="arw-field">
+          <label for="arwMsg">Message</label>
+          <textarea id="arwMsg" placeholder="Tell us a little about what you are looking for..."></textarea>
+          <span class="err">Please add a brief message (min 10 characters).</span>
+        </div>
+        <div class="arw-form__foot">
+          <button type="submit" class="arw-btn arw-btn--gold">Request Consultation <span class="ar">&rarr;</span></button>
+          <p class="arw-form__disclaimer">This form is for academic/project demonstration only.</p>
+          <div class="arw-form__ok" id="arwOk">Thank you. Your enquiry has been noted for this demonstration — a specialist would be in touch shortly.</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="arw-footer">
+  <div class="arw-wrap">
+    <div class="arw-footer__top">
+      <div>
+        <div class="arw-brand">
+          <span class="arw-brand__mark" style="border-color:var(--gold-soft);color:var(--gold-soft)">AR</span>
+          <span class="arw-brand__name">Anand Rathi Wealth<small style="color:rgba(247,243,236,.45)">Private Wealth Advisory</small></span>
+        </div>
+        <p class="arw-footer__about">A private wealth advisory guiding individuals and families to preserve, plan and grow their wealth with trust, strategy and a long-term vision.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul class="arw-footer__links">
+          <li><a href="#glance">The Company</a></li>
+          <li><a href="#why">Purpose</a></li>
+          <li><a href="#who">Who We Serve</a></li>
+          <li><a href="#journey">Advisory Journey</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Practice</h5>
+        <ul class="arw-footer__links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#relationship">Our Model</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Project Note</h5>
+        <div class="arw-footer__disc"><b>Academic Disclaimer:</b> This is a non-commercial educational project created for learning and demonstration. It is not affiliated with, endorsed by, or an official source of Anand Rathi Wealth Ltd. All figures are illustrative.</div>
+      </div>
+    </div>
+    <div class="arw-footer__bottom">
+      <span>&copy; 2026 Anand Rathi Wealth Ltd. — Company Profile (Demo). For academic use only.</span>
+      <span>A premium private wealth advisory UI demonstration.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="arw-top" id="arwTop" aria-label="Back to top">&uarr;</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- nav state ---- */
+  var nav = document.getElementById('arwNav');
+  var top = document.getElementById('arwTop');
+  function onScroll(){
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    nav.classList.toggle('is-stuck', y > 40);
+    top.classList.toggle('show', y > 700);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  top.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+  /* ---- mobile menu ---- */
+  var burger = document.getElementById('arwBurger');
+  var menu = document.getElementById('arwMenu');
+  var overlay = document.getElementById('arwOverlay');
+  function close(){ burger.classList.remove('is-open'); menu.classList.remove('is-mobile','is-open'); overlay.classList.remove('show'); document.body.style.overflow=''; }
+  function open(){ burger.classList.add('is-open'); menu.classList.add('is-mobile','is-open'); overlay.classList.add('show'); document.body.style.overflow='hidden'; }
+  burger.addEventListener('click', function(){ menu.classList.contains('is-open') ? close() : open(); });
+  overlay.addEventListener('click', close);
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+
+  /* ---- smooth anchor scroll with offset ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = this.getAttribute('href');
+      if(id.length < 2) return;
+      var t = document.querySelector(id);
+      if(t){ e.preventDefault(); window.scrollTo({top: t.getBoundingClientRect().top + window.pageYOffset - 76, behavior:'smooth'}); }
+    });
+  });
+
+  /* ---- reveal on scroll ---- */
+  var rEls = document.querySelectorAll('.r');
+  if('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); ro.unobserve(en.target); } });
+    }, {threshold:0.14, rootMargin:'0px 0px -50px 0px'});
+    rEls.forEach(function(el){ ro.observe(el); });
+  } else { rEls.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* ---- active nav link ---- */
+  var ids = ['glance','why','who','journey','services','relationship','contact'];
+  var secs = ids.map(function(i){ return document.getElementById(i); }).filter(Boolean);
+  var anchors = {};
+  document.querySelectorAll('#arwMenu a[href^="#"]').forEach(function(a){ anchors[a.getAttribute('href').slice(1)] = a; });
+  function active(){
+    var pos = window.pageYOffset + 150, cur = null;
+    secs.forEach(function(s){ if(s.offsetTop <= pos) cur = s.id; });
+    Object.keys(anchors).forEach(function(k){ anchors[k].classList.toggle('is-active', k === cur); });
+  }
+  window.addEventListener('scroll', active, {passive:true});
+  active();
+
+  /* ---- advisory journey interactive ---- */
+  var journeyData = [
+    {t:'Understand Client Profile', d:'We begin by listening. Through unhurried conversation we learn about your life, your family, your responsibilities and what financial security truly means to you.', a:'First meeting', b:'Personal & financial context'},
+    {t:'Identify Goals & Risk Appetite', d:'Together we define what you are working toward and how much risk feels right — clarifying priorities, timelines and the comfort that should guide every decision.', a:'Discovery', b:'Goals, horizon & risk profile'},
+    {t:'Create a Wealth Strategy', d:'We craft a tailored strategy that connects your goals to a clear plan — balancing preservation and growth in a way that fits your circumstances.', a:'Strategy design', b:'Asset & planning framework'},
+    {t:'Recommend Investment Solutions', d:'Suitable, well-researched solutions are selected to bring the strategy to life — chosen for their fit with your plan rather than for their own sake.', a:'Implementation', b:'Suitability-led selection'},
+    {t:'Monitor & Review Portfolio', d:'Your portfolio is reviewed with discipline and care. We track progress, respond to change and keep everything aligned to your evolving objectives.', a:'Ongoing', b:'Regular structured reviews'},
+    {t:'Long-Term Relationship Support', d:'Beyond the numbers, we remain a steady point of trust — guiding you and your family through every chapter, year after year.', a:'Lifelong', b:'Continuity & relationship care'}
+  ];
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.arw-step'));
+  var panel = document.getElementById('arwPanel');
+  var fill = document.getElementById('arwStepsFill');
+  function render(i){
+    var s = journeyData[i];
+    panel.innerHTML =
+      '<div class="arw-fade">'+
+        '<div class="arw-panel__num">0'+(i+1)+'</div>'+
+        '<h3 class="arw-panel__t">'+s.t+'</h3>'+
+        '<p class="arw-panel__d">'+s.d+'</p>'+
+        '<div class="arw-panel__meta">'+
+          '<div><span class="k">Phase</span><span class="v">'+s.a+'</span></div>'+
+          '<div><span class="k">Focus</span><span class="v">'+s.b+'</span></div>'+
+        '</div>'+
+      '</div>';
+    steps.forEach(function(st,idx){ st.classList.toggle('is-active', idx===i); });
+    if(steps.length>1){ fill.style.height = (i/(steps.length-1))*100 + '%'; }
+  }
+  steps.forEach(function(st){
+    var go = function(){ render(parseInt(st.getAttribute('data-step'),10)); };
+    st.addEventListener('click', go);
+    st.addEventListener('mouseenter', go);
+  });
+  render(0);
+
+  /* ---- subtle counters ---- */
+  function count(el){
+    var to = parseFloat(el.getAttribute('data-to'));
+    var nEl = el.querySelector('.n');
+    var dur = 1700, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur,1);
+      var e = 1 - Math.pow(1-p,3);
+      nEl.textContent = Math.round(to*e);
+      if(p<1) requestAnimationFrame(step); else nEl.textContent = to;
+    }
+    requestAnimationFrame(step);
+  }
+  var metrics = document.querySelectorAll('[data-to]');
+  if('IntersectionObserver' in window){
+    var co = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ count(en.target); co.unobserve(en.target); } });
+    }, {threshold:0.5});
+    metrics.forEach(function(m){ co.observe(m); });
+  } else { metrics.forEach(count); }
+
+  /* ---- form demo validation ---- */
+  var form = document.getElementById('arwForm');
+  var ok = document.getElementById('arwOk');
+  function mark(id, bad){ document.getElementById(id).closest('.arw-field').classList.toggle('invalid', bad); }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('arwName').value.trim();
+    var email = document.getElementById('arwEmail').value.trim();
+    var phone = document.getElementById('arwPhone').value.trim().replace(/\D/g,'');
+    var type = document.getElementById('arwType').value;
+    var serv = document.getElementById('arwService').value;
+    var msg = document.getElementById('arwMsg').value.trim();
+    var eOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var pOk = phone.length >= 10;
+    var bad = {
+      arwName: name.length < 2, arwEmail: !eOk, arwPhone: !pOk,
+      arwType: type === '', arwService: serv === '', arwMsg: msg.length < 10
+    };
+    Object.keys(bad).forEach(function(k){ mark(k, bad[k]); });
+    var hasErr = Object.keys(bad).some(function(k){ return bad[k]; });
+    if(hasErr){ ok.classList.remove('show'); return; }
+    ok.classList.add('show'); form.reset();
+    setTimeout(function(){ ok.classList.remove('show'); }, 6500);
+  });
+  ['arwName','arwEmail','arwPhone','arwType','arwService','arwMsg'].forEach(function(id){
+    var el = document.getElementById(id);
+    var ev = el.tagName === 'SELECT' ? 'change' : 'input';
+    el.addEventListener(ev, function(){ el.closest('.arw-field').classList.remove('invalid'); });
+  });
+})();
+</script>
+</body>
+</html>
