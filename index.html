@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Motilal Oswal Financial Services Ltd. - Empowering investors through research, advisory and wealth creation. Premium corporate profile." />
+<title>Motilal Oswal Financial Services Ltd. | Empowering Investors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+/* ============================================================
+   DESIGN SYSTEM
+   ============================================================ */
+:root{
+  --navy-950:#070d1f;
+  --navy-900:#0b1430;
+  --navy-800:#10204a;
+  --navy-700:#1a2c63;
+  --navy-600:#26408b;
+  --ink:#0b1430;
+  --ink-soft:#1f2a4a;
+  --muted:#6b7794;
+  --line:rgba(255,255,255,0.10);
+  --line-dark:rgba(11,20,48,0.08);
+  --white:#ffffff;
+  --cream:#f7f9fc;
+  --gold:#f5b544;
+  --gold-2:#e89a1c;
+  --orange:#ff7a3d;
+  --accent:#3b82f6;
+  --accent-2:#22d3ee;
+  --grad-primary:linear-gradient(135deg,#f5b544 0%,#ff7a3d 100%);
+  --grad-cool:linear-gradient(135deg,#1a2c63 0%,#26408b 50%,#3b82f6 100%);
+  --grad-hero:radial-gradient(1200px 600px at 80% -10%,rgba(245,181,68,0.18),transparent 60%),radial-gradient(900px 600px at -10% 30%,rgba(59,130,246,0.20),transparent 55%),linear-gradient(180deg,#070d1f 0%,#0b1430 60%,#10204a 100%);
+  --shadow-card:0 20px 50px -20px rgba(7,13,31,0.35);
+  --shadow-glow:0 25px 80px -20px rgba(245,181,68,0.45);
+  --radius-sm:10px;
+  --radius:18px;
+  --radius-lg:26px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink);
+  background:var(--white);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans','Manrope',sans-serif;line-height:1.18;letter-spacing:-0.02em;color:var(--ink)}
+h1{font-weight:800}
+h2{font-weight:800;font-size:clamp(1.9rem,3.4vw,2.85rem)}
+h3{font-weight:700;font-size:1.25rem}
+p{color:#475067}
+.container{width:min(1200px,92%);margin-inline:auto}
+section{padding:clamp(70px,9vw,120px) 0;position:relative}
+
+/* ============================================================
+   UTILITY: section heading
+   ============================================================ */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--navy-600);
+  background:linear-gradient(135deg,rgba(245,181,68,.14),rgba(59,130,246,.10));
+  border:1px solid rgba(38,64,139,.18);
+  padding:8px 14px;border-radius:999px;margin-bottom:18px;
+}
+.eyebrow i{color:var(--gold-2)}
+.section-head{max-width:760px;margin-bottom:54px}
+.section-head.center{margin-inline:auto;text-align:center}
+.section-head p{margin-top:14px;font-size:1.05rem}
+.gradient-text{
+  background:var(--grad-primary);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:999px;font-weight:600;font-size:.95rem;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--grad-primary);color:#1a1300;
+  box-shadow:0 14px 30px -10px rgba(245,181,68,.55);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 22px 40px -10px rgba(245,181,68,.65)}
+.btn-ghost{
+  background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(8px);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.btn-dark{
+  background:var(--navy-900);color:#fff;
+  box-shadow:0 14px 30px -10px rgba(11,20,48,.45);
+}
+.btn-dark:hover{transform:translateY(-2px);background:var(--navy-800)}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  padding:14px 0;
+  transition:background .3s var(--ease),box-shadow .3s var(--ease),padding .3s var(--ease);
+}
+.nav.scrolled{
+  background:rgba(7,13,31,0.78);
+  backdrop-filter:saturate(140%) blur(14px);
+  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  box-shadow:0 10px 30px -15px rgba(0,0,0,.5);
+  padding:10px 0;
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}
+.brand-mark{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--grad-primary);
+  display:grid;place-items:center;color:#1a1300;font-weight:800;
+  box-shadow:0 10px 20px -8px rgba(245,181,68,.6);
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.brand-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1.05}
+.brand-text small{display:block;font-weight:500;font-size:.7rem;color:#a9b3cc;letter-spacing:.16em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{
+  color:#cfd6e6;font-size:.93rem;font-weight:500;
+  padding:10px 14px;border-radius:999px;
+  transition:color .2s,background .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,255,255,.08)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.nav-cta .btn{padding:11px 20px;font-size:.88rem}
+.menu-toggle{
+  display:none;width:42px;height:42px;border-radius:12px;
+  background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18);
+  align-items:center;justify-content:center;
+}
+@media (max-width:960px){
+  .nav-links,.nav-cta .btn{display:none}
+  .menu-toggle{display:inline-flex}
+}
+.mobile-panel{
+  position:fixed;inset:64px 4% auto 4%;z-index:49;
+  background:rgba(11,20,48,.96);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;padding:18px;
+  transform:translateY(-12px);opacity:0;pointer-events:none;
+  transition:.25s var(--ease);
+}
+.mobile-panel.open{transform:translateY(0);opacity:1;pointer-events:auto}
+.mobile-panel a{display:block;color:#dbe1f1;padding:12px 14px;border-radius:10px;font-weight:500}
+.mobile-panel a:hover{background:rgba(255,255,255,.06);color:#fff}
+.mobile-panel .btn{display:flex;justify-content:center;margin-top:8px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100vh;
+  background:var(--grad-hero);
+  color:#fff;
+  padding:140px 0 90px;
+  overflow:hidden;
+  position:relative;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;
+  position:relative;z-index:2;
+}
+@media (max-width:960px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  padding:8px 14px;border-radius:999px;font-size:.82rem;letter-spacing:.06em;color:#e4e9f6;
+  margin-bottom:22px;backdrop-filter:blur(8px);
+}
+.hero-tag .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,181,68,.25)}
+.hero h1{
+  font-size:clamp(2.4rem,5.2vw,4.2rem);color:#fff;
+  margin-bottom:18px;
+}
+.hero h1 .accent{background:var(--grad-primary);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lede{color:#bcc5db;font-size:1.08rem;max-width:560px;margin-bottom:32px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:36px}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:520px;
+}
+.hero-stat{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;padding:14px 16px;backdrop-filter:blur(8px);
+}
+.hero-stat b{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.35rem;display:block;color:#fff}
+.hero-stat span{font-size:.78rem;color:#a9b3cc;letter-spacing:.04em}
+
+/* Hero visual */
+.hero-visual{position:relative;height:520px}
+.hero-photo{
+  position:absolute;inset:0;border-radius:28px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 50px 90px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(7,13,31,0) 40%,rgba(7,13,31,.55) 100%);
+}
+.float-card{
+  position:absolute;display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.18);
+  padding:12px 16px;border-radius:16px;color:#fff;
+  box-shadow:0 20px 40px -15px rgba(0,0,0,.5);
+  animation:floaty 6s ease-in-out infinite;
+}
+.float-card .ic{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:var(--grad-primary);color:#1a1300;font-size:.95rem;
+}
+.float-card b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem}
+.float-card span{font-size:.74rem;color:#c8d0e6}
+.fc-1{top:6%;left:-6%;animation-delay:0s}
+.fc-2{top:28%;right:-8%;animation-delay:1.2s}
+.fc-3{bottom:18%;left:-10%;animation-delay:2.4s}
+.fc-4{bottom:4%;right:-4%;animation-delay:3.2s}
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+@media (max-width:960px){
+  .hero-visual{height:420px}
+  .fc-1{left:0}.fc-2{right:0}.fc-3{left:0}.fc-4{right:0}
+}
+
+/* Blob */
+.blob{
+  position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;
+}
+.blob-1{width:420px;height:420px;background:#f5b544;top:-80px;right:-100px}
+.blob-2{width:380px;height:380px;background:#3b82f6;bottom:-120px;left:-120px}
+
+/* ============================================================
+   GENERIC CARDS / GRIDS
+   ============================================================ */
+.grid{display:grid;gap:22px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:980px){.g-3,.g-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.g-2,.g-3,.g-4{grid-template-columns:1fr}}
+
+.card{
+  background:#fff;border:1px solid var(--line-dark);
+  border-radius:var(--radius);padding:26px;
+  box-shadow:var(--shadow-card);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -25px rgba(11,20,48,.30);border-color:rgba(38,64,139,.18)}
+.icon-pill{
+  width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(245,181,68,.16),rgba(255,122,61,.10));
+  color:var(--gold-2);font-size:1.15rem;margin-bottom:16px;
+  border:1px solid rgba(245,181,68,.22);
+}
+.icon-pill.blue{background:linear-gradient(135deg,rgba(59,130,246,.16),rgba(34,211,238,.10));color:#1e6fe6;border-color:rgba(59,130,246,.22)}
+.icon-pill.navy{background:linear-gradient(135deg,rgba(26,44,99,.14),rgba(38,64,139,.10));color:var(--navy-700);border-color:rgba(26,44,99,.18)}
+.card h3{margin-bottom:8px}
+.card p{font-size:.95rem}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:60px;align-items:center}
+@media (max-width:960px){.about-grid{grid-template-columns:1fr}}
+.about-media{position:relative}
+.about-media .main{
+  border-radius:24px;overflow:hidden;
+  box-shadow:0 40px 80px -30px rgba(11,20,48,.35);
+  border:1px solid var(--line-dark);
+}
+.about-media .main img{aspect-ratio:4/5;object-fit:cover}
+.about-media .floating{
+  position:absolute;bottom:-26px;left:-26px;
+  background:#fff;border:1px solid var(--line-dark);
+  border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:14px;
+  box-shadow:0 30px 60px -25px rgba(11,20,48,.30);
+}
+.about-media .floating .ic{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  background:var(--grad-primary);color:#1a1300;
+}
+.about-media .floating b{font-family:'Plus Jakarta Sans',sans-serif}
+.about-media .floating span{font-size:.8rem;color:var(--muted)}
+.about-points{margin-top:22px;display:grid;gap:14px}
+.about-points li{
+  list-style:none;display:flex;gap:14px;align-items:flex-start;
+  padding:14px 16px;background:#f7f9fc;border:1px solid var(--line-dark);
+  border-radius:14px;
+}
+.about-points i{color:var(--gold-2);margin-top:4px}
+.about-points b{display:block;color:var(--ink);margin-bottom:2px;font-family:'Plus Jakarta Sans',sans-serif}
+.about-points span{font-size:.92rem;color:#475067}
+
+/* ============================================================
+   SECTIONS WITH DARK BACKGROUND
+   ============================================================ */
+.dark{
+  background:linear-gradient(180deg,#070d1f 0%,#0b1430 100%);
+  color:#fff;position:relative;overflow:hidden;
+}
+.dark h2,.dark h3{color:#fff}
+.dark p{color:#bcc5db}
+.dark .eyebrow{
+  color:#f5b544;background:rgba(245,181,68,.10);border-color:rgba(245,181,68,.25);
+}
+.dark .card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);box-shadow:0 30px 60px -25px rgba(0,0,0,.5);
+}
+.dark .card:hover{background:rgba(255,255,255,.06);border-color:rgba(245,181,68,.30)}
+.dark .card p{color:#bcc5db}
+.dark .icon-pill{background:linear-gradient(135deg,rgba(245,181,68,.18),rgba(255,122,61,.10));color:#f5b544;border-color:rgba(245,181,68,.30)}
+
+/* ============================================================
+   OBJECTIVE FEATURE GRID
+   ============================================================ */
+.feature-row{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;
+}
+@media (max-width:960px){.feature-row{grid-template-columns:1fr}}
+.feature-list{display:grid;gap:18px}
+.feature-list .item{
+  display:flex;gap:18px;padding:18px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  transition:.3s var(--ease);
+}
+.feature-list .item:hover{background:rgba(255,255,255,.07);transform:translateX(4px)}
+.feature-list .item .ic{
+  flex:none;width:48px;height:48px;border-radius:12px;display:grid;place-items:center;
+  background:var(--grad-primary);color:#1a1300;font-size:1.05rem;
+}
+.feature-list .item h4{color:#fff;font-size:1.05rem;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:4px}
+.feature-list .item p{font-size:.93rem;color:#bcc5db;margin:0}
+
+.feature-media{
+  position:relative;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.6);
+}
+.feature-media img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.feature-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(7,13,31,.10),rgba(7,13,31,.5));
+}
+
+/* ============================================================
+   PROCESS TIMELINE
+   ============================================================ */
+.timeline{
+  position:relative;margin-top:30px;
+}
+.timeline::before{
+  content:"";position:absolute;left:50%;top:30px;bottom:30px;width:2px;
+  background:linear-gradient(180deg,transparent,rgba(245,181,68,.6),rgba(59,130,246,.6),transparent);
+  transform:translateX(-50%);
+}
+.tl-step{
+  display:grid;grid-template-columns:1fr 90px 1fr;gap:20px;align-items:center;
+  margin-bottom:30px;
+}
+.tl-step .body{
+  background:#fff;border:1px solid var(--line-dark);border-radius:18px;padding:22px;
+  box-shadow:var(--shadow-card);transition:.3s var(--ease);
+}
+.tl-step .body:hover{transform:translateY(-4px);box-shadow:0 30px 60px -25px rgba(11,20,48,.3)}
+.tl-step .body h4{font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:6px;font-size:1.1rem}
+.tl-step .body p{font-size:.93rem}
+.tl-step .num{
+  width:64px;height:64px;border-radius:50%;justify-self:center;
+  background:var(--grad-primary);color:#1a1300;display:grid;place-items:center;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;
+  box-shadow:0 14px 30px -10px rgba(245,181,68,.55),0 0 0 8px rgba(245,181,68,.10);
+  position:relative;z-index:2;
+}
+.tl-step:nth-child(even) .body{grid-column:3}
+.tl-step:nth-child(even) > .empty{grid-column:1}
+.tl-step:nth-child(odd) .body{grid-column:1;text-align:right}
+.tl-step:nth-child(odd) > .empty{grid-column:3}
+.empty{}
+@media (max-width:760px){
+  .timeline::before{left:28px}
+  .tl-step{grid-template-columns:56px 1fr;gap:14px}
+  .tl-step .num{grid-column:1;width:52px;height:52px;font-size:1.1rem;justify-self:start}
+  .tl-step .body, .tl-step:nth-child(odd) .body, .tl-step:nth-child(even) .body{
+    grid-column:2;text-align:left;
+  }
+  .empty{display:none}
+}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:1100px){.service-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){.service-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.service-grid{grid-template-columns:1fr}}
+.service{
+  position:relative;background:#fff;border:1px solid var(--line-dark);
+  border-radius:20px;padding:26px;overflow:hidden;
+  transition:.35s var(--ease);
+}
+.service::before{
+  content:"";position:absolute;inset:auto -40% -40% auto;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,181,68,.18),transparent 65%);
+  transition:.5s var(--ease);
+}
+.service:hover{transform:translateY(-6px);border-color:rgba(245,181,68,.45);box-shadow:0 30px 60px -25px rgba(11,20,48,.25)}
+.service:hover::before{inset:auto -20% -20% auto}
+.service .ic{
+  width:54px;height:54px;border-radius:14px;display:grid;place-items:center;
+  background:var(--grad-primary);color:#1a1300;font-size:1.2rem;margin-bottom:16px;
+  box-shadow:0 14px 24px -10px rgba(245,181,68,.45);
+}
+.service h3{margin-bottom:8px;font-size:1.1rem}
+.service p{font-size:.92rem;margin-bottom:14px}
+.service .more{font-size:.84rem;color:var(--navy-700);font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+.service:hover .more{gap:10px;color:var(--gold-2)}
+
+/* ============================================================
+   DIGITAL STRENGTH
+   ============================================================ */
+.digital{
+  background:
+    radial-gradient(800px 400px at 100% 0%,rgba(245,181,68,.10),transparent 60%),
+    linear-gradient(180deg,#070d1f,#0b1430);
+}
+.digital-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center}
+@media (max-width:960px){.digital-grid{grid-template-columns:1fr}}
+.digital-points{display:grid;gap:14px;margin-top:24px}
+.digital-points .row{
+  display:flex;gap:14px;align-items:flex-start;padding:14px 16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:14px;
+}
+.digital-points i{color:var(--gold);margin-top:4px}
+.digital-points b{display:block;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:2px}
+.digital-points span{font-size:.92rem;color:#bcc5db}
+.digital-visual{
+  position:relative;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 50px 100px -30px rgba(0,0,0,.6);
+}
+.digital-visual img{aspect-ratio:5/4;object-fit:cover;width:100%}
+.digital-stat{
+  position:absolute;background:rgba(11,20,48,.8);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 16px;color:#fff;
+  display:flex;align-items:center;gap:12px;box-shadow:0 20px 40px -15px rgba(0,0,0,.6);
+}
+.digital-stat .ic{width:36px;height:36px;border-radius:10px;background:var(--grad-primary);color:#1a1300;display:grid;place-items:center}
+.digital-stat b{font-family:'Plus Jakarta Sans',sans-serif;display:block;font-size:1rem}
+.digital-stat span{font-size:.74rem;color:#bcc5db}
+.ds-1{top:18px;left:18px}
+.ds-2{bottom:18px;right:18px}
+
+/* ============================================================
+   IMPACT COUNTERS
+   ============================================================ */
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:30px}
+@media (max-width:900px){.impact-grid{grid-template-columns:repeat(2,1fr)}}
+.impact{
+  text-align:center;padding:30px 22px;border-radius:20px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(8px);transition:.3s var(--ease);
+}
+.impact:hover{transform:translateY(-6px);background:rgba(255,255,255,.07);border-color:rgba(245,181,68,.30)}
+.impact .ic{
+  width:54px;height:54px;border-radius:14px;margin:0 auto 14px;display:grid;place-items:center;
+  background:var(--grad-primary);color:#1a1300;font-size:1.2rem;
+}
+.impact b{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:800;
+  background:var(--grad-primary);-webkit-background-clip:text;background-clip:text;color:transparent;
+  display:block;line-height:1.1;
+}
+.impact span{color:#bcc5db;font-size:.92rem;display:block;margin-top:4px}
+
+.impact-context{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+@media (max-width:900px){.impact-context{grid-template-columns:1fr}}
+.impact-context .card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+}
+.impact-context .card p{color:#bcc5db}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
+@media (max-width:960px){.contact-grid{grid-template-columns:1fr}}
+.contact-info{display:grid;gap:14px}
+.contact-info .row{
+  display:flex;gap:14px;align-items:flex-start;padding:18px;
+  background:#fff;border:1px solid var(--line-dark);border-radius:16px;
+  box-shadow:var(--shadow-card);transition:.3s var(--ease);
+}
+.contact-info .row:hover{transform:translateY(-3px)}
+.contact-info .ic{
+  flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(245,181,68,.16),rgba(255,122,61,.10));color:var(--gold-2);
+  border:1px solid rgba(245,181,68,.22);
+}
+.contact-info b{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);display:block;margin-bottom:2px}
+.contact-info span{font-size:.93rem;color:#475067}
+.form{
+  background:#fff;border:1px solid var(--line-dark);border-radius:22px;padding:28px;
+  box-shadow:var(--shadow-card);
+}
+.form h3{margin-bottom:6px}
+.form .lead{color:#475067;margin-bottom:20px;font-size:.95rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.82rem;font-weight:600;color:var(--ink)}
+.field input,.field select,.field textarea{
+  font-family:inherit;font-size:.95rem;color:var(--ink);
+  background:#f7f9fc;border:1px solid var(--line-dark);
+  padding:12px 14px;border-radius:12px;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.field textarea{resize:vertical;min-height:120px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;background:#fff;border-color:rgba(245,181,68,.55);
+  box-shadow:0 0 0 4px rgba(245,181,68,.15);
+}
+.field .err{color:#d92d20;font-size:.78rem;display:none}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:#d92d20;background:#fff5f5}
+.field.invalid .err{display:block}
+.form-note{font-size:.78rem;color:var(--muted);margin-top:14px;display:flex;gap:8px;align-items:flex-start}
+.form-note i{color:var(--gold-2);margin-top:3px}
+.form-ok{
+  display:none;margin-top:16px;padding:14px 16px;border-radius:12px;
+  background:#ecfdf3;color:#067647;border:1px solid #abefc6;font-size:.92rem;
+}
+.form-ok.show{display:flex;align-items:center;gap:10px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  background:#070d1f;color:#bcc5db;padding:70px 0 30px;
+}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+@media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px;color:#fff}
+footer p{color:#9aa4bd;font-size:.92rem;margin-bottom:18px}
+footer h4{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:10px}
+footer ul a{color:#bcc5db;font-size:.92rem;transition:color .2s}
+footer ul a:hover{color:#f5b544}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#fff;
+  transition:.2s var(--ease);
+}
+.socials a:hover{background:var(--grad-primary);color:#1a1300;transform:translateY(-3px)}
+.foot-bottom{
+  margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  font-size:.85rem;color:#8b95ad;
+}
+.foot-bottom .note{
+  background:rgba(245,181,68,.10);color:#f5b544;border:1px solid rgba(245,181,68,.25);
+  padding:6px 12px;border-radius:999px;font-size:.78rem;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.delay-1{transition-delay:.08s}
+.reveal.delay-2{transition-delay:.16s}
+.reveal.delay-3{transition-delay:.24s}
+.reveal.delay-4{transition-delay:.32s}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#home" class="brand" aria-label="Motilal Oswal home">
+      <div class="brand-mark">MO</div>
+      <div class="brand-text">
+        Motilal Oswal
+        <small>Financial Services</small>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#purpose">Purpose</a>
+      <a href="#services">Services</a>
+      <a href="#process">How It Works</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-arrow-right-long"></i> Get in Touch</a>
+      <button class="menu-toggle" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#about">About</a>
+  <a href="#purpose">Purpose</a>
+  <a href="#services">Services</a>
+  <a href="#process">How It Works</a>
+  <a href="#impact">Impact</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="btn btn-primary">Get in Touch <i class="fa-solid fa-arrow-right-long"></i></a>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="home">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-tag"><span class="dot"></span> India's Trusted Financial Partner</span>
+      <h1>Empowering Investors Through <span class="accent">Research, Advisory</span> &amp; Wealth Creation</h1>
+      <p class="hero-lede">
+        Motilal Oswal Financial Services Ltd. is one of India's leading financial services groups —
+        helping millions of investors build long-term wealth through research-driven broking,
+        wealth management, asset management and advisory services.
+      </p>
+      <div class="hero-cta">
+        <a href="#about" class="btn btn-primary">Explore Company <i class="fa-solid fa-arrow-right-long"></i></a>
+        <a href="#contact" class="btn btn-ghost"><i class="fa-solid fa-phone"></i> Contact Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>35+</b><span>Years of Trust</span></div>
+        <div class="hero-stat"><b>2,500+</b><span>Locations</span></div>
+        <div class="hero-stat"><b>9 Mn+</b><span>Investors Served</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"
+             alt="Modern stock market trading desk" loading="eager">
+      </div>
+      <div class="float-card fc-1">
+        <div class="ic"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <div><b>Research</b><span>Equity &amp; Markets</span></div>
+      </div>
+      <div class="float-card fc-2">
+        <div class="ic"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div><b>Wealth</b><span>Long-term Growth</span></div>
+      </div>
+      <div class="float-card fc-3">
+        <div class="ic"><i class="fa-solid fa-chart-line"></i></div>
+        <div><b>Trading</b><span>Smart Platforms</span></div>
+      </div>
+      <div class="float-card fc-4">
+        <div class="ic"><i class="fa-solid fa-user-tie"></i></div>
+        <div><b>Advisory</b><span>Expert Guidance</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-media reveal">
+        <div class="main">
+          <img src="https://images.unsplash.com/photo-1664575602554-2087b04935a5?auto=format&fit=crop&w=900&q=80"
+               alt="Modern corporate office of a financial services firm" loading="lazy">
+        </div>
+        <div class="floating">
+          <div class="ic"><i class="fa-solid fa-shield-halved"></i></div>
+          <div><b>SEBI Registered</b><span>Trusted &amp; Regulated</span></div>
+        </div>
+      </div>
+
+      <div class="reveal delay-1">
+        <span class="eyebrow"><i class="fa-solid fa-building-columns"></i> About the Company</span>
+        <h2>A diversified financial services group built on <span class="gradient-text">research &amp; trust</span>.</h2>
+        <p style="margin-top:14px">
+          Founded in 1987, Motilal Oswal Financial Services Ltd. has grown into one of India's
+          most recognised financial brands. The company operates across broking, wealth management,
+          asset management, investment advisory, research, and a wide range of financial products —
+          serving retail investors, traders, HNIs and institutions.
+        </p>
+
+        <ul class="about-points">
+          <li><i class="fa-solid fa-circle-check"></i>
+            <div><b>Broking &amp; Distribution</b><span>Stocks, derivatives, commodities, mutual funds, IPOs and bonds.</span></div>
+          </li>
+          <li><i class="fa-solid fa-circle-check"></i>
+            <div><b>Wealth &amp; Asset Management</b><span>PMS, AIFs, mutual funds and personalised wealth planning.</span></div>
+          </li>
+          <li><i class="fa-solid fa-circle-check"></i>
+            <div><b>Research &amp; Advisory</b><span>Award-winning research, ideas and advisory across asset classes.</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PURPOSE ================= -->
+<section id="purpose" style="background:#f7f9fc">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><i class="fa-solid fa-bullseye"></i> Purpose</span>
+      <h2>Why Motilal Oswal exists</h2>
+      <p>To make financial markets accessible, understandable and rewarding for every Indian — from first-time investors to seasoned professionals.</p>
+    </div>
+
+    <div class="grid g-4">
+      <div class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-people-arrows"></i></div>
+        <h3>Access for Everyone</h3>
+        <p>Bring stock markets, mutual funds and wealth solutions within easy reach of every investor in India.</p>
+      </div>
+      <div class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-lightbulb"></i></div>
+        <h3>Informed Decisions</h3>
+        <p>Empower customers with deep research, insights and education so they invest with clarity, not guesswork.</p>
+      </div>
+      <div class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-seedling"></i></div>
+        <h3>Long-Term Wealth</h3>
+        <p>Help investors build sustainable, long-term wealth through disciplined investing and quality businesses.</p>
+      </div>
+      <div class="card reveal delay-3">
+        <div class="icon-pill"><i class="fa-solid fa-handshake-angle"></i></div>
+        <h3>Trusted Guidance</h3>
+        <p>Be a partner customers rely on — across market cycles, life stages and financial goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT HELPS PEOPLE ================= -->
+<section id="help">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><i class="fa-solid fa-hand-holding-heart"></i> How It Helps People</span>
+      <h2>Tailored solutions for <span class="gradient-text">every kind of investor</span>.</h2>
+      <p>From a first SIP to managing crores of family wealth, Motilal Oswal offers the right platform, product and people for every customer.</p>
+    </div>
+
+    <div class="grid g-3">
+      <article class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-user"></i></div>
+        <h3>Retail Investors</h3>
+        <p>Easy account opening, intuitive apps, mutual funds, SIPs, stocks and education — investing made simple.</p>
+      </article>
+      <article class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Active Traders</h3>
+        <p>Fast trading platforms, advanced charts, derivatives, commodities and research-backed ideas.</p>
+      </article>
+      <article class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-crown"></i></div>
+        <h3>HNIs &amp; UHNIs</h3>
+        <p>Dedicated relationship managers, PMS, AIFs, structured products and curated wealth strategies.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-building"></i></div>
+        <h3>Institutions &amp; Corporates</h3>
+        <p>Institutional broking, equity research, treasury solutions and capital market services.</p>
+      </article>
+      <article class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-piggy-bank"></i></div>
+        <h3>Long-Term Savers</h3>
+        <p>Goal-based planning for retirement, children's education, home and wealth preservation.</p>
+      </article>
+      <article class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>New Learners</h3>
+        <p>Investor education, webinars, knowledge centres and easy-to-understand market content.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MAIN OBJECTIVE (DARK) ================= -->
+<section id="objective" class="dark">
+  <span class="blob blob-1" style="top:-100px;right:-120px;opacity:.35"></span>
+  <div class="container">
+    <div class="feature-row">
+      <div class="reveal">
+        <span class="eyebrow"><i class="fa-solid fa-compass"></i> Main Objective</span>
+        <h2>Helping India invest with <span class="gradient-text">conviction &amp; clarity</span>.</h2>
+        <p style="margin-top:14px;max-width:560px">
+          Our core objective is to make investing research-backed, trustworthy and rewarding —
+          so customers can confidently participate in India's growth story.
+        </p>
+
+        <div class="feature-list" style="margin-top:26px">
+          <div class="item">
+            <div class="ic"><i class="fa-solid fa-flask"></i></div>
+            <div><h4>Research-Backed Investing</h4><p>Decisions driven by deep, independent research across sectors and asset classes.</p></div>
+          </div>
+          <div class="item">
+            <div class="ic"><i class="fa-solid fa-tree"></i></div>
+            <div><h4>Long-Term Wealth Creation</h4><p>Focus on quality businesses and disciplined investing to compound wealth over time.</p></div>
+          </div>
+          <div class="item">
+            <div class="ic"><i class="fa-solid fa-user-shield"></i></div>
+            <div><h4>Trusted Advisory</h4><p>Personalised guidance that puts the customer's financial well-being first.</p></div>
+          </div>
+          <div class="item">
+            <div class="ic"><i class="fa-solid fa-network-wired"></i></div>
+            <div><h4>Market Access &amp; Education</h4><p>Equipping every investor with the tools, knowledge and confidence to invest.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-media reveal delay-1">
+        <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1000&q=80"
+             alt="Financial advisor reviewing portfolio with client" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW THE COMPANY FUNCTIONS / PROCESS ================= -->
+<section id="process">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><i class="fa-solid fa-diagram-project"></i> How It Functions</span>
+      <h2>A simple, transparent way to <span class="gradient-text">grow your wealth</span></h2>
+      <p>From opening an account to long-term wealth, here's how Motilal Oswal serves its customers — and how the business creates value at every step.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-step reveal">
+        <div class="body">
+          <h4>1. Open Your Account</h4>
+          <p>Customers open a trading &amp; demat account online in minutes through a fully paperless digital journey.</p>
+        </div>
+        <div class="num">1</div>
+        <div class="empty"></div>
+      </div>
+      <div class="tl-step reveal delay-1">
+        <div class="empty"></div>
+        <div class="num">2</div>
+        <div class="body">
+          <h4>2. Access Trading &amp; Investment Platforms</h4>
+          <p>Investors use modern web and mobile apps to trade stocks, invest in mutual funds, IPOs, bonds and more.</p>
+        </div>
+      </div>
+      <div class="tl-step reveal">
+        <div class="body">
+          <h4>3. Get Research &amp; Advisory Support</h4>
+          <p>Customers receive expert research reports, stock ideas, model portfolios and personalised advisory.</p>
+        </div>
+        <div class="num">3</div>
+        <div class="empty"></div>
+      </div>
+      <div class="tl-step reveal delay-1">
+        <div class="empty"></div>
+        <div class="num">4</div>
+        <div class="body">
+          <h4>4. Invest Across Financial Products</h4>
+          <p>From equity and derivatives to mutual funds, PMS, AIFs and fixed-income — one platform, many solutions.</p>
+        </div>
+      </div>
+      <div class="tl-step reveal">
+        <div class="body">
+          <h4>5. Company Earns Through Value Created</h4>
+          <p>Revenue is generated via brokerage, advisory fees, distribution, asset management and wealth services.</p>
+        </div>
+        <div class="num">5</div>
+        <div class="empty"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KEY SERVICES ================= -->
+<section id="services" style="background:#f7f9fc">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Key Services</span>
+      <h2>A complete suite of <span class="gradient-text">financial services</span></h2>
+      <p>Everything an Indian investor needs — under one trusted brand.</p>
+    </div>
+
+    <div class="service-grid">
+      <div class="service reveal">
+        <div class="ic"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Stock Broking</h3>
+        <p>Trade equities, F&amp;O and commodities seamlessly across BSE and NSE.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-1">
+        <div class="ic"><i class="fa-solid fa-coins"></i></div>
+        <h3>Mutual Funds</h3>
+        <p>Curated SIPs and lump-sum investing across leading fund houses.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-2">
+        <div class="ic"><i class="fa-solid fa-folder-tree"></i></div>
+        <h3>Portfolio Management</h3>
+        <p>Discretionary PMS strategies built around quality &amp; long-term growth.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-3">
+        <div class="ic"><i class="fa-solid fa-gem"></i></div>
+        <h3>Wealth Management</h3>
+        <p>Holistic wealth planning for HNIs and family offices.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal">
+        <div class="ic"><i class="fa-solid fa-user-tie"></i></div>
+        <h3>Investment Advisory</h3>
+        <p>Personalised advice from experienced market professionals.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-1">
+        <div class="ic"><i class="fa-solid fa-rocket"></i></div>
+        <h3>IPOs</h3>
+        <p>Easy participation in primary markets with guided insights.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-2">
+        <div class="ic"><i class="fa-solid fa-building-columns"></i></div>
+        <h3>Bonds &amp; FDs</h3>
+        <p>Stable, fixed-income options to balance long-term portfolios.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-3">
+        <div class="ic"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Research &amp; Insights</h3>
+        <p>Award-winning research, market views and curated stock ideas.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal">
+        <div class="ic"><i class="fa-solid fa-oil-well"></i></div>
+        <h3>Commodities &amp; Derivatives</h3>
+        <p>Trade across futures &amp; options and commodity markets.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+      <div class="service reveal delay-1">
+        <div class="ic"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <h3>Digital Trading Platform</h3>
+        <p>Modern web &amp; mobile apps with fast, reliable execution.</p>
+        <span class="more">Learn more <i class="fa-solid fa-arrow-right-long"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIGITAL & RESEARCH STRENGTH ================= -->
+<section id="digital" class="dark digital">
+  <div class="container">
+    <div class="digital-grid">
+      <div class="reveal">
+        <span class="eyebrow"><i class="fa-solid fa-microchip"></i> Digital &amp; Research Strength</span>
+        <h2>Powered by <span class="gradient-text">technology &amp; insight</span>.</h2>
+        <p style="margin-top:14px">
+          Smart trading apps, intelligent dashboards and a dedicated research team work together
+          to help investors stay informed and act with confidence — anywhere, anytime.
+        </p>
+
+        <div class="digital-points">
+          <div class="row"><i class="fa-solid fa-check"></i>
+            <div><b>Modern Trading Apps</b><span>Fast, reliable web &amp; mobile apps for stocks, F&amp;O, mutual funds and more.</span></div>
+          </div>
+          <div class="row"><i class="fa-solid fa-check"></i>
+            <div><b>Research Reports &amp; Ideas</b><span>Daily, weekly and thematic reports built by experienced analysts.</span></div>
+          </div>
+          <div class="row"><i class="fa-solid fa-check"></i>
+            <div><b>Smart Dashboards</b><span>Portfolio insights, performance tracking and personalised alerts.</span></div>
+          </div>
+          <div class="row"><i class="fa-solid fa-check"></i>
+            <div><b>Investor Education</b><span>Learning hub, webinars and content for every level of investor.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="digital-visual reveal delay-1">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1100&q=80"
+             alt="Digital trading dashboard and analytics" loading="lazy">
+        <div class="digital-stat ds-1">
+          <div class="ic"><i class="fa-solid fa-bolt"></i></div>
+          <div><b>&lt; 1s</b><span>Order Execution</span></div>
+        </div>
+        <div class="digital-stat ds-2">
+          <div class="ic"><i class="fa-solid fa-shield-halved"></i></div>
+          <div><b>Bank-grade</b><span>Security</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CUSTOMER SEGMENTS ================= -->
+<section id="customers">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><i class="fa-solid fa-users"></i> Customer Segments</span>
+      <h2>Built for <span class="gradient-text">every customer journey</span></h2>
+      <p>From beginners taking their first step into the markets, to institutions managing large portfolios.</p>
+    </div>
+
+    <div class="grid g-3">
+      <div class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-seedling"></i></div>
+        <h3>Retail Investors</h3>
+        <p>Everyday investors looking for simple, trusted ways to invest in stocks and mutual funds.</p>
+      </div>
+      <div class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-bolt-lightning"></i></div>
+        <h3>Active Traders</h3>
+        <p>Market participants who need speed, advanced tools and timely research.</p>
+      </div>
+      <div class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-gem"></i></div>
+        <h3>HNIs &amp; Family Offices</h3>
+        <p>Customers managing significant wealth who need personalised strategies and PMS/AIF access.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-building-shield"></i></div>
+        <h3>Corporates &amp; Institutions</h3>
+        <p>Institutional broking, advisory and capital market services tailored to large clients.</p>
+      </div>
+      <div class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-house-chimney-medical"></i></div>
+        <h3>Long-Term Planners</h3>
+        <p>Customers focused on retirement, education and life-goal planning for their families.</p>
+      </div>
+      <div class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-handshake"></i></div>
+        <h3>Business Owners</h3>
+        <p>Entrepreneurs seeking treasury, wealth and structured investment solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IMPACT / COUNTERS ================= -->
+<section id="impact" class="dark">
+  <span class="blob blob-2" style="top:-100px;left:-100px;opacity:.30"></span>
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><i class="fa-solid fa-chart-pie"></i> Company Impact</span>
+      <h2>Shaping India's <span class="gradient-text">financial services future</span></h2>
+      <p>A trusted, research-driven brand with a strong national presence — built on decades of customer focus and innovation.</p>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact reveal">
+        <div class="ic"><i class="fa-solid fa-users-line"></i></div>
+        <b><span class="count" data-target="9" data-suffix="M+">0</span></b>
+        <span>Customers Served</span>
+      </div>
+      <div class="impact reveal delay-1">
+        <div class="ic"><i class="fa-solid fa-location-dot"></i></div>
+        <b><span class="count" data-target="2500" data-suffix="+">0</span></b>
+        <span>Locations Across India</span>
+      </div>
+      <div class="impact reveal delay-2">
+        <div class="ic"><i class="fa-solid fa-trophy"></i></div>
+        <b><span class="count" data-target="35" data-suffix="+">0</span></b>
+        <span>Years of Trust</span>
+      </div>
+      <div class="impact reveal delay-3">
+        <div class="ic"><i class="fa-solid fa-flask"></i></div>
+        <b><span class="count" data-target="250" data-suffix="+">0</span></b>
+        <span>Research Professionals</span>
+      </div>
+    </div>
+
+    <div class="impact-context">
+      <div class="card reveal">
+        <div class="icon-pill"><i class="fa-solid fa-handshake-simple"></i></div>
+        <h3>Trust You Can Build On</h3>
+        <p>A legacy of customer-first service across market cycles — earning long-term confidence from millions of investors.</p>
+      </div>
+      <div class="card reveal delay-1">
+        <div class="icon-pill blue"><i class="fa-solid fa-flask"></i></div>
+        <h3>Research-Driven DNA</h3>
+        <p>An industry-leading research team that drives investment ideas, strategies and education for customers.</p>
+      </div>
+      <div class="card reveal delay-2">
+        <div class="icon-pill navy"><i class="fa-solid fa-globe"></i></div>
+        <h3>Wide National Footprint</h3>
+        <p>A strong branch and partner network ensures personalised support is always within reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" style="background:#f7f9fc">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><i class="fa-solid fa-envelope-open-text"></i> Contact Us</span>
+      <h2>We'd love to <span class="gradient-text">hear from you</span></h2>
+      <p>Reach out for customer support, investment enquiries or branch assistance — we're here to help.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-headset"></i></div>
+          <div><b>Customer Support</b><span>Help with accounts, platforms and existing investments.</span></div>
+        </div>
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-chart-simple"></i></div>
+          <div><b>Investment Enquiry</b><span>Speak to an advisor about products and personalised strategies.</span></div>
+        </div>
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-location-dot"></i></div>
+          <div><b>Branch / Office Assistance</b><span>Find your nearest Motilal Oswal branch or partner location.</span></div>
+        </div>
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-envelope"></i></div>
+          <div><b>Email</b><span>info@example-motilaloswal.com (demo)</span></div>
+        </div>
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-phone"></i></div>
+          <div><b>Phone</b><span>1800-XXX-XXXX (demo)</span></div>
+        </div>
+      </div>
+
+      <form class="form reveal delay-1" id="contactForm" novalidate>
+        <h3>Send us a message</h3>
+        <p class="lead">Fill in the form and we'll get back to you shortly.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-name">Full Name</label>
+            <input id="f-name" name="name" type="text" placeholder="Your full name" required>
+            <span class="err">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="you@example.com" required>
+            <span class="err">Please enter a valid email.</span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" placeholder="+91 XXXXX XXXXX" required>
+            <span class="err">Please enter a valid 10-digit phone.</span>
+          </div>
+          <div class="field">
+            <label for="f-service">Service Interested In</label>
+            <select id="f-service" name="service" required>
+              <option value="">Select a service</option>
+              <option>Stock Broking</option>
+              <option>Mutual Funds</option>
+              <option>Portfolio Management Services</option>
+              <option>Wealth Management</option>
+              <option>Investment Advisory</option>
+              <option>IPOs</option>
+              <option>Bonds &amp; Fixed Deposits</option>
+              <option>Research &amp; Insights</option>
+              <option>Other</option>
+            </select>
+            <span class="err">Please select a service.</span>
+          </div>
+          <div class="field full">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" placeholder="Tell us how we can help..." required></textarea>
+            <span class="err">Please enter a short message.</span>
+          </div>
+          <div class="field full">
+            <button type="submit" class="btn btn-dark" style="justify-content:center;width:100%">
+              Send Message <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-ok" id="formOk">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Thanks! Your message has been recorded for this demo.</span>
+        </div>
+
+        <div class="form-note">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>This form is for academic/project demonstration only. No real data is submitted or stored.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <div class="brand-mark">MO</div>
+          <div class="brand-text">Motilal Oswal<small>Financial Services</small></div>
+        </div>
+        <p>
+          A premium corporate explainer site about Motilal Oswal Financial Services Ltd. —
+          covering its purpose, services and role in India's financial sector.
+        </p>
+        <div class="socials">
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#purpose">Purpose</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#impact">Impact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Stock Broking</a></li>
+          <li><a href="#services">Mutual Funds</a></li>
+          <li><a href="#services">Wealth Management</a></li>
+          <li><a href="#services">Research &amp; Insights</a></li>
+          <li><a href="#services">Investment Advisory</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">Company Profile</a></li>
+          <li><a href="#customers">Customers</a></li>
+          <li><a href="#digital">Digital &amp; Research</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div>&copy; <span id="yr"></span> Motilal Oswal Financial Services Ltd. — All references are illustrative.</div>
+      <div class="note"><i class="fa-solid fa-graduation-cap"></i> Academic / Project Demonstration Only</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+(function(){
+  // Year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+  menuBtn.addEventListener('click', () => {
+    panel.classList.toggle('open');
+    const open = panel.classList.contains('open');
+    menuBtn.innerHTML = open
+      ? '<i class="fa-solid fa-xmark"></i>'
+      : '<i class="fa-solid fa-bars"></i>';
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.classList.remove('open');
+    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  }));
+
+  // Active nav highlighting
+  const navAnchors = Array.from(document.querySelectorAll('#navLinks a'));
+  const sections = navAnchors
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const navObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) setActive(e.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => navObs.observe(s));
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const revObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revObs.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  // Animated counters
+  const counters = document.querySelectorAll('.count');
+  const animateCount = (el) => {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      let value = target * eased;
+      let display;
+      if (target >= 1000) display = Math.round(value).toLocaleString('en-IN');
+      else if (target % 1 !== 0) display = value.toFixed(1);
+      else display = Math.round(value);
+      el.textContent = display + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else {
+        let finalText;
+        if (target >= 1000) finalText = Math.round(target).toLocaleString('en-IN');
+        else finalText = target;
+        el.textContent = finalText + suffix;
+      }
+    };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window) {
+    const cObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { animateCount(e.target); cObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(c => cObs.observe(c));
+  } else {
+    counters.forEach(animateCount);
+  }
+
+  // Form validation (demo)
+  const form = document.getElementById('contactForm');
+  const ok = document.getElementById('formOk');
+  const validators = {
+    name: v => v.trim().length >= 2,
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    phone: v => /^[\d+\-\s]{10,15}$/.test(v.trim()),
+    service: v => v.trim().length > 0,
+    message: v => v.trim().length >= 5,
+  };
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+    Object.keys(validators).forEach(key => {
+      const input = form.elements[key];
+      const field = input.closest('.field');
+      const ok2 = validators[key](input.value);
+      field.classList.toggle('invalid', !ok2);
+      if (!ok2) valid = false;
+    });
+    if (valid) {
+      ok.classList.add('show');
+      form.reset();
+      setTimeout(() => ok.classList.remove('show'), 4500);
+    } else {
+      ok.classList.remove('show');
+    }
+  });
+  // Live clear on input
+  form.querySelectorAll('input,select,textarea').forEach(el => {
+    el.addEventListener('input', () => el.closest('.field').classList.remove('invalid'));
+    el.addEventListener('change', () => el.closest('.field').classList.remove('invalid'));
+  });
+})();
+</script>
+</body>
+</html>
