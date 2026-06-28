@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Angel One Ltd. - A digital-first financial services and stockbroking company making investing and trading simple through technology, research and digital platforms." />
+<title>Angel One Ltd. — Making Investing & Trading Simple</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   ANGEL ONE LTD. — PREMIUM FINTECH COMPANY PROFILE
+   Single-page site • internal CSS + JS • academic demo
+   ============================================================ */
+
+:root{
+  --navy-900:#070b1f;
+  --navy-800:#0b1230;
+  --navy-700:#111a44;
+  --navy-600:#16204f;
+  --white:#ffffff;
+  --ink-100:#eaf0ff;
+  --ink-300:#b7c2e0;
+  --ink-400:#8b97bd;
+  --sky:#36b8ff;
+  --sky-soft:#7ed0ff;
+  --purple:#8b5cf6;
+  --purple-soft:#b794ff;
+  --orange:#ff7a2f;
+  --orange-soft:#ffac6b;
+  --grad-brand:linear-gradient(120deg,#36b8ff 0%,#8b5cf6 55%,#ff7a2f 120%);
+  --grad-sky-purple:linear-gradient(120deg,#36b8ff,#8b5cf6);
+  --glass-bg:rgba(255,255,255,0.06);
+  --glass-border:rgba(255,255,255,0.12);
+  --glass-shadow:0 18px 50px rgba(2,6,23,0.55);
+  --radius:20px;
+  --radius-lg:28px;
+  --maxw:1200px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-head:'Poppins',sans-serif;
+  --font-alt:'Manrope',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  font-family:var(--font-body);
+  background:var(--navy-900);
+  color:var(--ink-100);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* ambient glows */
+body::before,body::after{
+  content:"";position:fixed;z-index:0;border-radius:50%;
+  filter:blur(120px);opacity:.5;pointer-events:none;
+}
+body::before{width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,#1d49ff55,transparent 70%)}
+body::after{width:650px;height:650px;bottom:-250px;right:-200px;background:radial-gradient(circle,#8b5cf644,transparent 70%)}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+section{position:relative;z-index:1}
+
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-alt);font-weight:700;font-size:.95rem;
+  padding:14px 26px;border-radius:50px;border:none;cursor:pointer;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s;
+  position:relative;
+}
+.btn-primary{background:var(--grad-brand);color:#fff;box-shadow:0 12px 30px rgba(54,184,255,.35)}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(139,92,246,.5)}
+.btn-ghost{background:var(--glass-bg);color:var(--white);border:1px solid var(--glass-border);backdrop-filter:blur(10px)}
+.btn-ghost:hover{transform:translateY(-4px);background:rgba(255,255,255,.12);border-color:var(--sky)}
+
+/* ---------- Navbar ---------- */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  padding:18px 0;transition:all .4s var(--ease);
+}
+.navbar.scrolled{
+  background:rgba(7,11,31,.78);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--glass-border);padding:12px 0;
+  box-shadow:0 10px 40px rgba(0,0,0,.4);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--font-head);font-weight:800;font-size:1.3rem}
+.logo-mark{
+  width:42px;height:42px;border-radius:13px;background:var(--grad-brand);
+  display:grid;place-items:center;font-size:1.3rem;box-shadow:0 8px 20px rgba(139,92,246,.4);
+  transform:rotate(-6deg);transition:transform .4s var(--ease);
+}
+.logo:hover .logo-mark{transform:rotate(0) scale(1.08)}
+.logo span{background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-family:var(--font-body);font-weight:500;font-size:.6rem;letter-spacing:3px;color:var(--ink-400);text-transform:uppercase}
+
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{
+  font-size:.9rem;font-weight:500;color:var(--ink-300);
+  padding:9px 14px;border-radius:30px;transition:all .3s;position:relative;
+}
+.nav-links a:hover{color:#fff}
+.nav-links a.active{color:#fff;background:var(--glass-bg)}
+.nav-links a.active::after{
+  content:"";position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  width:18px;height:3px;border-radius:3px;background:var(--grad-sky-purple);
+}
+.nav-cta{margin-left:10px}
+.nav-cta .btn{padding:10px 22px;font-size:.85rem}
+
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:120}
+.hamburger span{width:26px;height:3px;background:#fff;border-radius:3px;transition:all .35s var(--ease)}
+.hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* ---------- Section heading ---------- */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--font-alt);
+  font-weight:700;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--sky-soft);padding:7px 16px;border-radius:50px;
+  background:var(--glass-bg);border:1px solid var(--glass-border);margin-bottom:18px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--grad-sky-purple)}
+.section-head{max-width:720px;margin:0 auto 56px;text-align:center}
+.section-head.left{margin-left:0;text-align:left}
+h2.section-title{
+  font-family:var(--font-head);font-weight:800;line-height:1.15;
+  font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.5px;margin-bottom:16px;
+}
+.gradient-text{background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-sub{color:var(--ink-300);font-size:1.05rem}
+
+.block{padding:100px 0}
+.block.tight{padding:80px 0}
+
+/* ---------- Hero ---------- */
+.hero{padding:160px 0 90px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;background:var(--glass-bg);
+  border:1px solid var(--glass-border);padding:8px 16px;border-radius:50px;
+  font-size:.8rem;color:var(--ink-300);margin-bottom:24px;backdrop-filter:blur(10px);
+}
+.hero-badge b{color:#fff}
+.hero-badge .pulse{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 0 rgba(61,220,132,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,132,.6)}70%{box-shadow:0 0 0 12px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
+
+.hero h1{
+  font-family:var(--font-head);font-weight:800;letter-spacing:-1px;
+  font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.08;margin-bottom:20px;
+}
+.hero .tagline{font-size:1.15rem;color:var(--ink-100);font-weight:500;margin-bottom:14px}
+.hero p.lead{color:var(--ink-300);font-size:1.02rem;max-width:540px;margin-bottom:30px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;gap:34px;flex-wrap:wrap}
+.hero-stat .num{font-family:var(--font-head);font-weight:800;font-size:1.8rem;background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-stat .lbl{font-size:.8rem;color:var(--ink-400)}
+
+/* hero visual */
+.hero-visual{position:relative}
+.hero-phone{
+  position:relative;border-radius:30px;overflow:hidden;
+  border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);
+  background:var(--glass-bg);backdrop-filter:blur(8px);
+  animation:floatY 6s ease-in-out infinite;
+}
+.hero-phone img{width:100%;height:480px;object-fit:cover}
+.hero-phone::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 40%,rgba(7,11,31,.55))}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+.float-card{
+  position:absolute;display:flex;align-items:center;gap:12px;
+  background:rgba(13,18,46,.72);backdrop-filter:blur(14px);
+  border:1px solid var(--glass-border);border-radius:16px;padding:13px 16px;
+  box-shadow:0 14px 36px rgba(0,0,0,.4);animation:floatY 5s ease-in-out infinite;
+}
+.float-card .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:1.1rem}
+.float-card .t{font-family:var(--font-alt);font-weight:700;font-size:.9rem;line-height:1.1}
+.float-card .s{font-size:.72rem;color:var(--ink-400)}
+.fc-1{top:6%;left:-7%;animation-delay:.2s}
+.fc-1 .ic{background:rgba(54,184,255,.18);color:var(--sky)}
+.fc-2{top:38%;right:-9%;animation-delay:1.1s}
+.fc-2 .ic{background:rgba(139,92,246,.2);color:var(--purple-soft)}
+.fc-3{bottom:16%;left:-9%;animation-delay:1.8s}
+.fc-3 .ic{background:rgba(255,122,47,.18);color:var(--orange-soft)}
+.fc-4{bottom:-3%;right:4%;animation-delay:.7s}
+.fc-4 .ic{background:rgba(61,220,132,.18);color:#3ddc84}
+
+/* brand strip */
+.trust-strip{border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);background:rgba(255,255,255,.02)}
+.trust-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;padding:26px 0}
+.trust-inner .label{font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--ink-400)}
+.trust-items{display:flex;gap:30px;flex-wrap:wrap}
+.trust-items span{font-family:var(--font-head);font-weight:700;color:var(--ink-300);opacity:.85}
+
+/* ---------- Glass card generic ---------- */
+.glass{
+  background:var(--glass-bg);border:1px solid var(--glass-border);
+  border-radius:var(--radius);backdrop-filter:blur(12px);
+  box-shadow:var(--glass-shadow);transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+}
+.glass:hover{transform:translateY(-8px);border-color:rgba(54,184,255,.4);box-shadow:0 26px 60px rgba(54,184,255,.16)}
+
+/* ---------- About ---------- */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.about-img{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--glass-border);box-shadow:var(--glass-shadow)}
+.about-img img{width:100%;height:430px;object-fit:cover}
+.about-img .tag{
+  position:absolute;left:18px;bottom:18px;background:rgba(7,11,31,.7);backdrop-filter:blur(10px);
+  border:1px solid var(--glass-border);border-radius:14px;padding:12px 16px;display:flex;gap:12px;align-items:center;
+}
+.about-img .tag .ic{font-size:1.4rem}
+.about-feature-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+.about-feature{display:flex;gap:12px;align-items:flex-start;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:14px;padding:14px}
+.about-feature .ic{font-size:1.3rem}
+.about-feature b{display:block;font-family:var(--font-alt);font-size:.95rem}
+.about-feature small{color:var(--ink-400);font-size:.8rem}
+
+/* ---------- Purpose ---------- */
+.purpose-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.purpose-card{padding:30px 24px;text-align:left}
+.purpose-card .ic{
+  width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
+  font-size:1.5rem;margin-bottom:18px;background:var(--glass-bg);border:1px solid var(--glass-border);
+}
+.purpose-card h3{font-family:var(--font-head);font-size:1.1rem;margin-bottom:10px}
+.purpose-card p{color:var(--ink-300);font-size:.92rem}
+
+/* ---------- Help people ---------- */
+.help-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.help-card{padding:26px 20px;text-align:center}
+.help-card .emoji{font-size:2rem;margin-bottom:14px;display:block}
+.help-card h4{font-family:var(--font-alt);font-weight:700;font-size:1rem;margin-bottom:8px}
+.help-card p{font-size:.83rem;color:var(--ink-400)}
+
+/* ---------- Objective ---------- */
+.objective-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
+.objective-list{display:flex;flex-direction:column;gap:16px}
+.objective-item{display:flex;gap:16px;align-items:flex-start;padding:18px 20px}
+.objective-item .num{
+  flex-shrink:0;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  font-family:var(--font-head);font-weight:800;background:var(--grad-sky-purple);color:#fff;
+}
+.objective-item h4{font-family:var(--font-alt);font-size:1.02rem;margin-bottom:4px}
+.objective-item p{color:var(--ink-300);font-size:.9rem}
+.objective-side{padding:36px 30px;text-align:center}
+.objective-side .big{font-family:var(--font-head);font-weight:800;font-size:3rem;background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.objective-side .quote{font-size:1.05rem;color:var(--ink-100);font-weight:500;margin:16px 0}
+.objective-side .by{font-size:.82rem;color:var(--ink-400)}
+
+/* ---------- How it functions (steps) ---------- */
+.steps{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:20px}
+.step{padding:26px 20px;text-align:center;position:relative}
+.step .circle{
+  width:60px;height:60px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;
+  font-family:var(--font-head);font-weight:800;font-size:1.3rem;
+  background:var(--glass-bg);border:1px solid var(--glass-border);color:var(--sky-soft);position:relative;
+}
+.step:nth-child(2) .circle{color:var(--purple-soft)}
+.step:nth-child(3) .circle{color:var(--orange-soft)}
+.step:nth-child(4) .circle{color:var(--sky-soft)}
+.step:nth-child(5) .circle{color:#3ddc84}
+.step h4{font-family:var(--font-alt);font-weight:700;font-size:.98rem;margin-bottom:8px}
+.step p{font-size:.82rem;color:var(--ink-400)}
+.step .arrow{position:absolute;top:46px;right:-12px;font-size:1.3rem;color:var(--ink-400);opacity:.5}
+
+/* ---------- Services ---------- */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.service-card{padding:26px 22px;position:relative;overflow:hidden}
+.service-card::before{
+  content:"";position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;
+  background:var(--grad-sky-purple);opacity:0;filter:blur(30px);transition:opacity .4s;
+}
+.service-card:hover::before{opacity:.22}
+.service-card .ic{
+  width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;
+  margin-bottom:16px;background:var(--glass-bg);border:1px solid var(--glass-border);
+}
+.service-card h4{font-family:var(--font-head);font-size:1.05rem;margin-bottom:8px}
+.service-card p{font-size:.86rem;color:var(--ink-400)}
+.service-card .more{margin-top:14px;font-size:.8rem;font-weight:700;color:var(--sky-soft);display:inline-flex;gap:6px;opacity:0;transform:translateX(-6px);transition:all .35s}
+.service-card:hover .more{opacity:1;transform:translateX(0)}
+
+/* ---------- Digital strength ---------- */
+.digital{position:relative;overflow:hidden}
+.digital-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.digital-img{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--glass-border);box-shadow:var(--glass-shadow)}
+.digital-img img{width:100%;height:460px;object-fit:cover}
+.digital-feats{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+.digital-feat{display:flex;gap:14px;align-items:center;padding:16px 18px}
+.digital-feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;background:var(--glass-bg);border:1px solid var(--glass-border);flex-shrink:0}
+.digital-feat b{font-family:var(--font-alt)}
+.digital-feat small{display:block;color:var(--ink-400);font-size:.82rem}
+
+/* ---------- Counters ---------- */
+.counters{background:rgba(255,255,255,.02);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
+.counters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.counter .val{font-family:var(--font-head);font-weight:800;font-size:clamp(2rem,4vw,3.2rem);background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.counter .suffix{-webkit-text-fill-color:initial}
+.counter .lbl{margin-top:8px;color:var(--ink-300);font-size:.92rem}
+
+/* ---------- Segments ---------- */
+.segments-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.segment-card{padding:28px 24px;display:flex;gap:18px;align-items:flex-start}
+.segment-card .ic{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;flex-shrink:0;background:var(--glass-bg);border:1px solid var(--glass-border)}
+.segment-card h4{font-family:var(--font-head);font-size:1.08rem;margin-bottom:6px}
+.segment-card p{font-size:.86rem;color:var(--ink-400)}
+
+/* ---------- Impact ---------- */
+.impact{position:relative;overflow:hidden}
+.impact-card{
+  border-radius:var(--radius-lg);padding:60px 50px;position:relative;overflow:hidden;
+  border:1px solid var(--glass-border);
+  background:linear-gradient(130deg,rgba(54,184,255,.14),rgba(139,92,246,.12) 50%,rgba(255,122,47,.12));
+  backdrop-filter:blur(8px);box-shadow:var(--glass-shadow);
+}
+.impact-card .impact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center}
+.impact-card h2{font-family:var(--font-head);font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:16px;line-height:1.15}
+.impact-card p{color:var(--ink-100);margin-bottom:14px}
+.impact-points{display:flex;flex-direction:column;gap:14px}
+.impact-point{display:flex;gap:14px;align-items:flex-start;background:rgba(7,11,31,.4);border:1px solid var(--glass-border);border-radius:14px;padding:16px 18px}
+.impact-point .ic{font-size:1.4rem}
+.impact-point b{font-family:var(--font-alt);display:block}
+.impact-point small{color:var(--ink-300);font-size:.84rem}
+
+/* ---------- Contact ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:start}
+.contact-cards{display:flex;flex-direction:column;gap:16px}
+.contact-card{padding:22px 22px;display:flex;gap:16px;align-items:flex-start}
+.contact-card .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;background:var(--glass-bg);border:1px solid var(--glass-border)}
+.contact-card h4{font-family:var(--font-alt);font-size:1rem;margin-bottom:4px}
+.contact-card p{font-size:.85rem;color:var(--ink-300)}
+.contact-card a{color:var(--sky-soft);font-size:.85rem;font-weight:600}
+
+.form-wrap{padding:34px 32px}
+.form-wrap h3{font-family:var(--font-head);font-size:1.4rem;margin-bottom:6px}
+.form-wrap .form-sub{color:var(--ink-400);font-size:.9rem;margin-bottom:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin-bottom:16px;position:relative}
+.field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink-300);margin-bottom:7px}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(7,11,31,.55);border:1px solid var(--glass-border);
+  border-radius:12px;padding:13px 15px;color:#fff;font-family:var(--font-body);font-size:.92rem;
+  transition:border-color .3s,box-shadow .3s;
+}
+.field textarea{resize:vertical;min-height:110px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--sky);box-shadow:0 0 0 4px rgba(54,184,255,.14);
+}
+.field select option{background:var(--navy-800)}
+.field .err{color:#ff7a8a;font-size:.74rem;margin-top:5px;display:none}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:#ff5d73}
+.field.invalid .err{display:block}
+.form-note{font-size:.78rem;color:var(--ink-400);margin-top:6px;display:flex;gap:8px;align-items:center}
+.form-msg{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(61,220,132,.12);border:1px solid rgba(61,220,132,.4);color:#9bf0c0;font-size:.9rem}
+.form-msg.show{display:block;animation:fadeUp .5s var(--ease)}
+.demo-banner{
+  display:inline-flex;gap:8px;align-items:center;font-size:.76rem;color:var(--orange-soft);
+  background:rgba(255,122,47,.1);border:1px solid rgba(255,122,47,.3);padding:7px 14px;border-radius:50px;margin-bottom:20px;
+}
+
+/* ---------- Footer ---------- */
+.footer{background:rgba(4,7,20,.7);border-top:1px solid var(--glass-border);padding:60px 0 26px;position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.3fr;gap:36px}
+.footer h5{font-family:var(--font-head);font-size:.95rem;margin-bottom:16px;color:#fff}
+.footer p{color:var(--ink-400);font-size:.86rem;margin-bottom:14px}
+.footer-links li{margin-bottom:10px}
+.footer-links a{color:var(--ink-300);font-size:.86rem;transition:color .3s}
+.footer-links a:hover{color:var(--sky-soft)}
+.footer .disclaimer{background:rgba(255,122,47,.08);border:1px solid rgba(255,122,47,.25);border-radius:14px;padding:16px;font-size:.78rem;color:var(--ink-300)}
+.footer-bottom{margin-top:40px;padding-top:22px;border-top:1px solid var(--glass-border);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-400)}
+.social{display:flex;gap:10px}
+.social a{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--glass-bg);border:1px solid var(--glass-border);transition:all .3s}
+.social a:hover{transform:translateY(-4px);border-color:var(--sky);color:var(--sky)}
+
+/* ---------- Scroll reveal ---------- */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* scroll-to-top */
+.to-top{
+  position:fixed;bottom:26px;right:26px;width:48px;height:48px;border-radius:14px;z-index:90;
+  display:grid;place-items:center;background:var(--grad-brand);color:#fff;border:none;cursor:pointer;
+  box-shadow:0 12px 30px rgba(54,184,255,.4);opacity:0;visibility:hidden;transform:translateY(20px);transition:all .4s var(--ease);
+}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1024px){
+  .purpose-grid,.help-grid,.steps,.counters-grid{grid-template-columns:repeat(2,1fr)}
+  .segments-grid{grid-template-columns:repeat(2,1fr)}
+  .step .arrow{display:none}
+}
+@media(max-width:880px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .nav-links.mobile{
+    display:flex;flex-direction:column;align-items:stretch;gap:4px;
+    position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;z-index:110;
+    background:rgba(7,11,31,.96);backdrop-filter:blur(20px);padding:90px 24px 30px;
+    border-left:1px solid var(--glass-border);transform:translateX(100%);transition:transform .4s var(--ease);
+  }
+  .nav-links.mobile.open{transform:translateX(0)}
+  .nav-links.mobile a{padding:14px 16px;font-size:1rem;border-radius:12px}
+  .nav-links.mobile .btn{margin-top:14px;justify-content:center}
+  .nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:105;opacity:0;visibility:hidden;transition:.3s}
+  .nav-overlay.show{opacity:1;visibility:visible}
+
+  .hero-grid,.about-grid,.objective-wrap,.digital-grid,.contact-grid,.impact-card .impact-grid{grid-template-columns:1fr}
+  .hero-visual{order:-1;max-width:430px;margin:0 auto}
+  .hero-phone img{height:360px}
+  .float-card{display:none}
+  .float-card.fc-1,.float-card.fc-4{display:flex}
+  .fc-1{left:2%}.fc-4{right:2%}
+}
+@media(max-width:600px){
+  .block{padding:70px 0}
+  .purpose-grid,.help-grid,.steps,.counters-grid,.segments-grid,.about-feature-list,.form-row{grid-template-columns:1fr}
+  .impact-card{padding:36px 24px}
+  .form-wrap{padding:26px 20px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:22px}
+}
+@media(max-width:430px){
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="logo">
+      <span class="logo-mark">A1</span>
+      <span>Angel One<small>Ltd. • Digital Investing</small></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#purpose">Purpose</a>
+      <a href="#objective">Objective</a>
+      <a href="#functions">How It Works</a>
+      <a href="#services">Services</a>
+      <a href="#digital">Digital</a>
+      <a href="#segments">Customers</a>
+      <a href="#contact" class="btn btn-primary nav-cta-mobile" style="display:none">Contact Us</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Contact Us</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero" id="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="hero-badge"><span class="pulse"></span>Digital-first financial services • <b>Angel One Ltd.</b></span>
+      <h1>Making Investing &amp; Trading <span class="gradient-text">Simple Through Digital Innovation</span></h1>
+      <p class="tagline">A technology-driven stockbroking and financial services company.</p>
+      <p class="lead">Angel One helps people invest, trade and access a wide range of financial products through smart technology, research, advisory tools and easy-to-use digital platforms — built for every kind of Indian investor.</p>
+      <div class="hero-actions">
+        <a href="#about" class="btn btn-primary">Explore Company →</a>
+        <a href="#contact" class="btn btn-ghost">Contact Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num" data-count="100" data-suffix="%">0%</div><div class="lbl">Digital onboarding</div></div>
+        <div class="hero-stat"><div class="num" data-count="10" data-suffix="+">0</div><div class="lbl">Financial products</div></div>
+        <div class="hero-stat"><div class="num" data-count="24" data-suffix="/7">0</div><div class="lbl">App access</div></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal d2">
+      <div class="hero-phone">
+        <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=900&q=80" alt="Mobile trading and investing app" loading="lazy" />
+      </div>
+      <div class="float-card fc-1"><span class="ic">📈</span><div><div class="t">Trading</div><div class="s">Equity &amp; F&amp;O</div></div></div>
+      <div class="float-card fc-2"><span class="ic">💼</span><div><div class="t">Mutual Funds</div><div class="s">Direct &amp; SIP</div></div></div>
+      <div class="float-card fc-3"><span class="ic">🔬</span><div><div class="t">Research</div><div class="s">Smart insights</div></div></div>
+      <div class="float-card fc-4"><span class="ic">📱</span><div><div class="t">Digital Platform</div><div class="s">Invest anywhere</div></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== TRUST STRIP ========== -->
+<div class="trust-strip">
+  <div class="container trust-inner reveal">
+    <span class="label">What we offer</span>
+    <div class="trust-items">
+      <span>Stocks</span><span>F&amp;O</span><span>Mutual Funds</span><span>IPOs</span><span>Commodities</span><span>Research &amp; Advisory</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<section class="block" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img reveal">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80" alt="Stock market dashboard and analytics" loading="lazy" />
+        <div class="tag"><span class="ic">🏦</span><div><b style="font-family:var(--font-alt)">Financial services, digitised</b><br><small style="color:var(--ink-400)">One platform, many products</small></div></div>
+      </div>
+      <div class="reveal d2">
+        <span class="eyebrow"><span class="dot"></span>About the Company</span>
+        <h2 class="section-title">A digital home for <span class="gradient-text">investing &amp; trading</span></h2>
+        <p class="section-sub" style="text-align:left">Angel One Ltd. is a digital-first financial services and stockbroking company. It brings the stock market and a full suite of financial products into one simple, technology-led experience.</p>
+        <p style="color:var(--ink-300);margin-top:14px">Through its app and online platform, Angel One lets people buy and sell stocks, trade in futures &amp; options, invest in mutual funds, apply for IPOs and explore commodities — supported by research, advisory tools and clear guidance at every step.</p>
+        <div class="about-feature-list">
+          <div class="about-feature"><span class="ic">📊</span><div><b>Stockbroking &amp; Trading</b><small>Equity, F&amp;O and commodities</small></div></div>
+          <div class="about-feature"><span class="ic">💰</span><div><b>Investment Services</b><small>Mutual funds, IPOs &amp; SIPs</small></div></div>
+          <div class="about-feature"><span class="ic">🔍</span><div><b>Research &amp; Advisory</b><small>Insights for better decisions</small></div></div>
+          <div class="about-feature"><span class="ic">⚙️</span><div><b>Financial Products</b><small>Distribution &amp; tools</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PURPOSE ========== -->
+<section class="block tight" id="purpose">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Purpose of the Company</span>
+      <h2 class="section-title">Why <span class="gradient-text">Angel One</span> exists</h2>
+      <p class="section-sub">To make stock market participation easier, digital, affordable and accessible for every Indian investor — removing the barriers that once kept people away.</p>
+    </div>
+    <div class="purpose-grid">
+      <div class="purpose-card glass reveal d1"><div class="ic">🚪</div><h3>Make it Accessible</h3><p>Open the markets to everyone with simple, paperless access from any smartphone.</p></div>
+      <div class="purpose-card glass reveal d2"><div class="ic">📱</div><h3>Go Fully Digital</h3><p>Replace complex paperwork with a smooth, app-based investing journey.</p></div>
+      <div class="purpose-card glass reveal d3"><div class="ic">💸</div><h3>Keep it Affordable</h3><p>Cost-effective investing and trading so more people can take part.</p></div>
+      <div class="purpose-card glass reveal d4"><div class="ic">🧭</div><h3>Simplify Investing</h3><p>Guidance, research and clean design that make decisions easier for beginners.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT HELPS PEOPLE ========== -->
+<section class="block tight" id="help">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>How It Helps People</span>
+      <h2 class="section-title">Built for <span class="gradient-text">every kind of investor</span></h2>
+      <p class="section-sub">Whether someone is starting out or building long-term wealth, Angel One meets them where they are.</p>
+    </div>
+    <div class="help-grid">
+      <div class="help-card glass reveal d1"><span class="emoji">🌱</span><h4>New Investors</h4><p>Easy onboarding, guidance and simple tools to start with confidence.</p></div>
+      <div class="help-card glass reveal d2"><span class="emoji">⚡</span><h4>Active Traders</h4><p>Fast, reliable platforms with charts and live market data.</p></div>
+      <div class="help-card glass reveal d3"><span class="emoji">📦</span><h4>Mutual Fund Investors</h4><p>Direct funds and SIPs for steady, disciplined investing.</p></div>
+      <div class="help-card glass reveal d4"><span class="emoji">📲</span><h4>Young Digital Users</h4><p>A mobile-first experience designed for digital natives.</p></div>
+      <div class="help-card glass reveal d5"><span class="emoji">🏆</span><h4>Wealth Builders</h4><p>Long-term tools to grow and track wealth over time.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAIN OBJECTIVE ========== -->
+<section class="block" id="objective">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Main Objective</span>
+      <h2 class="section-title">The goal that drives <span class="gradient-text">everything</span></h2>
+    </div>
+    <div class="objective-wrap">
+      <div class="objective-side glass reveal">
+        <div class="big">🎯</div>
+        <div class="quote">"Empower people to invest smarter and build wealth — with technology that makes finance simple and within reach."</div>
+        <div class="by">— The Angel One mission</div>
+      </div>
+      <div class="objective-list reveal d2">
+        <div class="objective-item glass"><span class="num">1</span><div><h4>Simplify Investing</h4><p>Turn a complex process into a few easy, guided steps.</p></div></div>
+        <div class="objective-item glass"><span class="num">2</span><div><h4>Provide Digital Access to Markets</h4><p>Bring stocks, funds and more to every screen, anytime.</p></div></div>
+        <div class="objective-item glass"><span class="num">3</span><div><h4>Support Research-Based Decisions</h4><p>Equip investors with insights, analytics and advisory tools.</p></div></div>
+        <div class="objective-item glass"><span class="num">4</span><div><h4>Help People Build Wealth</h4><p>Enable long-term growth through smart, consistent investing.</p></div></div>
+        <div class="objective-item glass"><span class="num">5</span><div><h4>Make Financial Services Accessible</h4><p>Lower barriers so finance works for everyone.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW THE COMPANY FUNCTIONS ========== -->
+<section class="block tight" id="functions">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>How the Company Functions</span>
+      <h2 class="section-title">From sign-up to <span class="gradient-text">smart investing</span></h2>
+      <p class="section-sub">A simple, transparent flow that takes a customer from account opening to a full investing experience.</p>
+    </div>
+    <div class="steps">
+      <div class="step glass reveal d1"><div class="circle">1</div><h4>Open an Account</h4><p>Customers sign up and complete onboarding fully digitally.</p><span class="arrow">→</span></div>
+      <div class="step glass reveal d2"><div class="circle">2</div><h4>Use the Platform</h4><p>They access the Angel One app and web platform.</p><span class="arrow">→</span></div>
+      <div class="step glass reveal d3"><div class="circle">3</div><h4>Access Products</h4><p>Stocks, F&amp;O, mutual funds, IPOs, commodities &amp; more.</p><span class="arrow">→</span></div>
+      <div class="step glass reveal d4"><div class="circle">4</div><h4>Get Support</h4><p>Research, tools and advisory help guide decisions.</p><span class="arrow">→</span></div>
+      <div class="step glass reveal d5"><div class="circle">5</div><h4>Company Earns</h4><p>Through brokerage, distribution &amp; platform services.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== KEY SERVICES ========== -->
+<section class="block" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Key Services</span>
+      <h2 class="section-title">Everything you need, <span class="gradient-text">in one place</span></h2>
+      <p class="section-sub">A complete suite of investing, trading and financial services delivered digitally.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card glass reveal d1"><div class="ic">📈</div><h4>Equity Trading</h4><p>Buy and sell shares of listed companies with ease.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d1"><div class="ic">🔁</div><h4>F&amp;O Trading</h4><p>Trade futures and options with advanced tools.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d2"><div class="ic">💼</div><h4>Mutual Funds</h4><p>Direct mutual funds and SIPs for every goal.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d2"><div class="ic">🚀</div><h4>IPO Investments</h4><p>Apply for new public offerings in a few taps.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d3"><div class="ic">🛢️</div><h4>Commodities</h4><p>Trade in commodity markets through one account.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d3"><div class="ic">🔬</div><h4>Research &amp; Advisory</h4><p>Reports, ideas and insights for smarter calls.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d4"><div class="ic">📱</div><h4>Digital Trading Platform</h4><p>A fast, intuitive app and web experience.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d4"><div class="ic">📊</div><h4>Portfolio Tracking</h4><p>Monitor holdings and performance in real time.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d5"><div class="ic">🎓</div><h4>Investor Education</h4><p>Learning resources to build market knowledge.</p><span class="more">Learn more →</span></div>
+      <div class="service-card glass reveal d5"><div class="ic">🧩</div><h4>Product Distribution</h4><p>Access to a range of financial products.</p><span class="more">Learn more →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIGITAL STRENGTH ========== -->
+<section class="block digital" id="digital">
+  <div class="container">
+    <div class="digital-grid">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>Digital Strength</span>
+        <h2 class="section-title">A <span class="gradient-text">technology-first</span> way to invest</h2>
+        <p class="section-sub" style="text-align:left">The Angel One app and platform put powerful investing tools in everyone's pocket — paperless onboarding, real-time analytics and a smooth experience designed around the customer.</p>
+        <div class="digital-feats">
+          <div class="digital-feat glass"><span class="ic">⚡</span><div><b>Instant Digital Onboarding</b><small>Open and verify an account online in minutes.</small></div></div>
+          <div class="digital-feat glass"><span class="ic">📊</span><div><b>Smart Analytics &amp; Tools</b><small>Live charts, insights and decision-support features.</small></div></div>
+          <div class="digital-feat glass"><span class="ic">🛡️</span><div><b>Reliable &amp; Convenient</b><small>Secure, always-on access from mobile and web.</small></div></div>
+        </div>
+      </div>
+      <div class="digital-img reveal d2">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Financial technology analytics dashboard" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COUNTERS ========== -->
+<section class="counters block tight">
+  <div class="container">
+    <div class="counters-grid">
+      <div class="counter reveal d1"><div class="val"><span data-count="100">0</span><span class="suffix">%</span></div><div class="lbl">Paperless onboarding</div></div>
+      <div class="counter reveal d2"><div class="val"><span data-count="10">0</span><span class="suffix">+</span></div><div class="lbl">Financial product types</div></div>
+      <div class="counter reveal d3"><div class="val"><span data-count="6">0</span><span class="suffix">+</span></div><div class="lbl">Customer segments served</div></div>
+      <div class="counter reveal d4"><div class="val"><span data-count="24">0</span><span class="suffix">/7</span></div><div class="lbl">Digital market access</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CUSTOMER SEGMENTS ========== -->
+<section class="block" id="segments">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Customer Segments</span>
+      <h2 class="section-title">Who Angel One <span class="gradient-text">serves</span></h2>
+      <p class="section-sub">A platform designed to fit the needs of a wide and growing range of investors.</p>
+    </div>
+    <div class="segments-grid">
+      <div class="segment-card glass reveal d1"><span class="ic">👨‍💻</span><div><h4>Retail Investors</h4><p>Everyday individuals investing for their goals.</p></div></div>
+      <div class="segment-card glass reveal d2"><span class="ic">⚡</span><div><h4>Active Traders</h4><p>Frequent traders who need speed and tools.</p></div></div>
+      <div class="segment-card glass reveal d3"><span class="ic">🌟</span><div><h4>First-Time Investors</h4><p>Beginners taking their first market steps.</p></div></div>
+      <div class="segment-card glass reveal d1"><span class="ic">💼</span><div><h4>Young Professionals</h4><p>Career starters building early wealth.</p></div></div>
+      <div class="segment-card glass reveal d2"><span class="ic">📦</span><div><h4>Mutual Fund Investors</h4><p>People investing through funds and SIPs.</p></div></div>
+      <div class="segment-card glass reveal d3"><span class="ic">💎</span><div><h4>Digital Wealth Customers</h4><p>Tech-savvy users managing wealth online.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COMPANY IMPACT ========== -->
+<section class="block impact" id="impact">
+  <div class="container">
+    <div class="impact-card reveal">
+      <div class="impact-grid">
+        <div>
+          <span class="eyebrow"><span class="dot"></span>Company Impact</span>
+          <h2>Widening retail participation in Indian markets</h2>
+          <p>By combining technology with accessibility, Angel One has helped bring a new generation of investors into the financial markets — making investing a habit, not a privilege.</p>
+          <p style="color:var(--ink-300)">Simple digital access, education and low-friction onboarding mean more people across India can take part in wealth creation, including those from smaller towns and first-time investors.</p>
+        </div>
+        <div class="impact-points">
+          <div class="impact-point"><span class="ic">🌍</span><div><b>Broader Access</b><small>Bringing markets to investors across the country.</small></div></div>
+          <div class="impact-point"><span class="ic">📲</span><div><b>Tech-Led Inclusion</b><small>Digital tools that lower barriers to investing.</small></div></div>
+          <div class="impact-point"><span class="ic">📚</span><div><b>Financial Awareness</b><small>Education that builds investor confidence.</small></div></div>
+          <div class="impact-point"><span class="ic">📈</span><div><b>Wealth Creation</b><small>Helping people grow long-term wealth.</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="block" id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Contact Us</span>
+      <h2 class="section-title">Get in <span class="gradient-text">touch</span></h2>
+      <p class="section-sub">Reach the right team — from account support to platform help.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-cards reveal">
+        <div class="contact-card glass"><span class="ic">🎧</span><div><h4>Customer Support</h4><p>General queries, accounts and assistance.</p><a href="#contact">support@angelone-demo.in</a></div></div>
+        <div class="contact-card glass"><span class="ic">📈</span><div><h4>Trading / Investment Enquiry</h4><p>Questions about products and investing.</p><a href="#contact">invest@angelone-demo.in</a></div></div>
+        <div class="contact-card glass"><span class="ic">📱</span><div><h4>App / Platform Assistance</h4><p>Help with the app, login and digital tools.</p><a href="#contact">appcare@angelone-demo.in</a></div></div>
+      </div>
+
+      <div class="form-wrap glass reveal d2">
+        <span class="demo-banner">⚠️ Demo only — no data is stored or sent</span>
+        <h3>Send us a message</h3>
+        <p class="form-sub">Fill in the details below and we'll get back to you.</p>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" placeholder="Your name" />
+              <span class="err">Please enter your name.</span>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="you@example.com" />
+              <span class="err">Please enter a valid email.</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" placeholder="10-digit mobile number" />
+              <span class="err">Please enter a valid 10-digit phone number.</span>
+            </div>
+            <div class="field">
+              <label for="service">Service Interested In</label>
+              <select id="service">
+                <option value="">Select a service</option>
+                <option>Equity Trading</option>
+                <option>F&amp;O Trading</option>
+                <option>Mutual Funds</option>
+                <option>IPO Investments</option>
+                <option>Commodities</option>
+                <option>Research &amp; Advisory</option>
+                <option>Digital Platform Help</option>
+                <option>General Enquiry</option>
+              </select>
+              <span class="err">Please select a service.</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="How can we help you?"></textarea>
+            <span class="err">Please enter a message (min 10 characters).</span>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message →</button>
+          <p class="form-note">📝 This form is for academic/project demonstration only.</p>
+          <div class="form-msg" id="formMsg">✅ Thank you! Your message has been recorded for this demo.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#hero" class="logo" style="margin-bottom:16px"><span class="logo-mark">A1</span><span>Angel One<small>Ltd.</small></span></a>
+        <p>A digital-first financial services and stockbroking company, helping people invest, trade and build wealth through technology, research and easy-to-use platforms.</p>
+        <div class="social">
+          <a href="#hero" aria-label="LinkedIn">in</a>
+          <a href="#hero" aria-label="Twitter">𝕏</a>
+          <a href="#hero" aria-label="Instagram">◎</a>
+          <a href="#hero" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#purpose">Purpose</a></li>
+          <li><a href="#objective">Objective</a></li>
+          <li><a href="#functions">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul class="footer-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#digital">Digital Strength</a></li>
+          <li><a href="#segments">Customers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Project Note</h5>
+        <div class="disclaimer">
+          📚 <b>Academic Disclaimer:</b> This website is a non-commercial, educational project created for learning and demonstration. It is not affiliated with, endorsed by, or an official source of Angel One Ltd. All figures shown are illustrative.
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Angel One Ltd. — Company Profile (Demo). For academic use only.</span>
+      <span>Designed as a premium fintech UI demonstration.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+/* ============================================================
+   INTERACTIONS
+   ============================================================ */
+(function(){
+  "use strict";
+
+  /* ---- Navbar scroll state + scroll-to-top ---- */
+  var navbar = document.getElementById('navbar');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    navbar.classList.toggle('scrolled', y > 30);
+    toTop.classList.toggle('show', y > 600);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  /* ---- Mobile menu ---- */
+  var hamburger = document.getElementById('hamburger');
+  var navLinks  = document.getElementById('navLinks');
+  var overlay   = document.getElementById('navOverlay');
+  function closeMenu(){
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open','mobile');
+    overlay.classList.remove('show');
+    document.body.style.overflow='';
+  }
+  function openMenu(){
+    hamburger.classList.add('open');
+    navLinks.classList.add('open','mobile');
+    overlay.classList.add('show');
+    document.body.style.overflow='hidden';
+  }
+  hamburger.addEventListener('click', function(){
+    if(navLinks.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  overlay.addEventListener('click', closeMenu);
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+
+  /* ---- Smooth scroll (with offset; works even without CSS smooth) ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = this.getAttribute('href');
+      if(id.length < 2) return;
+      var target = document.querySelector(id);
+      if(target){
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 78;
+        window.scrollTo({top:top, behavior:'smooth'});
+      }
+    });
+  });
+
+  /* ---- Scroll reveal ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('visible'); ro.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ---- Animated counters ---- */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-suffix') || '';
+    var dur = 1600, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  if('IntersectionObserver' in window){
+    var co = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ animateCount(en.target); co.unobserve(en.target); }
+      });
+    }, {threshold:0.5});
+    counters.forEach(function(c){ co.observe(c); });
+  } else {
+    counters.forEach(animateCount);
+  }
+
+  /* ---- Active nav highlight ---- */
+  var sections = ['about','purpose','objective','functions','services','digital','segments']
+    .map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  var navAnchors = {};
+  document.querySelectorAll('#navLinks a[href^="#"]').forEach(function(a){
+    navAnchors[a.getAttribute('href').slice(1)] = a;
+  });
+  function highlight(){
+    var pos = window.scrollY + 140;
+    var current = null;
+    sections.forEach(function(sec){
+      if(sec.offsetTop <= pos) current = sec.id;
+    });
+    Object.keys(navAnchors).forEach(function(k){
+      navAnchors[k].classList.toggle('active', k === current);
+    });
+  }
+  window.addEventListener('scroll', highlight, {passive:true});
+  highlight();
+
+  /* ---- Form validation (demo) ---- */
+  var form = document.getElementById('contactForm');
+  var formMsg = document.getElementById('formMsg');
+  function setError(id, isErr){
+    document.getElementById(id).closest('.field').classList.toggle('invalid', isErr);
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var service = document.getElementById('service').value;
+    var message = document.getElementById('message').value.trim();
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var phoneOk = /^[0-9]{10}$/.test(phone.replace(/\D/g,'').slice(-10)) && phone.replace(/\D/g,'').length >= 10;
+
+    var nE = name.length < 2;
+    var eE = !emailOk;
+    var pE = !phoneOk;
+    var sE = service === '';
+    var mE = message.length < 10;
+
+    setError('name', nE);
+    setError('email', eE);
+    setError('phone', pE);
+    setError('service', sE);
+    setError('message', mE);
+
+    if(nE||eE||pE||sE||mE){ formMsg.classList.remove('show'); return; }
+
+    formMsg.classList.add('show');
+    form.reset();
+    setTimeout(function(){ formMsg.classList.remove('show'); }, 6000);
+  });
+  // clear error as user types
+  ['name','email','phone','service','message'].forEach(function(id){
+    var el = document.getElementById(id);
+    var ev = el.tagName === 'SELECT' ? 'change' : 'input';
+    el.addEventListener(ev, function(){ el.closest('.field').classList.remove('invalid'); });
+  });
+
+  /* ---- Year ---- */
+})();
+</script>
+</body>
+</html>
