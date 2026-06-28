@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Nuvama Wealth Management Ltd. — a modern financial services ecosystem spanning wealth management, advisory, capital markets and asset solutions for investors and institutions." />
+<title>Nuvama Wealth Management Ltd. — Smarter Wealth. Stronger Market Access.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   NUVAMA WEALTH MANAGEMENT LTD.
+   Modern wealth + capital-markets ecosystem
+   Single-page • internal CSS + JS • academic demo
+   Class prefix: nv-   Palette: indigo / teal / cyan / silver
+   ============================================================ */
+
+:root{
+  --indigo-950:#0d1133;
+  --indigo-900:#141a4a;
+  --indigo-800:#1e2767;
+  --indigo-700:#2c3793;
+  --teal-600:#0e8f8f;
+  --teal-500:#14b3ac;
+  --teal-400:#2fd1c4;
+  --cyan-400:#56e0e0;
+  --cyan-300:#86f0ec;
+  --violet-500:#6d5cf0;
+  --violet-400:#8f7dff;
+  --violet:#7b6cf6;
+  --silver-50:#f5f7fb;
+  --silver-100:#eef1f8;
+  --silver-200:#e0e5f0;
+  --silver-300:#c6cee0;
+  --slate-500:#5b6588;
+  --slate-600:#434c6e;
+  --ink:#10142e;
+  --white:#ffffff;
+  --grad-hero:linear-gradient(135deg,#1e2767 0%,#2c3793 45%,#0e8f8f 120%);
+  --grad-teal:linear-gradient(120deg,#14b3ac,#56e0e0);
+  --grad-violet:linear-gradient(120deg,#6d5cf0,#56e0e0);
+  --grad-text:linear-gradient(100deg,#2fd1c4,#86f0ec 60%,#8f7dff);
+  --shadow-sm:0 8px 24px rgba(20,26,74,.08);
+  --shadow-md:0 18px 50px rgba(20,26,74,.12);
+  --shadow-lg:0 30px 70px rgba(13,17,51,.18);
+  --shadow-glow:0 20px 60px rgba(20,179,172,.28);
+  --r-sm:14px;--r-md:22px;--r-lg:32px;--r-xl:44px;
+  --head:'Plus Jakarta Sans',sans-serif;
+  --body:'Source Sans 3',system-ui,sans-serif;
+  --maxw:1220px;
+  --ease:cubic-bezier(.16,.8,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:var(--body);background:var(--white);color:var(--ink);line-height:1.7;font-size:16.5px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--head);font-weight:700;line-height:1.14;letter-spacing:-.02em;color:var(--ink)}
+
+.nv-wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.nv-grad-text{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---- pill / tag ---- */
+.nv-pill{display:inline-flex;align-items:center;gap:9px;font-family:var(--head);font-weight:600;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:50px;background:var(--silver-100);color:var(--teal-600);border:1px solid var(--silver-200)}
+.nv-pill .d{width:7px;height:7px;border-radius:50%;background:var(--grad-teal)}
+.nv-pill--ondark{background:rgba(255,255,255,.08);color:var(--cyan-300);border-color:rgba(255,255,255,.16)}
+
+/* ---- buttons ---- */
+.nv-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:.92rem;padding:14px 26px;border-radius:50px;cursor:pointer;border:1.5px solid transparent;transition:all .4s var(--ease)}
+.nv-btn .a{transition:transform .4s var(--ease)}
+.nv-btn:hover .a{transform:translateX(4px)}
+.nv-btn--primary{background:var(--grad-teal);color:#06231f;box-shadow:var(--shadow-glow)}
+.nv-btn--primary:hover{transform:translateY(-3px);box-shadow:0 26px 60px rgba(20,179,172,.4)}
+.nv-btn--dark{background:var(--indigo-800);color:#fff}
+.nv-btn--dark:hover{transform:translateY(-3px);background:var(--indigo-700)}
+.nv-btn--ghost{background:transparent;color:var(--ink);border-color:var(--silver-300)}
+.nv-btn--ghost:hover{border-color:var(--teal-500);color:var(--teal-600)}
+.nv-btn--ghostlight{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.28);backdrop-filter:blur(8px)}
+.nv-btn--ghostlight:hover{background:rgba(255,255,255,.14);border-color:var(--cyan-400)}
+
+/* ---- section heads ---- */
+.nv-head{max-width:680px;margin-bottom:54px}
+.nv-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.nv-head h2{font-size:clamp(1.9rem,3.8vw,2.9rem);margin:16px 0 14px}
+.nv-head p{color:var(--slate-500);font-size:1.05rem}
+.nv-sec{padding:104px 0;position:relative}
+
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.show{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.nv-nav{position:fixed;top:0;left:0;width:100%;z-index:200;padding:18px 0;transition:all .4s var(--ease)}
+.nv-nav.stuck{background:rgba(255,255,255,.85);backdrop-filter:blur(16px);box-shadow:0 6px 30px rgba(20,26,74,.08);padding:12px 0}
+.nv-nav__row{display:flex;align-items:center;justify-content:space-between}
+.nv-logo{display:flex;align-items:center;gap:12px}
+.nv-logo__mark{width:42px;height:42px;border-radius:13px;background:var(--grad-hero);display:grid;place-items:center;position:relative;overflow:hidden}
+.nv-logo__mark::after{content:"";position:absolute;width:16px;height:16px;border:2.5px solid var(--cyan-400);border-radius:50%;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg)}
+.nv-logo__txt{font-family:var(--head);font-weight:800;font-size:1.16rem;color:var(--ink);line-height:1}
+.nv-logo__txt small{display:block;font-family:var(--body);font-weight:600;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--slate-500);margin-top:4px}
+.nv-navlinks{display:flex;align-items:center;gap:4px}
+.nv-navlinks a{font-family:var(--head);font-weight:500;font-size:.9rem;color:var(--slate-600);padding:9px 14px;border-radius:50px;transition:all .3s}
+.nv-navlinks a:hover{color:var(--ink);background:var(--silver-100)}
+.nv-navlinks a.active{color:var(--teal-600);background:var(--silver-100)}
+.nv-nav__cta{display:flex;align-items:center;gap:12px}
+.nv-nav__cta .nv-btn{padding:11px 22px;font-size:.86rem}
+.nv-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:230}
+.nv-burger span{width:26px;height:2.5px;border-radius:3px;background:var(--ink);transition:.4s var(--ease)}
+.nv-burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.nv-burger.open span:nth-child(2){opacity:0}
+.nv-burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* ============================================================
+   HERO  (split screen)
+   ============================================================ */
+.nv-hero{padding:150px 0 90px;position:relative;overflow:hidden}
+.nv-hero::before{content:"";position:absolute;top:-180px;right:-120px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(86,224,224,.22),transparent 65%);z-index:0}
+.nv-hero::after{content:"";position:absolute;bottom:-160px;left:-120px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(109,92,240,.16),transparent 65%);z-index:0}
+.nv-hero__grid{display:grid;grid-template-columns:1.02fr .98fr;gap:58px;align-items:center;position:relative;z-index:1}
+.nv-hero h1{font-size:clamp(2.4rem,5vw,3.9rem);margin:22px 0 20px}
+.nv-hero__lead{color:var(--slate-500);font-size:1.1rem;max-width:520px;margin-bottom:34px}
+.nv-hero__actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.nv-hero__mini{display:flex;gap:28px;flex-wrap:wrap}
+.nv-hero__mini div b{font-family:var(--head);font-size:1.5rem;color:var(--indigo-800)}
+.nv-hero__mini div span{display:block;font-size:.8rem;color:var(--slate-500)}
+
+/* hero collage */
+.nv-collage{position:relative;height:540px}
+.nv-collage__img{position:absolute;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-lg);border:5px solid #fff}
+.nv-collage__img img{width:100%;height:100%;object-fit:cover}
+.nv-collage__a{width:64%;height:74%;top:0;right:0;z-index:2;animation:nvFloat 7s ease-in-out infinite}
+.nv-collage__b{width:50%;height:50%;bottom:0;left:0;z-index:3;animation:nvFloat 8s ease-in-out infinite reverse}
+@keyframes nvFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.nv-collage__panel{position:absolute;z-index:4;left:8%;top:10%;background:rgba(13,17,51,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.16);border-radius:var(--r-sm);padding:16px 18px;color:#fff;box-shadow:var(--shadow-md);animation:nvFloat 6s ease-in-out infinite}
+.nv-collage__panel .row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:8px}
+.nv-collage__panel .row:last-child{margin-bottom:0}
+.nv-collage__panel .k{font-size:.74rem;color:var(--silver-300)}
+.nv-collage__panel .v{font-family:var(--head);font-weight:700;font-size:.86rem;color:var(--cyan-300)}
+.nv-collage__panel .bar{width:70px;height:5px;border-radius:5px;background:rgba(255,255,255,.16);overflow:hidden}
+.nv-collage__panel .bar i{display:block;height:100%;background:var(--grad-teal);border-radius:5px}
+.nv-badges{position:absolute;z-index:5;display:flex;flex-direction:column;gap:10px;right:-8px;bottom:14%}
+.nv-badge{display:flex;align-items:center;gap:8px;background:#fff;border-radius:50px;padding:8px 15px 8px 10px;box-shadow:var(--shadow-md);font-family:var(--head);font-weight:600;font-size:.82rem;animation:nvFloat 5.5s ease-in-out infinite}
+.nv-badge i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.7rem;color:#fff}
+.nv-badge:nth-child(1){animation-delay:.1s}.nv-badge:nth-child(2){animation-delay:.6s}.nv-badge:nth-child(3){animation-delay:1.1s}.nv-badge:nth-child(4){animation-delay:1.6s}
+.nv-badge:nth-child(1) i{background:var(--teal-500)}
+.nv-badge:nth-child(2) i{background:var(--violet)}
+.nv-badge:nth-child(3) i{background:var(--indigo-700)}
+.nv-badge:nth-child(4) i{background:var(--cyan-400);color:#06231f}
+
+/* ============================================================
+   ECOSYSTEM (What Nuvama does) — bento with feature card
+   ============================================================ */
+.nv-eco{background:var(--silver-50);border-radius:var(--r-xl) var(--r-xl) 0 0}
+.nv-bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:22px}
+.nv-card{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-md);padding:30px;transition:all .45s var(--ease);position:relative;overflow:hidden}
+.nv-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:transparent}
+.nv-card__ic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.3rem;margin-bottom:16px;background:var(--silver-100);transition:.4s}
+.nv-card:hover .nv-card__ic{background:var(--grad-teal)}
+.nv-card h4{font-size:1.12rem;margin-bottom:8px}
+.nv-card p{color:var(--slate-500);font-size:.92rem}
+.nv-card--feature{grid-column:span 2;grid-row:span 2;background:var(--grad-hero);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:40px}
+.nv-card--feature .nv-pill{margin-bottom:auto}
+.nv-card--feature h3{color:#fff;font-size:1.9rem;margin:24px 0 14px}
+.nv-card--feature p{color:rgba(255,255,255,.78);font-size:1.02rem;max-width:440px}
+.nv-card--feature .nv-eco__tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.nv-card--feature .nv-eco__tags span{font-family:var(--head);font-weight:600;font-size:.78rem;padding:7px 14px;border-radius:50px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:var(--cyan-300)}
+.nv-card--accent{background:linear-gradient(135deg,#eef1f8,#fff)}
+.nv-card--accent .nv-card__ic{background:var(--grad-violet)}
+
+/* ============================================================
+   PURPOSE
+   ============================================================ */
+.nv-purpose__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--silver-200)}
+.nv-purpose__block{padding:38px 30px;border-right:1px solid var(--silver-200);position:relative;transition:background .45s var(--ease)}
+.nv-purpose__block:last-child{border-right:none}
+.nv-purpose__block:hover{background:var(--silver-50)}
+.nv-purpose__block .no{font-family:var(--head);font-weight:800;font-size:.9rem;color:var(--teal-500);letter-spacing:.1em}
+.nv-purpose__block .ic{font-size:1.8rem;margin:16px 0 14px;display:block}
+.nv-purpose__block h4{font-size:1.16rem;margin-bottom:10px}
+.nv-purpose__block p{color:var(--slate-500);font-size:.9rem}
+.nv-purpose__block::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:3px;background:var(--grad-teal);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.nv-purpose__block:hover::after{transform:scaleX(1)}
+
+/* ============================================================
+   SEGMENTS (interactive)
+   ============================================================ */
+.nv-seg{background:var(--indigo-950);color:#fff;border-radius:var(--r-xl)}
+.nv-seg .nv-head h2{color:#fff}
+.nv-seg .nv-head p{color:rgba(255,255,255,.6)}
+.nv-seg__layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:50px;align-items:stretch}
+.nv-seg__tabs{display:flex;flex-direction:column;gap:8px}
+.nv-seg__tab{display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:var(--r-sm);cursor:pointer;border:1px solid transparent;transition:all .4s var(--ease);background:rgba(255,255,255,.03)}
+.nv-seg__tab .n{font-family:var(--head);font-weight:700;font-size:.82rem;color:rgba(255,255,255,.4)}
+.nv-seg__tab .t{font-family:var(--head);font-weight:600;font-size:1.05rem;color:rgba(255,255,255,.7)}
+.nv-seg__tab:hover{background:rgba(255,255,255,.06)}
+.nv-seg__tab.active{background:linear-gradient(120deg,rgba(20,179,172,.22),rgba(109,92,240,.18));border-color:rgba(86,224,224,.4)}
+.nv-seg__tab.active .t{color:#fff}
+.nv-seg__tab.active .n{color:var(--cyan-300)}
+.nv-seg__panel{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.nv-seg__panel::before{content:"";position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(86,224,224,.18),transparent 70%)}
+.nv-seg__panel .ic{font-size:2.4rem;margin-bottom:18px}
+.nv-seg__panel h3{color:#fff;font-size:1.8rem;margin-bottom:14px}
+.nv-seg__panel p{color:rgba(255,255,255,.74);font-size:1.05rem;max-width:460px}
+.nv-seg__panel .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.nv-seg__panel .chips span{font-family:var(--head);font-weight:600;font-size:.78rem;padding:8px 15px;border-radius:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--cyan-300)}
+.nv-fade{animation:nvFadeUp .5s var(--ease)}
+@keyframes nvFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   FUNCTIONS (node flow)
+   ============================================================ */
+.nv-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;position:relative}
+.nv-node{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-md);padding:28px;position:relative;transition:all .45s var(--ease)}
+.nv-node:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:var(--teal-400)}
+.nv-node__top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.nv-node__dot{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-family:var(--head);font-weight:800;color:#fff;background:var(--grad-hero);flex-shrink:0}
+.nv-node:nth-child(even) .nv-node__dot{background:var(--grad-violet)}
+.nv-node__step{font-family:var(--head);font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-600)}
+.nv-node h4{font-size:1.12rem}
+.nv-node p{color:var(--slate-500);font-size:.92rem}
+.nv-node__link{position:absolute;right:-26px;top:50%;transform:translateY(-50%);z-index:2;color:var(--silver-300);font-size:1.3rem}
+.nv-node:nth-child(3n) .nv-node__link{display:none}
+
+/* ============================================================
+   SERVICES (bento)
+   ============================================================ */
+.nv-serv{background:var(--silver-50)}
+.nv-sbento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:160px;gap:18px}
+.nv-stile{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-md);padding:24px;transition:all .45s var(--ease);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.nv-stile:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:transparent}
+.nv-stile .ic{font-size:1.5rem}
+.nv-stile h4{font-size:1.04rem}
+.nv-stile p{color:var(--slate-500);font-size:.84rem;margin-top:4px}
+.nv-stile__no{position:absolute;top:18px;right:20px;font-family:var(--head);font-weight:800;font-size:.8rem;color:var(--silver-300)}
+.nv-stile--wide{grid-column:span 2}
+.nv-stile--tall{grid-row:span 2}
+.nv-stile--dark{background:var(--grad-hero);color:#fff}
+.nv-stile--dark h4{color:#fff}.nv-stile--dark p{color:rgba(255,255,255,.75)}
+.nv-stile--dark .nv-stile__no{color:rgba(255,255,255,.4)}
+.nv-stile--violet{background:var(--grad-violet);color:#fff}
+.nv-stile--violet h4{color:#fff}.nv-stile--violet p{color:rgba(255,255,255,.85)}
+.nv-stile--violet .nv-stile__no{color:rgba(255,255,255,.5)}
+
+/* ============================================================
+   OBJECTIVE
+   ============================================================ */
+.nv-obj__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.nv-obj h2{font-size:clamp(1.9rem,4vw,2.9rem);margin:16px 0 22px}
+.nv-obj__lead{color:var(--slate-500);font-size:1.08rem;margin-bottom:30px}
+.nv-obj__list{display:flex;flex-direction:column;gap:14px}
+.nv-obj__item{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-sm);background:var(--silver-50);border:1px solid var(--silver-200);transition:.4s}
+.nv-obj__item:hover{transform:translateX(6px);border-color:var(--teal-400)}
+.nv-obj__item .c{width:26px;height:26px;border-radius:50%;background:var(--grad-teal);color:#06231f;display:grid;place-items:center;font-size:.8rem;font-weight:800;flex-shrink:0;font-family:var(--head)}
+.nv-obj__item b{font-family:var(--head)}
+.nv-obj__visual{position:relative;background:var(--grad-hero);border-radius:var(--r-lg);padding:46px;color:#fff;overflow:hidden}
+.nv-obj__visual::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(86,224,224,.3),transparent 70%)}
+.nv-obj__visual .big{font-family:var(--head);font-weight:800;font-size:3.4rem;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.nv-obj__visual .ql{font-family:var(--head);font-size:1.4rem;font-weight:600;line-height:1.4;margin:18px 0;color:#fff}
+.nv-obj__visual .by{color:var(--cyan-300);font-size:.85rem;letter-spacing:.06em}
+.nv-obj__dots{display:flex;gap:8px;margin-top:30px}
+.nv-obj__dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3)}
+.nv-obj__dots i:nth-child(1){background:var(--cyan-400)}
+
+/* ============================================================
+   DIGITAL STRENGTH
+   ============================================================ */
+.nv-dig{background:var(--indigo-950);color:#fff;border-radius:var(--r-xl)}
+.nv-dig .nv-head h2{color:#fff}.nv-dig .nv-head p{color:rgba(255,255,255,.6)}
+.nv-dig__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:center}
+.nv-dig__cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nv-dig__c{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:26px;transition:.4s}
+.nv-dig__c:hover{background:rgba(255,255,255,.09);transform:translateY(-5px)}
+.nv-dig__c .ic{font-size:1.5rem;margin-bottom:12px}
+.nv-dig__c h4{color:#fff;font-size:1.08rem;margin-bottom:8px}
+.nv-dig__c p{color:rgba(255,255,255,.66);font-size:.88rem}
+.nv-dig__media{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+.nv-dig__media img{width:100%;height:460px;object-fit:cover}
+.nv-dig__media::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 40%,rgba(13,17,51,.7))}
+.nv-dig__float{position:absolute;left:20px;bottom:20px;right:20px;z-index:2;background:rgba(13,17,51,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-sm);padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
+.nv-dig__float .k{font-size:.74rem;color:var(--silver-300)}
+.nv-dig__float .v{font-family:var(--head);font-weight:700;color:var(--cyan-300)}
+
+/* ============================================================
+   IMPACT (metrics)
+   ============================================================ */
+.nv-imp__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.nv-imp__c{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-md);padding:34px 28px;text-align:center;transition:.4s}
+.nv-imp__c:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.nv-imp__v{font-family:var(--head);font-weight:800;font-size:clamp(2.2rem,4vw,3rem);line-height:1;background:var(--grad-violet);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nv-imp__l{margin-top:12px;color:var(--slate-500);font-size:.9rem}
+.nv-imp__note{margin-top:40px;text-align:center;max-width:760px;margin-left:auto;margin-right:auto;color:var(--slate-500)}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.nv-con{background:var(--silver-50)}
+.nv-con__grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:30px;align-items:start}
+.nv-con__routes{display:flex;flex-direction:column;gap:16px}
+.nv-route{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-md);padding:24px;display:flex;gap:16px;align-items:flex-start;transition:.4s;cursor:default}
+.nv-route:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:var(--teal-400)}
+.nv-route .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;background:var(--silver-100)}
+.nv-route:nth-child(1) .ic{background:var(--grad-teal)}
+.nv-route:nth-child(2) .ic{background:var(--grad-violet)}
+.nv-route:nth-child(3) .ic{background:var(--grad-hero)}
+.nv-route h4{font-size:1.04rem;margin-bottom:3px}
+.nv-route p{color:var(--slate-500);font-size:.86rem}
+.nv-route a{color:var(--teal-600);font-weight:600;font-size:.86rem}
+
+.nv-form{background:#fff;border:1px solid var(--silver-200);border-radius:var(--r-lg);padding:40px;box-shadow:var(--shadow-sm)}
+.nv-form__note{display:inline-flex;gap:8px;align-items:center;font-size:.76rem;font-weight:600;color:var(--violet);background:rgba(109,92,240,.08);border:1px solid rgba(109,92,240,.2);padding:7px 14px;border-radius:50px;margin-bottom:20px}
+.nv-form h3{font-size:1.5rem;margin-bottom:6px}
+.nv-form__sub{color:var(--slate-500);font-size:.92rem;margin-bottom:26px}
+.nv-fr{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.nv-field{margin-bottom:18px}
+.nv-field label{display:block;font-family:var(--head);font-weight:600;font-size:.78rem;color:var(--slate-600);margin-bottom:7px}
+.nv-field input,.nv-field select,.nv-field textarea{width:100%;background:var(--silver-50);border:1.5px solid var(--silver-200);border-radius:12px;padding:13px 15px;font-family:var(--body);font-size:.95rem;color:var(--ink);transition:.3s}
+.nv-field textarea{resize:vertical;min-height:110px}
+.nv-field input:focus,.nv-field select:focus,.nv-field textarea:focus{outline:none;border-color:var(--teal-500);background:#fff;box-shadow:0 0 0 4px rgba(20,179,172,.12)}
+.nv-field .err{display:none;color:#d6455d;font-size:.76rem;margin-top:5px}
+.nv-field.bad input,.nv-field.bad select,.nv-field.bad textarea{border-color:#d6455d}
+.nv-field.bad .err{display:block}
+.nv-form__ok{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(20,179,172,.1);border:1px solid rgba(20,179,172,.35);color:var(--teal-600);font-size:.9rem;font-weight:600}
+.nv-form__ok.show{display:block;animation:nvFadeUp .5s var(--ease)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.nv-foot{background:var(--indigo-950);color:rgba(255,255,255,.7);padding:70px 0 28px}
+.nv-foot__top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.3fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1)}
+.nv-foot .nv-logo__txt{color:#fff}
+.nv-foot__about{margin-top:18px;font-size:.9rem;max-width:330px;color:rgba(255,255,255,.6)}
+.nv-foot h5{font-family:var(--head);font-weight:700;color:#fff;font-size:.96rem;margin-bottom:16px}
+.nv-foot__links li{margin-bottom:11px}
+.nv-foot__links a{font-size:.88rem;color:rgba(255,255,255,.62);transition:.3s}
+.nv-foot__links a:hover{color:var(--cyan-300)}
+.nv-foot__disc{background:rgba(109,92,240,.1);border:1px solid rgba(109,92,240,.25);border-radius:14px;padding:16px;font-size:.8rem;color:rgba(255,255,255,.72)}
+.nv-foot__disc b{color:var(--cyan-300)}
+.nv-foot__bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:26px;font-size:.82rem;color:rgba(255,255,255,.45)}
+.nv-soc{display:flex;gap:10px}
+.nv-soc a{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-size:.85rem;transition:.3s}
+.nv-soc a:hover{background:var(--grad-teal);color:#06231f;transform:translateY(-3px)}
+
+/* ---- scroll top ---- */
+.nv-top{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:14px;z-index:150;border:none;cursor:pointer;background:var(--grad-teal);color:#06231f;display:grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow-glow);opacity:0;visibility:hidden;transform:translateY(18px);transition:.4s var(--ease)}
+.nv-top.show{opacity:1;visibility:visible;transform:none}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1040px){
+  .nv-hero__grid,.nv-obj__grid,.nv-dig__grid,.nv-seg__layout{grid-template-columns:1fr;gap:46px}
+  .nv-collage{max-width:520px;margin:0 auto}
+  .nv-bento{grid-template-columns:repeat(2,1fr)}
+  .nv-card--feature{grid-column:span 2;grid-row:auto}
+  .nv-purpose__grid{grid-template-columns:1fr 1fr}
+  .nv-purpose__block:nth-child(2){border-right:none}
+  .nv-purpose__block:nth-child(1),.nv-purpose__block:nth-child(2){border-bottom:1px solid var(--silver-200)}
+  .nv-flow{grid-template-columns:1fr 1fr}
+  .nv-node__link{display:none}
+  .nv-sbento{grid-template-columns:repeat(2,1fr)}
+  .nv-stile--wide{grid-column:span 2}
+  .nv-stile--tall{grid-row:auto}
+  .nv-imp__grid{grid-template-columns:1fr 1fr}
+  .nv-con__grid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nv-wrap{padding:0 22px}
+  .nv-navlinks,.nv-nav__cta .nv-btn{display:none}
+  .nv-burger{display:flex}
+  .nv-navlinks.mobile{display:flex;flex-direction:column;align-items:stretch;gap:4px;position:fixed;inset:0 0 0 auto;width:80%;max-width:330px;height:100vh;z-index:210;background:#fff;padding:96px 24px 30px;transform:translateX(100%);transition:transform .45s var(--ease);box-shadow:-30px 0 60px rgba(20,26,74,.18)}
+  .nv-navlinks.mobile.open{transform:translateX(0)}
+  .nv-navlinks.mobile a{padding:14px 16px;font-size:1.05rem}
+  .nv-ovl{position:fixed;inset:0;background:rgba(13,17,51,.5);z-index:205;opacity:0;visibility:hidden;transition:.3s}
+  .nv-ovl.show{opacity:1;visibility:visible}
+  .nv-sec{padding:74px 0}
+  .nv-bento,.nv-purpose__grid,.nv-flow,.nv-sbento,.nv-imp__grid,.nv-dig__cards,.nv-fr,.nv-foot__top{grid-template-columns:1fr}
+  .nv-card--feature{grid-column:auto}
+  .nv-stile--wide{grid-column:auto}
+  .nv-purpose__block{border-right:none;border-bottom:1px solid var(--silver-200)}
+  .nv-sbento{grid-auto-rows:auto}
+  .nv-collage{height:440px}
+  .nv-foot__top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:460px){
+  .nv-imp__grid,.nv-foot__top{grid-template-columns:1fr}
+  .nv-form,.nv-obj__visual{padding:28px}
+}
+</style>
+</head>
+<body id="top">
+
+<!-- ============ NAV ============ -->
+<header class="nv-nav" id="nvNav">
+  <div class="nv-wrap nv-nav__row">
+    <a href="#top" class="nv-logo">
+      <span class="nv-logo__mark"></span>
+      <span class="nv-logo__txt">Nuvama<small>Wealth Management</small></span>
+    </a>
+    <nav class="nv-navlinks" id="nvLinks">
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#purpose">Purpose</a>
+      <a href="#segments">Who We Help</a>
+      <a href="#functions">How It Works</a>
+      <a href="#services">Services</a>
+      <a href="#digital">Strength</a>
+      <a href="#impact">Impact</a>
+    </nav>
+    <div class="nv-nav__cta">
+      <a href="#contact" class="nv-btn nv-btn--dark">Contact Us</a>
+      <button class="nv-burger" id="nvBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="nv-ovl" id="nvOvl"></div>
+
+<!-- ============ HERO ============ -->
+<section class="nv-hero">
+  <div class="nv-wrap nv-hero__grid">
+    <div class="nv-hero__copy">
+      <span class="nv-pill rv"><span class="d"></span>Nuvama Wealth Management Ltd.</span>
+      <h1 class="rv d1">Smarter Wealth.<br><span class="nv-grad-text">Stronger Market Access.</span></h1>
+      <p class="nv-hero__lead rv d2">Building smarter wealth solutions for investors and institutions — a modern financial ecosystem spanning wealth management, advisory, capital markets and asset solutions.</p>
+      <div class="nv-hero__actions rv d3">
+        <a href="#ecosystem" class="nv-btn nv-btn--primary">Explore Nuvama <span class="a">&rarr;</span></a>
+        <a href="#contact" class="nv-btn nv-btn--ghost">Contact Us</a>
+      </div>
+      <div class="nv-hero__mini rv d4">
+        <div><b>4</b><span>Connected business lines</span></div>
+        <div><b>360&deg;</b><span>Client coverage</span></div>
+        <div><b>1</b><span>Integrated platform</span></div>
+      </div>
+    </div>
+
+    <div class="nv-collage rv d2">
+      <div class="nv-collage__img nv-collage__a"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80" alt="Financial advisors discussing wealth strategy" loading="eager" /></div>
+      <div class="nv-collage__img nv-collage__b"><img src="https://images.unsplash.com/photo-1543286386-2e659306cd6c?auto=format&fit=crop&w=800&q=80" alt="Capital market analytics dashboard" loading="lazy" /></div>
+      <div class="nv-collage__panel">
+        <div class="row"><span class="k">Wealth</span><span class="bar"><i style="width:82%"></i></span></div>
+        <div class="row"><span class="k">Capital Markets</span><span class="bar"><i style="width:68%"></i></span></div>
+        <div class="row"><span class="k">Assets</span><span class="v">+ Growth</span></div>
+      </div>
+      <div class="nv-badges">
+        <span class="nv-badge"><i>W</i>Wealth</span>
+        <span class="nv-badge"><i>A</i>Advisory</span>
+        <span class="nv-badge"><i>C</i>Capital Markets</span>
+        <span class="nv-badge"><i>S</i>Asset Solutions</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ECOSYSTEM ============ -->
+<section class="nv-sec nv-eco" id="ecosystem">
+  <div class="nv-wrap">
+    <div class="nv-head rv">
+      <span class="nv-pill"><span class="d"></span>What Nuvama Does</span>
+      <h2>One ecosystem for<br>wealth &amp; markets</h2>
+      <p>Nuvama brings together the services individuals and institutions need to access markets, grow wealth and make informed financial decisions — under one connected platform.</p>
+    </div>
+    <div class="nv-bento">
+      <div class="nv-card nv-card--feature rv">
+        <span class="nv-pill nv-pill--ondark"><span class="d"></span>Integrated Platform</span>
+        <div>
+          <h3>Wealth, advisory &amp; capital markets — working together</h3>
+          <p>From personal wealth management to institutional capital market services and asset solutions, Nuvama connects every part of the financial journey so clients get coordinated guidance and access in one place.</p>
+          <div class="nv-eco__tags">
+            <span>Wealth Management</span><span>Advisory</span><span>Capital Markets</span><span>Asset Management</span><span>Client Support</span>
+          </div>
+        </div>
+      </div>
+      <div class="nv-card rv d1"><div class="nv-card__ic">📊</div><h4>Wealth Management</h4><p>Personalised strategies to manage and grow client wealth.</p></div>
+      <div class="nv-card nv-card--accent rv d2"><div class="nv-card__ic">🧭</div><h4>Advisory</h4><p>Informed, research-backed guidance for better decisions.</p></div>
+      <div class="nv-card rv d3"><div class="nv-card__ic">🏛️</div><h4>Capital Market Services</h4><p>Market access and solutions for active and institutional clients.</p></div>
+      <div class="nv-card nv-card--accent rv d4"><div class="nv-card__ic">💠</div><h4>Asset &amp; Investment Solutions</h4><p>Diversified products across the risk and return spectrum.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PURPOSE ============ -->
+<section class="nv-sec" id="purpose">
+  <div class="nv-wrap">
+    <div class="nv-head center rv">
+      <span class="nv-pill"><span class="d"></span>Purpose</span>
+      <h2>Connecting clients to better financial possibilities</h2>
+      <p>Nuvama exists to widen access, grow wealth and support smarter decisions — for every kind of client, across every stage of their journey.</p>
+    </div>
+    <div class="nv-purpose__grid">
+      <div class="nv-purpose__block rv d1"><span class="no">01</span><span class="ic">🔓</span><h4>Access Markets</h4><p>Open the door to financial markets for individuals and institutions alike.</p></div>
+      <div class="nv-purpose__block rv d2"><span class="no">02</span><span class="ic">📈</span><h4>Manage Wealth</h4><p>Help clients protect and grow what they have built over time.</p></div>
+      <div class="nv-purpose__block rv d3"><span class="no">03</span><span class="ic">🎯</span><h4>Plan Goals</h4><p>Turn long-term ambitions into structured, achievable financial plans.</p></div>
+      <div class="nv-purpose__block rv d4"><span class="no">04</span><span class="ic">💡</span><h4>Support Decisions</h4><p>Back every choice with research, insight and advisory expertise.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEGMENTS (interactive) ============ -->
+<section class="nv-sec nv-seg" id="segments">
+  <div class="nv-wrap">
+    <div class="nv-head rv">
+      <span class="nv-pill nv-pill--ondark"><span class="d"></span>Who Nuvama Helps</span>
+      <h2>Built for a broad spectrum of clients</h2>
+      <p>Select a client type to see how Nuvama serves them.</p>
+    </div>
+    <div class="nv-seg__layout">
+      <div class="nv-seg__tabs rv" id="nvSegTabs">
+        <div class="nv-seg__tab active" data-seg="0"><span class="n">01</span><span class="t">Retail Investors</span></div>
+        <div class="nv-seg__tab" data-seg="1"><span class="n">02</span><span class="t">HNIs</span></div>
+        <div class="nv-seg__tab" data-seg="2"><span class="n">03</span><span class="t">Ultra-HNIs</span></div>
+        <div class="nv-seg__tab" data-seg="3"><span class="n">04</span><span class="t">Institutional Clients</span></div>
+        <div class="nv-seg__tab" data-seg="4"><span class="n">05</span><span class="t">Corporate Clients</span></div>
+        <div class="nv-seg__tab" data-seg="5"><span class="n">06</span><span class="t">Active Market Participants</span></div>
+        <div class="nv-seg__tab" data-seg="6"><span class="n">07</span><span class="t">Long-Term Wealth Customers</span></div>
+      </div>
+      <div class="nv-seg__panel rv d2" id="nvSegPanel"><!-- JS --></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUNCTIONS (node flow) ============ -->
+<section class="nv-sec" id="functions">
+  <div class="nv-wrap">
+    <div class="nv-head center rv">
+      <span class="nv-pill"><span class="d"></span>How the Company Functions</span>
+      <h2>From client goals to financial solutions</h2>
+      <p>A connected flow that turns understanding into outcomes — and sustains a long-term relationship.</p>
+    </div>
+    <div class="nv-flow">
+      <div class="nv-node rv d1"><div class="nv-node__top"><span class="nv-node__dot">1</span><div><span class="nv-node__step">Discover</span><h4>Understand Client Goals</h4></div></div><p>Learn each client's objectives, profile and risk appetite.</p><span class="nv-node__link">&rarr;</span></div>
+      <div class="nv-node rv d2"><div class="nv-node__top"><span class="nv-node__dot">2</span><div><span class="nv-node__step">Match</span><h4>Match to Suitable Service</h4></div></div><p>Align the client with the right wealth, advisory or market service.</p><span class="nv-node__link">&rarr;</span></div>
+      <div class="nv-node rv d3"><div class="nv-node__top"><span class="nv-node__dot">3</span><div><span class="nv-node__step">Deliver</span><h4>Provide Solutions &amp; Access</h4></div></div><p>Offer market access, advisory and tailored wealth solutions.</p><span class="nv-node__link">&rarr;</span></div>
+      <div class="nv-node rv d4"><div class="nv-node__top"><span class="nv-node__dot">4</span><div><span class="nv-node__step">Support</span><h4>Research, Platforms &amp; RMs</h4></div></div><p>Back clients with insight, technology and relationship managers.</p><span class="nv-node__link">&rarr;</span></div>
+      <div class="nv-node rv d5"><div class="nv-node__top"><span class="nv-node__dot">5</span><div><span class="nv-node__step">Monitor</span><h4>Review Portfolios &amp; Needs</h4></div></div><p>Continuously monitor portfolios and evolving client needs.</p><span class="nv-node__link">&rarr;</span></div>
+      <div class="nv-node rv d6"><div class="nv-node__top"><span class="nv-node__dot">6</span><div><span class="nv-node__step">Sustain</span><h4>Diversified Revenue Model</h4></div></div><p>Earn via advisory fees, brokerage, distribution, asset management &amp; capital market services.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES (bento) ============ -->
+<section class="nv-sec nv-serv" id="services">
+  <div class="nv-wrap">
+    <div class="nv-head center rv">
+      <span class="nv-pill"><span class="d"></span>Services &amp; Capabilities</span>
+      <h2>A full spectrum of financial capabilities</h2>
+      <p>Diversified solutions for individuals, families, institutions and corporates.</p>
+    </div>
+    <div class="nv-sbento">
+      <div class="nv-stile nv-stile--dark nv-stile--wide nv-stile--tall rv"><span class="nv-stile__no">01</span><div class="ic">📊</div><div><h4>Wealth Management</h4><p>A coordinated, personalised approach to managing and growing client wealth across goals and life stages.</p></div></div>
+      <div class="nv-stile rv d1"><span class="nv-stile__no">02</span><div class="ic">🧭</div><h4>Investment Advisory</h4></div>
+      <div class="nv-stile rv d2"><span class="nv-stile__no">03</span><div class="ic">💠</div><h4>Asset Management</h4></div>
+      <div class="nv-stile nv-stile--violet nv-stile--wide rv d2"><span class="nv-stile__no">04</span><div class="ic">🏛️</div><div><h4>Capital Market Services</h4><p>Market access and solutions for active and institutional participants.</p></div></div>
+      <div class="nv-stile rv d3"><span class="nv-stile__no">05</span><div class="ic">⚡</div><h4>Broking &amp; Trading</h4></div>
+      <div class="nv-stile rv d3"><span class="nv-stile__no">06</span><div class="ic">🗂️</div><h4>Portfolio Solutions</h4></div>
+      <div class="nv-stile rv d4"><span class="nv-stile__no">07</span><div class="ic">🏢</div><h4>Institutional Services</h4></div>
+      <div class="nv-stile rv d4"><span class="nv-stile__no">08</span><div class="ic">🔬</div><h4>Research &amp; Insights</h4></div>
+      <div class="nv-stile rv d5"><span class="nv-stile__no">09</span><div class="ic">🎯</div><h4>Financial Planning</h4></div>
+      <div class="nv-stile nv-stile--wide rv d5"><span class="nv-stile__no">10</span><div class="ic">🌐</div><div><h4>Alternative Investment Solutions</h4><p>Differentiated strategies beyond traditional asset classes.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJECTIVE ============ -->
+<section class="nv-sec" id="objective">
+  <div class="nv-wrap nv-obj__grid">
+    <div class="rv">
+      <span class="nv-pill"><span class="d"></span>Main Objective</span>
+      <h2>Smart solutions for<br>every kind of investor</h2>
+      <p class="nv-obj__lead">Nuvama's objective is to deliver intelligent wealth solutions and dependable market access — serving individuals and institutions with equal rigour.</p>
+      <div class="nv-obj__list">
+        <div class="nv-obj__item"><span class="c">✓</span><div><b>Deliver smart wealth solutions</b></div></div>
+        <div class="nv-obj__item"><span class="c">✓</span><div><b>Support long-term financial growth</b></div></div>
+        <div class="nv-obj__item"><span class="c">✓</span><div><b>Provide trusted advisory</b></div></div>
+        <div class="nv-obj__item"><span class="c">✓</span><div><b>Offer access to financial markets</b></div></div>
+        <div class="nv-obj__item"><span class="c">✓</span><div><b>Serve individual &amp; institutional clients</b></div></div>
+      </div>
+    </div>
+    <div class="nv-obj__visual rv d2">
+      <div class="big">360&deg;</div>
+      <p class="ql">"Smarter wealth, stronger access — for individuals and institutions alike."</p>
+      <p class="by">— The Nuvama objective</p>
+      <div class="nv-obj__dots"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIGITAL STRENGTH ============ -->
+<section class="nv-sec nv-dig" id="digital">
+  <div class="nv-wrap">
+    <div class="nv-head rv">
+      <span class="nv-pill nv-pill--ondark"><span class="d"></span>Digital, Research &amp; Advisory Strength</span>
+      <h2>Technology and insight,<br>working for the client</h2>
+      <p>Smart platforms, deep research and relationship-led service combine to help clients act with clarity and confidence.</p>
+    </div>
+    <div class="nv-dig__grid">
+      <div class="nv-dig__cards rv">
+        <div class="nv-dig__c"><div class="ic">📱</div><h4>Client Platforms</h4><p>Intuitive digital tools to track, plan and act on portfolios.</p></div>
+        <div class="nv-dig__c"><div class="ic">🔬</div><h4>Research Depth</h4><p>Insight across markets, sectors and instruments.</p></div>
+        <div class="nv-dig__c"><div class="ic">🧭</div><h4>Advisory Support</h4><p>Guidance grounded in suitability and expertise.</p></div>
+        <div class="nv-dig__c"><div class="ic">🤝</div><h4>Relationship Service</h4><p>Dedicated managers who understand each client.</p></div>
+      </div>
+      <div class="nv-dig__media rv d2">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Research and analytics platform" loading="lazy" />
+        <div class="nv-dig__float"><div><div class="k">Insight to action</div></div><div class="v">Research-led</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section class="nv-sec" id="impact">
+  <div class="nv-wrap">
+    <div class="nv-head center rv">
+      <span class="nv-pill"><span class="d"></span>Impact in Financial Services</span>
+      <h2>Part of India's growing wealth &amp; markets ecosystem</h2>
+    </div>
+    <div class="nv-imp__grid">
+      <div class="nv-imp__c rv d1"><div class="nv-imp__v" data-to="7"><span class="n">0</span>+</div><div class="nv-imp__l">Client segments served</div></div>
+      <div class="nv-imp__c rv d2"><div class="nv-imp__v" data-to="10"><span class="n">0</span>+</div><div class="nv-imp__l">Services &amp; capabilities</div></div>
+      <div class="nv-imp__c rv d3"><div class="nv-imp__v" data-to="4"><span class="n">0</span></div><div class="nv-imp__l">Connected business lines</div></div>
+      <div class="nv-imp__c rv d4"><div class="nv-imp__v" data-to="100"><span class="n">0</span>%</div><div class="nv-imp__l">Client-centric approach</div></div>
+    </div>
+    <p class="nv-imp__note rv">As wealth deepens across India, Nuvama supports a maturing financial ecosystem — widening market participation, strengthening advisory standards and connecting individuals and institutions to better financial possibilities.</p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="nv-sec nv-con" id="contact">
+  <div class="nv-wrap">
+    <div class="nv-head center rv">
+      <span class="nv-pill"><span class="d"></span>Contact Us</span>
+      <h2>Let's start the conversation</h2>
+      <p>Choose the route that fits you, and our team will be in touch.</p>
+    </div>
+    <div class="nv-con__grid">
+      <div class="nv-con__routes rv">
+        <div class="nv-route"><span class="ic">📊</span><div><h4>Wealth Enquiry</h4><p>Personal wealth management &amp; planning.</p><a href="#contact">wealth@nuvama-demo.in</a></div></div>
+        <div class="nv-route"><span class="ic">🏛️</span><div><h4>Institutional / Capital Market Enquiry</h4><p>For institutions, corporates &amp; market services.</p><a href="#contact">institutional@nuvama-demo.in</a></div></div>
+        <div class="nv-route"><span class="ic">🎧</span><div><h4>Customer Support</h4><p>Help with platforms, accounts &amp; queries.</p><a href="#contact">support@nuvama-demo.in</a></div></div>
+      </div>
+
+      <form class="nv-form rv d2" id="nvForm" novalidate>
+        <span class="nv-form__note">⚠️ Demo only — nothing is stored or sent</span>
+        <h3>Send an enquiry</h3>
+        <p class="nv-form__sub">Tell us a little about your needs.</p>
+        <div class="nv-fr">
+          <div class="nv-field"><label for="nvName">Full Name</label><input type="text" id="nvName" placeholder="Your name" /><span class="err">Please enter your name.</span></div>
+          <div class="nv-field"><label for="nvEmail">Email</label><input type="email" id="nvEmail" placeholder="you@example.com" /><span class="err">Enter a valid email.</span></div>
+        </div>
+        <div class="nv-fr">
+          <div class="nv-field"><label for="nvPhone">Phone</label><input type="tel" id="nvPhone" placeholder="10-digit number" /><span class="err">Enter a valid 10-digit number.</span></div>
+          <div class="nv-field"><label for="nvType">Client Type</label>
+            <select id="nvType"><option value="">Select</option><option>Retail Investor</option><option>HNI</option><option>Ultra-HNI</option><option>Institutional Client</option><option>Corporate Client</option><option>Active Market Participant</option><option>Long-Term Wealth Customer</option></select>
+            <span class="err">Select a client type.</span>
+          </div>
+        </div>
+        <div class="nv-field"><label for="nvService">Service Interested In</label>
+          <select id="nvService"><option value="">Select a service</option><option>Wealth Management</option><option>Investment Advisory</option><option>Asset Management</option><option>Capital Market Services</option><option>Broking &amp; Trading</option><option>Portfolio Solutions</option><option>Institutional Services</option><option>Research &amp; Insights</option><option>Financial Planning</option><option>Alternative Investments</option></select>
+          <span class="err">Select a service.</span>
+        </div>
+        <div class="nv-field"><label for="nvMsg">Message</label><textarea id="nvMsg" placeholder="How can we help you?"></textarea><span class="err">Add a message (min 10 characters).</span></div>
+        <button type="submit" class="nv-btn nv-btn--primary" style="width:100%;justify-content:center">Submit Enquiry <span class="a">&rarr;</span></button>
+        <p style="font-size:.78rem;color:var(--slate-500);margin-top:14px;text-align:center">This form is for academic/project demonstration only.</p>
+        <div class="nv-form__ok" id="nvOk">✅ Thank you! Your enquiry has been recorded for this demo.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="nv-foot">
+  <div class="nv-wrap">
+    <div class="nv-foot__top">
+      <div>
+        <a href="#top" class="nv-logo"><span class="nv-logo__mark"></span><span class="nv-logo__txt" style="color:#fff">Nuvama<small style="color:rgba(255,255,255,.45)">Wealth Management</small></span></a>
+        <p class="nv-foot__about">A modern financial services ecosystem spanning wealth management, advisory, capital markets and asset solutions — for investors and institutions.</p>
+        <div class="nv-soc"><a href="#top">in</a><a href="#top">𝕏</a><a href="#top">◎</a><a href="#top">▶</a></div>
+      </div>
+      <div><h5>Explore</h5><ul class="nv-foot__links"><li><a href="#ecosystem">Ecosystem</a></li><li><a href="#purpose">Purpose</a></li><li><a href="#segments">Who We Help</a></li><li><a href="#functions">How It Works</a></li></ul></div>
+      <div><h5>Capabilities</h5><ul class="nv-foot__links"><li><a href="#services">Services</a></li><li><a href="#digital">Strength</a></li><li><a href="#impact">Impact</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h5>Project Note</h5><div class="nv-foot__disc"><b>Academic Disclaimer:</b> A non-commercial educational project for learning and demonstration. Not affiliated with, endorsed by, or an official source of Nuvama Wealth Management Ltd. All figures are illustrative.</div></div>
+    </div>
+    <div class="nv-foot__bottom">
+      <span>&copy; 2026 Nuvama Wealth Management Ltd. — Company Profile (Demo). For academic use only.</span>
+      <span>A modern financial-ecosystem UI demonstration.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="nv-top" id="nvTop" aria-label="Back to top">&uarr;</button>
+
+<script>
+(function(){
+  "use strict";
+
+  var nav=document.getElementById('nvNav'), top=document.getElementById('nvTop');
+  function onScroll(){var y=window.pageYOffset||document.documentElement.scrollTop;nav.classList.toggle('stuck',y>30);top.classList.toggle('show',y>650);}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* mobile menu */
+  var burger=document.getElementById('nvBurger'),links=document.getElementById('nvLinks'),ovl=document.getElementById('nvOvl');
+  function close(){burger.classList.remove('open');links.classList.remove('mobile','open');ovl.classList.remove('show');document.body.style.overflow='';}
+  function open(){burger.classList.add('open');links.classList.add('mobile','open');ovl.classList.add('show');document.body.style.overflow='hidden';}
+  burger.addEventListener('click',function(){links.classList.contains('open')?close():open();});
+  ovl.addEventListener('click',close);
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+
+  /* smooth scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(function(l){
+    l.addEventListener('click',function(e){
+      var id=this.getAttribute('href');if(id.length<2)return;
+      var t=document.querySelector(id);
+      if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-72,behavior:'smooth'});}
+    });
+  });
+
+  /* reveal */
+  var rv=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var ro=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('show');ro.unobserve(en.target);}});},{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+    rv.forEach(function(el){ro.observe(el);});
+  }else{rv.forEach(function(el){el.classList.add('show');});}
+
+  /* active nav */
+  var ids=['ecosystem','purpose','segments','functions','services','digital','impact'];
+  var secs=ids.map(function(i){return document.getElementById(i);}).filter(Boolean);
+  var anchors={};document.querySelectorAll('#nvLinks a[href^="#"]').forEach(function(a){anchors[a.getAttribute('href').slice(1)]=a;});
+  function active(){var pos=window.pageYOffset+140,cur=null;secs.forEach(function(s){if(s.offsetTop<=pos)cur=s.id;});Object.keys(anchors).forEach(function(k){anchors[k].classList.toggle('active',k===cur);});}
+  window.addEventListener('scroll',active,{passive:true});active();
+
+  /* segments interactive */
+  var segData=[
+    {ic:'👤',t:'Retail Investors',d:'Everyday investors who want simple access to markets, guidance and the tools to grow their savings with confidence.',c:['Market access','Guidance','Easy platforms']},
+    {ic:'💼',t:'HNIs',d:'High net-worth individuals seeking personalised wealth management and a coordinated view of their financial lives.',c:['Wealth management','Personal advisory','Portfolio solutions']},
+    {ic:'💎',t:'Ultra-HNIs',d:'Sophisticated clients with complex needs, served with bespoke strategies and access to differentiated solutions.',c:['Bespoke strategy','Alternatives','Dedicated RM']},
+    {ic:'🏛️',t:'Institutional Clients',d:'Institutions that require deep market access, research and capital market services delivered with scale and rigour.',c:['Capital markets','Research','Execution']},
+    {ic:'🏢',t:'Corporate Clients',d:'Corporates balancing enterprise needs with treasury, investment and capital market requirements.',c:['Corporate solutions','Treasury','Advisory']},
+    {ic:'⚡',t:'Active Market Participants',d:'Traders and active investors who need fast, reliable access, research and capable platforms.',c:['Broking & trading','Live research','Tools']},
+    {ic:'🌱',t:'Long-Term Wealth Customers',d:'Clients focused on patient, goal-based wealth creation and continuity across years and generations.',c:['Goal planning','Long-term growth','Continuity']}
+  ];
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('.nv-seg__tab'));
+  var panel=document.getElementById('nvSegPanel');
+  function renderSeg(i){
+    var s=segData[i];
+    panel.innerHTML='<div class="nv-fade"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p><div class="chips">'+s.c.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div></div>';
+    tabs.forEach(function(t,idx){t.classList.toggle('active',idx===i);});
+  }
+  tabs.forEach(function(t){
+    var go=function(){renderSeg(parseInt(t.getAttribute('data-seg'),10));};
+    t.addEventListener('click',go);t.addEventListener('mouseenter',go);
+  });
+  renderSeg(0);
+
+  /* counters */
+  function count(el){
+    var to=parseFloat(el.getAttribute('data-to')),nEl=el.querySelector('.n'),dur=1600,start=null;
+    function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);var e=1-Math.pow(1-p,3);nEl.textContent=Math.round(to*e);if(p<1)requestAnimationFrame(step);else nEl.textContent=to;}
+    requestAnimationFrame(step);
+  }
+  var ms=document.querySelectorAll('[data-to]');
+  if('IntersectionObserver' in window){
+    var co=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){count(en.target);co.unobserve(en.target);}});},{threshold:.5});
+    ms.forEach(function(m){co.observe(m);});
+  }else{ms.forEach(count);}
+
+  /* form */
+  var form=document.getElementById('nvForm'),ok=document.getElementById('nvOk');
+  function mark(id,bad){document.getElementById(id).closest('.nv-field').classList.toggle('bad',bad);}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('nvName').value.trim();
+    var email=document.getElementById('nvEmail').value.trim();
+    var phone=document.getElementById('nvPhone').value.trim().replace(/\D/g,'');
+    var type=document.getElementById('nvType').value;
+    var serv=document.getElementById('nvService').value;
+    var msg=document.getElementById('nvMsg').value.trim();
+    var bad={nvName:name.length<2,nvEmail:!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),nvPhone:phone.length<10,nvType:type==='',nvService:serv==='',nvMsg:msg.length<10};
+    Object.keys(bad).forEach(function(k){mark(k,bad[k]);});
+    if(Object.keys(bad).some(function(k){return bad[k];})){ok.classList.remove('show');return;}
+    ok.classList.add('show');form.reset();setTimeout(function(){ok.classList.remove('show');},6500);
+  });
+  ['nvName','nvEmail','nvPhone','nvType','nvService','nvMsg'].forEach(function(id){
+    var el=document.getElementById(id),ev=el.tagName==='SELECT'?'change':'input';
+    el.addEventListener(ev,function(){el.closest('.nv-field').classList.remove('bad');});
+  });
+})();
+</script>
+</body>
+</html>
